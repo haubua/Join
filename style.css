@@ -17,6 +17,10 @@ body {
 .rightContainer {
     width: calc(100% - 150px);
     height: 100vh;
+    
+}
+
+.board {
     display: flex;
     justify-content: space-around;
 }
@@ -57,4 +61,65 @@ body {
     margin: 8px;
     display: flex;
     justify-content: center;
+}
+
+/****   Backlog     ****/
+
+.backlog {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.headBacklog {
+    display: flex;
+    flex-direction: column;
+    height: 120px;
+    justify-content: center;
+}
+
+.headBacklog2ndRow {
+    margin-top: -15px;
+    font-size: 13px;
+    color: #1818d7;
+    font-weight: 600;
+}
+
+.descriptions {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 27px;
+    font-size: 21px;
+    color: #1818d7;
+    font-weight: 600;
+}
+
+.tasks {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.task {
+    background-color: lightgray;
+    height: 74px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    border-radius: 7px;
+    
+}
+
+.name {
+    display: flex;
+    flex-direction: column;
+}
+
+.width33 {
+    width: 33%;
 }

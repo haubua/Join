@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,47 +8,36 @@
     <title>Document</title>
     <script src="/smallest_backend_ever/smallest_backend_ever-master/mini_backend.js"></script>
     <script src="script.js"></script>
+    <script src="htmlTemplates.js"></script>
     <link rel="stylesheet" href="./style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap"
+        rel="stylesheet">
 </head>
+
 <body onload="init()">
     <div class="container">
         <div class="leftContainer">
             <div class="logo">
                 <img src="./img/logo.png" alt="">
             </div>
-            
+
             <div class="menuLink">
-                <a href="">Board</a>
-                <a href="">Backlog</a>
-                <a href="">Add Task</a>
-                <a href="">Help</a>
+                <a onclick="loadBoard()">Board</a>
+                <a onclick="loadBacklog()">Backlog</a>
+                <a onclick="showAddTast()">Add Task</a>
+                <a onclick="showHelp()">Help</a>
             </div>
 
         </div>
+        <div id="rightContainer" class="rightContainer">
 
-        <div class="rightContainer">
-    
-             <div class="bgColor">
-                 <h2>TO DO</h2>
-             </div>
-
-             <div class="bgColor">
-                 <h2>IN PROGRESS</h2>
-             </div> 
-              
-             <div class="bgColor">
-             <h2>TESTING</h2>
-             </div>
-
-             <div class="bgColor">
-                <h2>DONE</h2>
-            </div>
-            
         </div>
+    </div>
     </div>
 
 </body>
+
 </html>

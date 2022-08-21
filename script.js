@@ -6,6 +6,23 @@ async function init() {
     await downloadFromServer();
     users = JSON.parse(backend.getItem('users')) || [];
     toDos = JSON.parse(backend.getItem('todos')) || [];
+    boardHtmlTemplate();
+}
+
+function loadBoard() {
+    boardHtmlTemplate();
+}
+
+function loadBacklog() {
+    backlogHtmlTemplate();
+}
+
+function showAddTast() {
+    addTaskHTMLTemplate();
+}
+
+function showHelp() {
+    showHelpHtmlTemplate();
 }
 
 
