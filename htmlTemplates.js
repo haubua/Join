@@ -117,6 +117,62 @@ function backlogHtmlTemplate() {
 function addTaskHTMLTemplate() {
     document.getElementById('rightContainer').innerHTML = `
     
+    <div class="headAddTask">
+        <h2>Add Task</h2>
+        <div class="headBacklog2ndRow">Learning Management System Project</div>
+    </div>
+    <form id="inputContain " onsubmit="createNewTask(); return false " class="inputContain">
+            <div class="inputBox">
+                <div>
+                    <p>TITLE</p>
+                    <input class="inputFieldSize" id="inputTitel" required="" type="text" placeholder="Management meeting preparation">
+                </div>
+                <div>
+                    <p>CATEGORY</p>
+                    <select id="inputCategory"class="inputFieldSize" required="">
+                        <option value="" disabled="" selected="" hidden="">Please select</option>
+                        <option value="Sale">Sale</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Product">Product</option>
+                        <option value="Distribution">Distribution</option>
+                    </select>
+                </div>
+                <div>
+                    <p>DESCRIPTION</p>
+
+                    <textarea class="inputDescriptionField" type="text" id="inputDescription" cols="34" rows="10" required="" placeholder="Note"></textarea>
+                </div>
+            </div>
+
+
+            <div class="inputBox">
+                <div>
+                    <p>DUE DATE</p>
+                    <input id="inputDate" class="inputFieldSize" required="" type="date">
+                </div>
+                <div>
+                    <p>URGENCY</p>
+                    <select id="inputUrgency" class="inputFieldSize" placeholder="Urgency" required="">
+                        <option value="" disabled="" selected="" hidden="">Please select </option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Important">Important</option>
+                        <option value="Higt">High</option>
+                    </select>
+                </div>
+                <div>
+                    <p>ASSIGNED TO</p>
+                    <div id="avatarPicker">
+                        <img class="avatarPicker" src="./img/profile.png">
+                        <img src="./img/icon plus.png">
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button type="reset" id="cancel">Cancel</button>
+                    <button type="submit" id="create">Create Task</button>
+                </div>
+            </div>
+        </form>
     
     `
 
