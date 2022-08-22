@@ -1,11 +1,18 @@
-let users = [];
-let toDos = []
+let titles = [];
+let descriptions = [];
+let categorys = [];
+let dates = [];
+let urgencyStatusArr = []
+
 setURL('https://gruppe-298.developerakademie.net/smallest_backend_ever/smallest_backend_ever-master');
 
 async function init() {
     await downloadFromServer();
-    users = JSON.parse(backend.getItem('users')) || [];
-    toDos = JSON.parse(backend.getItem('todos')) || [];
+    titles = JSON.parse(backend.getItem('titles')) || [];
+    descriptions = JSON.parse(backend.getItem('descriptions')) || [];
+    categorys = JSON.parse(backend.getItem('categorys')) || [];
+    dates = JSON.parse(backend.getItem('dates')) || [];
+    urgencyStatusArr = JSON.parse(backend.getItem('urgencyStatusArr')) || [];
     boardHtmlTemplate();
 }
 
@@ -23,15 +30,35 @@ function showAddTast() {
 
 function showHelp() {
     showHelpHtmlTemplate();
+
 }
 
-
-function addUser() {
-    users.push(username.value);
-    backend.setItem('users', JSON.stringify(users));
+async function createNewTask() {
+    pushNewTask();
+    await backend.setItem('titles', JSON.stringify(titles));
+    await backend.setItem('descriptions', JSON.stringify(descriptions));
+    await backend.setItem('categorys', JSON.stringify(categorys));
+    await backend.setItem('dates', JSON.stringify(dates));
+    await backend.setItem('urgencyStatusArr', JSON.stringify(urgencyStatusArr));
 }
 
-function addTodo() {
-    toDos.push(todo.value);
-    backend.setItem('todos', JSON.stringify(toDos));
+function pushNewTask() {
+    let title = document.getElementById('inputTitel')
+    let description = document.getElementById('inputDescription');
+    let category = document.getElementById('inputCategory');
+    let date = document.getElementById('inputDate');
+    let urgencyStatus = document.getElementById('inputUrgency');
+    titles.push(title.value);
+    descriptions.push(description.value);
+    categorys.push(category.value)
+    dates.push(date.value);
+    urgencyStatusArr.push(urgencyStatus.value);
+}
+
+async function deleteAllArrays() {
+    await backend.deleteItem('titles');
+    await backend.deleteItem('descriptions');
+    await backend.deleteItem('categorys');
+    await backend.deleteItem('dates');
+    await backend.deleteItem('urgencyStatusArr');
 }

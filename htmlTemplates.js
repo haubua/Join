@@ -157,7 +157,7 @@ function addTaskHTMLTemplate() {
                         <option value="Low">Low</option>
                         <option value="Medium">Medium</option>
                         <option value="Important">Important</option>
-                        <option value="Higt">High</option>
+                        <option value="High">High</option>
                     </select>
                 </div>
                 <div>
