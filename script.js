@@ -22,6 +22,10 @@ function loadBoard() {
 
 function loadBacklog() {
     backlogHtmlTemplate();
+    for (let i = 0; i < descriptions.length; i++) {
+        loadTasksHtmlTemplaste(i);
+    }
+    
 }
 
 function showAddTast() {

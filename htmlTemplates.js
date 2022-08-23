@@ -32,87 +32,28 @@ function backlogHtmlTemplate() {
                 <div class="width33">CATEGORY</div>
                 <div class="width33">DETAILS</div>
             </div>
-            <div class="tasks" id="tasks">
-                <div class="task">
-                    <div class="width33"id="name">
-                        <div>NAME</div>
-                        <div>E-MAIL</div>
-                    </div>
-                    <div class="width33">
-                        CATEGORY
-                    </div>
-                    <div class="width33">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quam culpa rerum sint
-                    </div>
-                </div>
-                <div class="task">
-                    <div class="width33"id="name">
-                        <div>NAME</div>
-                        <div>E-MAIL</div>
-                    </div>
-                    <div class="width33">
-                        CATEGORY
-                    </div>
-                    <div class="width33">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quam culpa rerum sint
-                    </div>
-                </div>
-                <div class="task">
-                    <div class="width33"id="name">
-                        <div>NAME</div>
-                        <div>E-MAIL</div>
-                    </div>
-                    <div class="width33">
-                        CATEGORY
-                    </div>
-                    <div class="width33">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quam culpa rerum sint
-                    </div>
-                </div>
-                <div class="task">
-                    <div class="width33"id="name">
-                        <div>NAME</div>
-                        <div>E-MAIL</div>
-                    </div>
-                    <div class="width33">
-                        CATEGORY
-                    </div>
-                    <div class="width33">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quam culpa rerum sint
-                    </div>
-                </div>
-                <div class="task">
-                    <div class="width33"id="name">
-                        <div>NAME</div>
-                        <div>E-MAIL</div>
-                    </div>
-                    <div class="width33">
-                        CATEGORY
-                    </div>
-                    <div class="width33">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quam culpa rerum sint
-                    </div>
-                </div>
-                <div class="task">
-                    <div class="width33"id="name">
-                        <div>NAME</div>
-                        <div>E-MAIL</div>
-                    </div>
-                    <div class="width33">
-                        CATEGORY
-                    </div>
-                    <div class="width33">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quam culpa rerum sint
-                    </div>
-                </div>
-                
+            <div class="tasks" id="tasks">                
             </div>
         </div>
     `
-
-
-
 }
+
+function loadTasksHtmlTemplaste(i){
+    document.getElementById('tasks').innerHTML += `
+                    <div class="task">
+                        <div class="width33"id="name">
+                            <div>"Assigned to"</div>
+                            <div>"Assigned to"</div>
+                        </div>
+                        <div class="width33">
+                            ${categorys[i]}
+                        </div>
+                        <div class="width33">
+                            ${descriptions[i]}
+                        </div>
+                    </div>`
+}
+
 
 function addTaskHTMLTemplate() {
     document.getElementById('rightContainer').innerHTML = `
