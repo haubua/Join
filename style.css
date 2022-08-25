@@ -63,6 +63,14 @@ body {
     justify-content: center;
 }
 
+.bgColor h2 {
+    background-color: white;
+    height: 30px;
+    width: 100%;
+    margin-top: -1px;
+    text-align: center;
+}
+
 /****   Backlog     ****/
 
 .backlog {
@@ -122,6 +130,19 @@ body {
 
 .width33 {
     width: 33%;
+}
+
+.backlogImg {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.backlogBtn {
+    cursor: pointer;
+    width: 38px;
+    height: 38px;
+    padding: 8px;
 }
 
 .headAddTask {

@@ -48,8 +48,12 @@ function loadTasksHtmlTemplaste(i){
                         <div class="width33">
                             ${categorys[i]}
                         </div>
-                        <div class="width33">
+                        <div class="width33 backlogImg">
                             ${descriptions[i]}
+                            <div>
+                            <img class="backlogBtn" id="sendTo${i}" onclick="sendToBoard()" src="./img/sendTo.jpg">
+                            <img class="backlogBtn" id="delete${i}" onclick="deleteTask()" src="./img/trash.jpg">
+                            </div>
                         </div>
                     </div>`
 }
