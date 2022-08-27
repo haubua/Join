@@ -1,9 +1,9 @@
 function boardHtmlTemplate() {
     document.getElementById('rightContainer').innerHTML = `
         <div class="board">
-
             <div class="bgColor">
                 <h2>TO DO</h2>
+                <div id="todo"></div>
             </div>
 
             <div class="bgColor">
@@ -19,6 +19,19 @@ function boardHtmlTemplate() {
             </div>
         </div>`
 }
+
+function todoHTMLTemplate() {
+    for (let i = 0; i < board.length; i++) {
+        document.getElementById('todo').innerHTML += `
+        <div>Due Date: ${board[i]['dates']}</div>
+        <div>${board[i]['titles']}</div>
+        <div>Assigned to</div>
+`        
+    }
+   
+}
+
+
 
 function backlogHtmlTemplate() {
     document.getElementById('rightContainer').innerHTML = `
@@ -51,8 +64,8 @@ function loadTasksHtmlTemplate(i){
                         <div class="width33 backlogImg">
                             ${descriptions[i]}
                             <div>
-                                <img class="backlogBtn" id="sendTo${i}" onclick="sendToBoard()" src="./img/sendTo.jpg">
-                                <img class="backlogBtn" id="delete${i}" onclick="deleteTask()" src="./img/trash.jpg">
+                                <img class="backlogBtn" id="sendTo${i}" onclick="pushToBoardArray(${i})" src="./img/sendTo.jpg">
+                                <img class="backlogBtn" id="delete${i}" onclick="deleteTask(${i})" src="./img/trash.jpg">
                             </div>
                         </div>
                     </div>`

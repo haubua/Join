@@ -3,6 +3,11 @@ let descriptions = [];
 let categorys = [];
 let dates = [];
 let urgencyStatusArr = [];
+let board = [];
+let todo = [];
+let inProgress = [];
+let testing = [];
+let done = [];
 let users = [
     {
         'firstName': 'Robert',
@@ -22,6 +27,10 @@ let users = [
 
 setURL('https://gruppe-298.developerakademie.net/smallest_backend_ever/smallest_backend_ever-master');
 
+/**
+ * This function will download all arrays from the backend-server, and it will render the start-page
+ */
+
 async function init() {
     await downloadFromServer();
     titles = JSON.parse(backend.getItem('titles')) || [];
@@ -29,11 +38,27 @@ async function init() {
     categorys = JSON.parse(backend.getItem('categorys')) || [];
     dates = JSON.parse(backend.getItem('dates')) || [];
     urgencyStatusArr = JSON.parse(backend.getItem('urgencyStatusArr')) || [];
-    boardHtmlTemplate();
+    board = JSON.parse(backend.getItem('board')) || [];
+    loadBoard();
+}
+
+
+/**
+ * This function will save all arrays on the backend-server
+ */
+
+async function setItem() {
+    await backend.setItem('titles', JSON.stringify(titles));
+    await backend.setItem('descriptions', JSON.stringify(descriptions));
+    await backend.setItem('categorys', JSON.stringify(categorys));
+    await backend.setItem('dates', JSON.stringify(dates));
+    await backend.setItem('urgencyStatusArr', JSON.stringify(urgencyStatusArr));
+    await backend.setItem('board', JSON.stringify(board))
 }
 
 function loadBoard() {
     boardHtmlTemplate();
+    todoHTMLTemplate();
 }
 
 function loadBacklog() {
@@ -53,14 +78,14 @@ function showHelp() {
 
 }
 
-async function createNewTask() {
+function createNewTask() {
     pushNewTask();
-    await backend.setItem('titles', JSON.stringify(titles));
-    await backend.setItem('descriptions', JSON.stringify(descriptions));
-    await backend.setItem('categorys', JSON.stringify(categorys));
-    await backend.setItem('dates', JSON.stringify(dates));
-    await backend.setItem('urgencyStatusArr', JSON.stringify(urgencyStatusArr));
+    setItem();
 }
+
+/**
+ * This function will push each value into an seperate Array
+ */
 
 function pushNewTask() {
     let title = document.getElementById('inputTitel');
@@ -80,14 +105,38 @@ function pushNewTask() {
     urgencyStatus.value = '';
 }
 
-function sendToBoard() {
-
+function pushToBoardArray(i) {
+    board.push(
+                {
+                'titles' :titles[i], 
+                'description' :descriptions[i], 
+                'category' :categorys[i], 
+                'dates' :dates[i],
+                'urgencyStatusArr': urgencyStatusArr[i]
+                }
+            )
+    spliceBacklog(i);
+    setItem();
 }
 
 function deleteTask(i) {
-
-    
+    spliceBacklog(i);
+    setItem();
 }
+
+function spliceBacklog(i) {
+    titles.splice(i, 1);
+    descriptions.splice(i, 1);
+    categorys.splice(i, 1);
+    dates.splice(i, 1);
+    urgencyStatusArr.splice(i, 1);
+    loadBacklog();
+}
+
+
+/**
+ * This function is just for testing.. you can clear all arrays with it
+ */
 
 async function deleteAllArrays() {
     await backend.deleteItem('titles');
