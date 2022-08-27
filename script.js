@@ -86,7 +86,7 @@ function sendToBoard() {
 
 function deleteTask(i) {
 
-
+    
 }
 
 async function deleteAllArrays() {
