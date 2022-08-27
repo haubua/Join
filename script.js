@@ -2,7 +2,23 @@ let titles = [];
 let descriptions = [];
 let categorys = [];
 let dates = [];
-let urgencyStatusArr = []
+let urgencyStatusArr = [];
+let users = [
+    {
+        'firstName': 'Robert',
+        'lastName': 'Hahn',
+        'userImg': "./img/profile.png"
+    },
+    {
+        'firstName': 'Arsen',
+        'lastName': 'Tasha',
+        'userImg': "./img/profile.png"
+    },
+    {
+        'firstName': 'Delil',
+        'lastName': 'Duro',
+        'userImg': "./img/profile.jpg"
+    }];
 
 setURL('https://gruppe-298.developerakademie.net/smallest_backend_ever/smallest_backend_ever-master');
 
@@ -23,7 +39,7 @@ function loadBoard() {
 function loadBacklog() {
     backlogHtmlTemplate();
     for (let i = 0; i < descriptions.length; i++) {
-        loadTasksHtmlTemplaste(i);
+        loadTasksHtmlTemplate(i);
     }
     
 }
@@ -47,16 +63,30 @@ async function createNewTask() {
 }
 
 function pushNewTask() {
-    let title = document.getElementById('inputTitel')
+    let title = document.getElementById('inputTitel');
     let description = document.getElementById('inputDescription');
     let category = document.getElementById('inputCategory');
     let date = document.getElementById('inputDate');
     let urgencyStatus = document.getElementById('inputUrgency');
     titles.push(title.value);
     descriptions.push(description.value);
-    categorys.push(category.value)
+    categorys.push(category.value);
     dates.push(date.value);
     urgencyStatusArr.push(urgencyStatus.value);
+    title.value = '';
+    description.value = '';
+    category.value = '';
+    date.value = '';
+    urgencyStatus.value = '';
+}
+
+function sendToBoard() {
+
+}
+
+function deleteTask(i) {
+
+
 }
 
 async function deleteAllArrays() {

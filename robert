@@ -1,4 +1,0 @@
-    <input type="text" id="username">
-    <button onclick="addUser()">Add User</button>
-    <input type="text" id="todo">
-    <button onclick="addTodo()">Add Todo</button>
