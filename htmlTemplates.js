@@ -23,12 +23,11 @@ function boardHtmlTemplate() {
 function todoHTMLTemplate() {
     for (let i = 0; i < board.length; i++) {
         document.getElementById('todo').innerHTML += `
-        <div class="todoBox">
+        <div class="todoBox" draggable="true" ondragstart="drag(event)" >
             <div>Due Date: ${board[i]['dates']}</div>
             <div>${board[i]['titles']}</div>
             <div>Assigned to</div>
-        </div>
-`        
+        </div>`        
     }
    
 }

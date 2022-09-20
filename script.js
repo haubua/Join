@@ -145,3 +145,14 @@ async function deleteAllArrays() {
     await backend.deleteItem('dates');
     await backend.deleteItem('urgencyStatusArr');
 }
+
+
+/**
+ * This function is for drag & drop
+ * 
+ * @param {*} ev 
+ */
+
+function allowDrop(ev) {
+    ev.preventDefault();
+  }
