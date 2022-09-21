@@ -67,6 +67,7 @@ function loadBoard() {
     inProgressHTMLTemplate();
     testingHTMLTemplate();
     doneHTMLTemplate();
+    generateId();
 }
 
 function loadBacklog() {
@@ -123,15 +124,19 @@ function pushToBoardArray(i) {
                 'dates' :dates[i],
                 'urgencyStatusArr': urgencyStatusArr[i],
                 'taskCategory' : taskCategory[i],
-                // 'id' : j
+                'id' : 0
                 }
             )
-        // for (let j = 0; j < board.length; j++) {
-        //     board.push({'id' : j})
-            
-        // }
     spliceBacklog(i);
     setItem();
+    generateId();
+}
+
+function generateId() {
+    for (let j = 0; j < board.length; j++) {
+        board[j]['id'] = j;
+        
+    }
 }
 
 function deleteTask(i) {
