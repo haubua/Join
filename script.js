@@ -1,3 +1,5 @@
+let taskCategory = [];
+let id = [];
 let titles = [];
 let descriptions = [];
 let categorys = [];
@@ -24,6 +26,7 @@ let users = [
         'lastName': 'Duro',
         'userImg': "./img/profile.jpg"
     }];
+let currentDraggedElement;
 
 setURL('https://gruppe-298.developerakademie.net/smallest_backend_ever/smallest_backend_ever-master');
 
@@ -39,6 +42,7 @@ async function init() {
     dates = JSON.parse(backend.getItem('dates')) || [];
     urgencyStatusArr = JSON.parse(backend.getItem('urgencyStatusArr')) || [];
     board = JSON.parse(backend.getItem('board')) || [];
+    taskCategory = JSON.parse(backend.getItem('taskCategory')) || [];
     loadBoard();
 }
 
@@ -54,11 +58,15 @@ async function setItem() {
     await backend.setItem('dates', JSON.stringify(dates));
     await backend.setItem('urgencyStatusArr', JSON.stringify(urgencyStatusArr));
     await backend.setItem('board', JSON.stringify(board))
+    await backend.setItem('taskCategory', JSON.stringify(taskCategory))
 }
 
 function loadBoard() {
     boardHtmlTemplate();
     todoHTMLTemplate();
+    inProgressHTMLTemplate();
+    testingHTMLTemplate();
+    doneHTMLTemplate();
 }
 
 function loadBacklog() {
@@ -66,7 +74,6 @@ function loadBacklog() {
     for (let i = 0; i < descriptions.length; i++) {
         loadTasksHtmlTemplate(i);
     }
-    
 }
 
 function showAddTast() {
@@ -83,6 +90,7 @@ function createNewTask() {
     setItem();
 }
 
+
 /**
  * This function will push each value into an seperate Array
  */
@@ -98,6 +106,7 @@ function pushNewTask() {
     categorys.push(category.value);
     dates.push(date.value);
     urgencyStatusArr.push(urgencyStatus.value);
+    taskCategory.push('todo')
     title.value = '';
     description.value = '';
     category.value = '';
@@ -112,9 +121,15 @@ function pushToBoardArray(i) {
                 'description' :descriptions[i], 
                 'category' :categorys[i], 
                 'dates' :dates[i],
-                'urgencyStatusArr': urgencyStatusArr[i]
+                'urgencyStatusArr': urgencyStatusArr[i],
+                'taskCategory' : taskCategory[i],
+                // 'id' : j
                 }
             )
+        // for (let j = 0; j < board.length; j++) {
+        //     board.push({'id' : j})
+            
+        // }
     spliceBacklog(i);
     setItem();
 }
@@ -130,6 +145,7 @@ function spliceBacklog(i) {
     categorys.splice(i, 1);
     dates.splice(i, 1);
     urgencyStatusArr.splice(i, 1);
+    taskCategory.splice(i, 1);
     loadBacklog();
 }
 
@@ -144,6 +160,7 @@ async function deleteAllArrays() {
     await backend.deleteItem('categorys');
     await backend.deleteItem('dates');
     await backend.deleteItem('urgencyStatusArr');
+    await backend.deleteItem('taskCategory')
 }
 
 
@@ -156,3 +173,13 @@ async function deleteAllArrays() {
 function allowDrop(ev) {
     ev.preventDefault();
   }
+
+function moveTo(category) {
+    board[currentDraggedElement]['taskCategory'] = category;
+    setItem();
+    loadBoard();
+}
+
+function startDragging(id){
+    currentDraggedElement = id;
+}

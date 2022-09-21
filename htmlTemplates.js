@@ -1,35 +1,78 @@
 function boardHtmlTemplate() {
     document.getElementById('rightContainer').innerHTML = `
         <div class="board">
-            <div class="bgColor">
+            <div class="bgColor" ondrop="moveTo('todo')" ondragover="allowDrop(event)">
                 <h2>TO DO</h2>
                 <div id="todo"></div>
             </div>
 
-            <div class="bgColor">
+            <div class="bgColor" ondrop="moveTo('inProgress')" ondragover="allowDrop(event)"> 
                 <h2>IN PROGRESS</h2>
+                <div id="inProgress"></div>
             </div>
 
-            <div class="bgColor">
+            <div class="bgColor" ondrop="moveTo('testing')" ondragover="allowDrop(event)">
                 <h2>TESTING</h2>
+                <div id="testing"></div>
             </div>
 
-            <div class="bgColor">
+            <div class="bgColor" ondrop="moveTo('done')" ondragover="allowDrop(event)">
                 <h2>DONE</h2>
+                <div id="done"></div>
             </div>
         </div>`
 }
 
 function todoHTMLTemplate() {
-    for (let i = 0; i < board.length; i++) {
+    let todoCat = board.filter(t => t['taskCategory'] == 'todo')
+    document.getElementById('todo').innerHTML = '';
+    for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('todo').innerHTML += `
-        <div class="todoBox" draggable="true" ondragstart="drag(event)" >
-            <div>Due Date: ${board[i]['dates']}</div>
-            <div>${board[i]['titles']}</div>
+        <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
+            <div>Due Date: ${todoCat[i]['dates']}</div>
+            <div>${todoCat[i]['titles']}</div>
             <div>Assigned to</div>
-        </div>`        
+        </div>`      
     }
-   
+}
+
+function inProgressHTMLTemplate() {
+    let todoCat = board.filter(t => t['taskCategory'] == 'inProgress')
+    document.getElementById('inProgress').innerHTML = '';
+    for (let i = 0; i < todoCat.length; i++) {
+        document.getElementById('inProgress').innerHTML += `
+        <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
+            <div>Due Date: ${todoCat[i]['dates']}</div>
+            <div>${todoCat[i]['titles']}</div>
+            <div>Assigned to</div>
+        </div>`      
+    }
+}
+
+function testingHTMLTemplate() {
+    let todoCat = board.filter(t => t['taskCategory'] == 'testing')
+    document.getElementById('testing').innerHTML = '';
+    for (let i = 0; i < todoCat.length; i++) {
+        document.getElementById('testing').innerHTML += `
+        <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
+            <div>Due Date: ${todoCat[i]['dates']}</div>
+            <div>${todoCat[i]['titles']}</div>
+            <div>Assigned to</div>
+        </div>`      
+    }
+}
+
+function doneHTMLTemplate() {
+    let todoCat = board.filter(t => t['taskCategory'] == 'done')
+    document.getElementById('done').innerHTML = '';
+    for (let i = 0; i < todoCat.length; i++) {
+        document.getElementById('done').innerHTML += `
+        <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
+            <div>Due Date: ${todoCat[i]['dates']}</div>
+            <div>${todoCat[i]['titles']}</div>
+            <div>Assigned to</div>
+        </div>`      
+    }
 }
 
 
