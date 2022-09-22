@@ -26,7 +26,8 @@ let users = [
         'lastName': 'Duro',
         'userImg': "./img/profile.png"
     }];
-
+let userNameArr = [];
+let userImgArr = [];
 let currentDraggedElement;
 
 
@@ -45,6 +46,8 @@ async function init() {
     urgencyStatusArr = JSON.parse(backend.getItem('urgencyStatusArr')) || [];
     board = JSON.parse(backend.getItem('board')) || [];
     taskCategory = JSON.parse(backend.getItem('taskCategory')) || [];
+    userNameArr = JSON.parse(backend.getItem('userNameArr')) || [];
+    userImgArr = JSON.parse(backend.getItem('userImgArr')) || [];
     loadBoard();
 }
 
@@ -59,8 +62,10 @@ async function setItem() {
     await backend.setItem('categorys', JSON.stringify(categorys));
     await backend.setItem('dates', JSON.stringify(dates));
     await backend.setItem('urgencyStatusArr', JSON.stringify(urgencyStatusArr));
-    await backend.setItem('board', JSON.stringify(board))
-    await backend.setItem('taskCategory', JSON.stringify(taskCategory))
+    await backend.setItem('board', JSON.stringify(board));
+    await backend.setItem('taskCategory', JSON.stringify(taskCategory));
+    await backend.setItem('userNameArr', JSON.stringify(userNameArr));
+    await backend.setItem('userImgArr', JSON.stringify(userImgArr))
 }
 
 function loadBoard() {
@@ -74,20 +79,20 @@ function loadBoard() {
 
 function loadBacklog() {
     backlogHtmlTemplate();
-    
+
     for (let i = 0; i < descriptions.length; i++) {
         loadTasksHtmlTemplate(i);
-        selectedUser(i);
+        // selectedUser(i);
     }
-    
+
 }
 
-function selectedUser(i) {
-    let selectedUserName = users[i]['firstName'];
-    let selectedUserImg = users[i]['userImg'];
-    document.getElementById(`userName${i}`).innerHTML += selectedUserName;
-    document.getElementById(`userImg${i}`).src += selectedUserImg; 
-}
+// function selectedUser(i) {
+//     let selectedUserName = users[i]['firstName'];
+//     let selectedUserImg = users[i]['userImg'];
+//     document.getElementById(`userName${i}`).innerHTML += selectedUserName;
+//     document.getElementById(`userImg${i}`).src += selectedUserImg;
+// }
 
 function showAddTast() {
     addTaskHTMLTemplate();
@@ -128,20 +133,29 @@ function pushNewTask() {
     urgencyStatus.value = '';
 }
 
+function selectAvatar(i) {
+    let boxImg = document.getElementById(`user${i}`);
+    boxImg.classList.toggle('avatarCornize');
+    const userName = users[i]['firstName'];
+    const userImg = users[i]['userImg'];
+    userNameArr.push(userName);
+    userImgArr.push(userImg);
+
+}
 
 
 function pushToBoardArray(i) {
     board.push(
-                {
-                'titles' :titles[i], 
-                'description' :descriptions[i], 
-                'category' :categorys[i], 
-                'dates' :dates[i],
-                'urgencyStatusArr': urgencyStatusArr[i],
-                'taskCategory' : taskCategory[i],
-                'id' : 0
-                }
-            )
+        {
+            'titles': titles[i],
+            'description': descriptions[i],
+            'category': categorys[i],
+            'dates': dates[i],
+            'urgencyStatusArr': urgencyStatusArr[i],
+            'taskCategory': taskCategory[i],
+            'id': 0
+        }
+    )
     spliceBacklog(i);
     setItem();
     generateId();
@@ -150,7 +164,7 @@ function pushToBoardArray(i) {
 function generateId() {
     for (let j = 0; j < board.length; j++) {
         board[j]['id'] = j;
-        
+
     }
 }
 
@@ -166,6 +180,8 @@ function spliceBacklog(i) {
     dates.splice(i, 1);
     urgencyStatusArr.splice(i, 1);
     taskCategory.splice(i, 1);
+    userNameArr.splice(i, 1);
+    userImgArr.splice(i, 1);
     loadBacklog();
 }
 
@@ -192,7 +208,7 @@ async function deleteAllArrays() {
 
 function allowDrop(ev) {
     ev.preventDefault();
-  }
+}
 
 function moveTo(category) {
     board[currentDraggedElement]['taskCategory'] = category;
@@ -200,6 +216,6 @@ function moveTo(category) {
     loadBoard();
 }
 
-function startDragging(id){
+function startDragging(id) {
     currentDraggedElement = id;
 }

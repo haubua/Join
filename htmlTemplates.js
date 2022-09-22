@@ -99,8 +99,8 @@ function loadTasksHtmlTemplate(i){
     document.getElementById('tasks').innerHTML += `
                     <div class="task">
                         <div class="width33 userDiv"id="name">
-                            <div class="userName" id="userName${i}"></div>
-                            <img id="userImg${i}" class="userImg">
+                            <div class="userName" id="userName${i}">${userNameArr[i]}</div>
+                            <img id="userImg${i}" src="${userImgArr[i]}"class="userImg">
                         </div>
                         <div class="width33">
                             ${categorys[i]}
@@ -203,10 +203,5 @@ function renderUsers() {
 }
 
 
-function selectAvatar(i){
-        
-        let  boxImg = document.getElementById(`user${i}`) ;   
-        boxImg.classList.toggle('avatarCornize'); 
- 
-  }
+
 
