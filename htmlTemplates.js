@@ -31,7 +31,7 @@ function todoHTMLTemplate() {
         <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
             <div>Due Date: ${todoCat[i]['dates']}</div>
             <div>${todoCat[i]['titles']}</div>
-            <div>Assigned to</div>
+            <div>Assigned to:</div>
         </div>`      
     }
 }
@@ -98,9 +98,9 @@ function backlogHtmlTemplate() {
 function loadTasksHtmlTemplate(i){
     document.getElementById('tasks').innerHTML += `
                     <div class="task">
-                        <div class="width33"id="name">
-                            <div>"Assigned to"</div>
-                            <div>"Assigned to"</div>
+                        <div class="width33 userDiv"id="name">
+                            <div class="userName" id="userName${i}"></div>
+                            <img id="userImg${i}" class="userImg">
                         </div>
                         <div class="width33">
                             ${categorys[i]}
@@ -164,14 +164,14 @@ function addTaskHTMLTemplate() {
                 </div>
                 <div>
                     <p>ASSIGNED TO</p>
-                    <div id="avatarPicker">
-                        <img class="avatarPicker" src="./img/profile.png">
-                        <img src="./img/icon plus.png">
+                    <div id="avatarPicker" class="avatarPickerMain">
+                        <div id="usersAccount"></div>
+                        <img id="addUser" onclick="addUser()" class="addButtonAvatar" src="./img/icon plus.png">
                     </div>
                 </div>
                 <div class="buttons">
                     <button type="reset" id="cancel">Cancel</button>
-                    <button type="submit" id="create">Create Task</button>
+                    <button type="submit" onclick="assignedUser()" id="create">Create Task</button>
                 </div>
             </div>
         </form>
@@ -186,3 +186,27 @@ function showHelpHtmlTemplate() {
     
     `
 }
+
+function renderUsers() {
+    let usersAccount = document.getElementById("usersAccount");
+    usersAccount.innerHTML = '';
+    for (let i=0; i<users.length; i++){
+        const userName = users[i]['firstName'];
+        const userImg = users[i]['userImg'];
+        usersAccount.innerHTML += `
+        <div class="avatarbox">
+                <p class="userName">${userName}</p>  
+                <img required onclick="selectAvatar(${i})" class="profile profileBorder" id='user${i}' src='${userImg}'>
+        </div>`
+        
+    }
+}
+
+
+function selectAvatar(i){
+        
+        let  boxImg = document.getElementById(`user${i}`) ;   
+        boxImg.classList.toggle('avatarCornize'); 
+ 
+  }
+

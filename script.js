@@ -24,9 +24,11 @@ let users = [
     {
         'firstName': 'Delil',
         'lastName': 'Duro',
-        'userImg': "./img/profile.jpg"
+        'userImg': "./img/profile.png"
     }];
+
 let currentDraggedElement;
+
 
 setURL('https://gruppe-298.developerakademie.net/smallest_backend_ever/smallest_backend_ever-master');
 
@@ -72,13 +74,24 @@ function loadBoard() {
 
 function loadBacklog() {
     backlogHtmlTemplate();
+    
     for (let i = 0; i < descriptions.length; i++) {
         loadTasksHtmlTemplate(i);
+        selectedUser(i);
     }
+    
+}
+
+function selectedUser(i) {
+    let selectedUserName = users[i]['firstName'];
+    let selectedUserImg = users[i]['userImg'];
+    document.getElementById(`userName${i}`).innerHTML += selectedUserName;
+    document.getElementById(`userImg${i}`).src += selectedUserImg; 
 }
 
 function showAddTast() {
     addTaskHTMLTemplate();
+    renderUsers();
 }
 
 function showHelp() {
@@ -107,13 +120,15 @@ function pushNewTask() {
     categorys.push(category.value);
     dates.push(date.value);
     urgencyStatusArr.push(urgencyStatus.value);
-    taskCategory.push('todo')
+    taskCategory.push('todo');
     title.value = '';
     description.value = '';
     category.value = '';
     date.value = '';
     urgencyStatus.value = '';
 }
+
+
 
 function pushToBoardArray(i) {
     board.push(
