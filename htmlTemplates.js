@@ -169,7 +169,7 @@ function addTaskHTMLTemplate() {
                 </div>
                 <div class="buttons">
                     <button type="reset" id="cancel">Cancel</button>
-                    <button type="submit"  id="create">Create Task</button>
+                    <button type="submit" id="create">Create Task</button>
                 </div>
             </div>
         </form>
