@@ -1,10 +1,6 @@
 let taskCategory = [];
 let id = [];
-let titles = [];
-let descriptions = [];
-let categorys = [];
-let dates = [];
-let urgencyStatusArr = [];
+let backlog = [];
 let board = [];
 let todo = [];
 let inProgress = [];
@@ -39,11 +35,7 @@ setURL('https://gruppe-298.developerakademie.net/smallest_backend_ever/smallest_
 
 async function init() {
     await downloadFromServer();
-    titles = JSON.parse(backend.getItem('titles')) || [];
-    descriptions = JSON.parse(backend.getItem('descriptions')) || [];
-    categorys = JSON.parse(backend.getItem('categorys')) || [];
-    dates = JSON.parse(backend.getItem('dates')) || [];
-    urgencyStatusArr = JSON.parse(backend.getItem('urgencyStatusArr')) || [];
+    backlog = JSON.parse(backend.getItem('backlog')) || [];
     board = JSON.parse(backend.getItem('board')) || [];
     taskCategory = JSON.parse(backend.getItem('taskCategory')) || [];
     userNameArr = JSON.parse(backend.getItem('userNameArr')) || [];
@@ -57,11 +49,7 @@ async function init() {
  */
 
 async function setItem() {
-    await backend.setItem('titles', JSON.stringify(titles));
-    await backend.setItem('descriptions', JSON.stringify(descriptions));
-    await backend.setItem('categorys', JSON.stringify(categorys));
-    await backend.setItem('dates', JSON.stringify(dates));
-    await backend.setItem('urgencyStatusArr', JSON.stringify(urgencyStatusArr));
+    await backend.setItem('backlog', JSON.stringify(backlog));
     await backend.setItem('board', JSON.stringify(board));
     await backend.setItem('taskCategory', JSON.stringify(taskCategory));
     await backend.setItem('userNameArr', JSON.stringify(userNameArr));
@@ -79,20 +67,11 @@ function loadBoard() {
 
 function loadBacklog() {
     backlogHtmlTemplate();
-
-    for (let i = 0; i < descriptions.length; i++) {
+    for (let i = 0; i < backlog.length; i++) {
         loadTasksHtmlTemplate(i);
-        // selectedUser(i);
     }
-
 }
 
-// function selectedUser(i) {
-//     let selectedUserName = users[i]['firstName'];
-//     let selectedUserImg = users[i]['userImg'];
-//     document.getElementById(`userName${i}`).innerHTML += selectedUserName;
-//     document.getElementById(`userImg${i}`).src += selectedUserImg;
-// }
 
 function showAddTast() {
     addTaskHTMLTemplate();
@@ -101,7 +80,6 @@ function showAddTast() {
 
 function showHelp() {
     showHelpHtmlTemplate();
-
 }
 
 function createNewTask() {
@@ -120,18 +98,28 @@ function pushNewTask() {
     let category = document.getElementById('inputCategory');
     let date = document.getElementById('inputDate');
     let urgencyStatus = document.getElementById('inputUrgency');
-    titles.push(title.value);
-    descriptions.push(description.value);
-    categorys.push(category.value);
-    dates.push(date.value);
-    urgencyStatusArr.push(urgencyStatus.value);
-    taskCategory.push('todo');
+    backlog.push(
+        {
+            'titles': title.value,
+            'description': description.value,
+            'category': category.value,
+            'dates': date.value,
+            'urgencyStatus': urgencyStatus.value,
+            'taskCategory': 'todo',
+    }
+    )
+    clearInput(title, description, category, date, urgencyStatus);
+}
+
+
+function clearInput(title, description, category, date, urgencyStatus){
     title.value = '';
     description.value = '';
     category.value = '';
     date.value = '';
     urgencyStatus.value = '';
 }
+
 
 function selectAvatar(i) {
     let boxImg = document.getElementById(`user${i}`);
@@ -140,19 +128,20 @@ function selectAvatar(i) {
     const userImg = users[i]['userImg'];
     userNameArr.push(userName);
     userImgArr.push(userImg);
-
 }
 
 
 function pushToBoardArray(i) {
     board.push(
         {
-            'titles': titles[i],
-            'description': descriptions[i],
-            'category': categorys[i],
-            'dates': dates[i],
-            'urgencyStatusArr': urgencyStatusArr[i],
-            'taskCategory': taskCategory[i],
+            'titles': backlog[i]['titles'],
+            'description': backlog[i]['description'],
+            'category': backlog[i]['category'],
+            'dates': backlog[i]['dates'],
+            'urgencyStatus': backlog[i]['urgencyStatus'],
+            'taskCategory': backlog[i]['taskCategory'],
+            'userName' : userNameArr[i],
+            'userImg' : userImgArr[i],
             'id': 0
         }
     )
@@ -161,24 +150,22 @@ function pushToBoardArray(i) {
     generateId();
 }
 
+
 function generateId() {
     for (let j = 0; j < board.length; j++) {
         board[j]['id'] = j;
-
     }
 }
+
 
 function deleteTask(i) {
     spliceBacklog(i);
     setItem();
 }
 
+
 function spliceBacklog(i) {
-    titles.splice(i, 1);
-    descriptions.splice(i, 1);
-    categorys.splice(i, 1);
-    dates.splice(i, 1);
-    urgencyStatusArr.splice(i, 1);
+    backlog.splice(i, 1);
     taskCategory.splice(i, 1);
     userNameArr.splice(i, 1);
     userImgArr.splice(i, 1);

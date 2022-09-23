@@ -31,7 +31,7 @@ function todoHTMLTemplate() {
         <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
             <div>Due Date: ${todoCat[i]['dates']}</div>
             <div>${todoCat[i]['titles']}</div>
-            <div>Assigned to:</div>
+            <div>Assigned to: ${todoCat[i]['userName']}</div>
         </div>`      
     }
 }
@@ -44,7 +44,7 @@ function inProgressHTMLTemplate() {
         <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
             <div>Due Date: ${todoCat[i]['dates']}</div>
             <div>${todoCat[i]['titles']}</div>
-            <div>Assigned to</div>
+            <div>Assigned to: ${todoCat[i]['userName']}</div>
         </div>`      
     }
 }
@@ -57,7 +57,7 @@ function testingHTMLTemplate() {
         <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
             <div>Due Date: ${todoCat[i]['dates']}</div>
             <div>${todoCat[i]['titles']}</div>
-            <div>Assigned to</div>
+            <div>Assigned to: ${todoCat[i]['userName']}</div>
         </div>`      
     }
 }
@@ -70,12 +70,10 @@ function doneHTMLTemplate() {
         <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
             <div>Due Date: ${todoCat[i]['dates']}</div>
             <div>${todoCat[i]['titles']}</div>
-            <div>Assigned to</div>
+            <div>Assigned to: ${todoCat[i]['userName']}</div>
         </div>`      
     }
 }
-
-
 
 function backlogHtmlTemplate() {
     document.getElementById('rightContainer').innerHTML = `
@@ -103,10 +101,10 @@ function loadTasksHtmlTemplate(i){
                             <img id="userImg${i}" src="${userImgArr[i]}"class="userImg">
                         </div>
                         <div class="width33">
-                            ${categorys[i]}
+                            ${backlog[i]['category']}
                         </div>
                         <div class="width33 backlogImg">
-                            ${descriptions[i]}
+                            ${backlog[i]['description']}
                             <div>
                                 <img class="backlogBtn" id="sendTo${i}" onclick="pushToBoardArray(${i})" src="./img/sendTo.jpg">
                                 <img class="backlogBtn" id="delete${i}" onclick="deleteTask(${i})" src="./img/trash.jpg">
@@ -171,7 +169,7 @@ function addTaskHTMLTemplate() {
                 </div>
                 <div class="buttons">
                     <button type="reset" id="cancel">Cancel</button>
-                    <button type="submit" onclick="assignedUser()" id="create">Create Task</button>
+                    <button type="submit"  id="create">Create Task</button>
                 </div>
             </div>
         </form>
