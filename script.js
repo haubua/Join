@@ -69,7 +69,15 @@ function loadBacklog() {
     backlogHtmlTemplate();
     for (let i = 0; i < backlog.length; i++) {
         loadTasksHtmlTemplate(i);
+        renderUserImages(i);
     }
+}
+
+function renderUserImages(i){
+    for (let j = 0; j < backlog[i]['userImages'].length; j++) {
+        document.getElementById(`userImg${i}`).innerHTML += `
+        <img  class="userImg" src="${backlog[i]['userImages'][j]}">`
+    }    
 }
 
 
@@ -106,13 +114,20 @@ function pushNewTask() {
             'dates': date.value,
             'urgencyStatus': urgencyStatus.value,
             'taskCategory': 'todo',
-    }
+            'userNames': userNameArr,
+            'userImages': userImgArr
+        }
     )
+    userNameArr = [];
+    userImgArr = [];
     clearInput(title, description, category, date, urgencyStatus);
+    document.getElementById(`user${0}`).classList.remove('avatarCornize')
+    document.getElementById(`user${1}`).classList.remove('avatarCornize')
+    document.getElementById(`user${2}`).classList.remove('avatarCornize')
 }
 
 
-function clearInput(title, description, category, date, urgencyStatus){
+function clearInput(title, description, category, date, urgencyStatus) {
     title.value = '';
     description.value = '';
     category.value = '';
@@ -123,11 +138,21 @@ function clearInput(title, description, category, date, urgencyStatus){
 
 function selectAvatar(i) {
     let boxImg = document.getElementById(`user${i}`);
-    boxImg.classList.toggle('avatarCornize');
+
     const userName = users[i]['firstName'];
     const userImg = users[i]['userImg'];
-    userNameArr.push(userName);
-    userImgArr.push(userImg);
+    let index = userNameArr.indexOf(userName)
+    if (index == -1) {
+        userNameArr.push(userName)
+        userImgArr.push(userImg);
+        boxImg.classList.add('avatarCornize');
+    } else {
+        userNameArr.splice(userName);
+        userImgArr.splice(userImg);
+        document.getElementById(`user${0}`).classList.remove('avatarCornize')
+        document.getElementById(`user${1}`).classList.remove('avatarCornize')
+        document.getElementById(`user${2}`).classList.remove('avatarCornize')
+    }
 }
 
 
@@ -140,8 +165,8 @@ function pushToBoardArray(i) {
             'dates': backlog[i]['dates'],
             'urgencyStatus': backlog[i]['urgencyStatus'],
             'taskCategory': backlog[i]['taskCategory'],
-            'userName' : userNameArr[i],
-            'userImg' : userImgArr[i],
+            'userName': backlog[i]['userNames'],
+            'userImg': backlog[i]['userImages'],
             'id': 0
         }
     )

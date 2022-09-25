@@ -97,8 +97,9 @@ function loadTasksHtmlTemplate(i){
     document.getElementById('tasks').innerHTML += `
                     <div class="task">
                         <div class="width33 userDiv"id="name">
-                            <div class="userName" id="userName${i}">${userNameArr[i]}</div>
-                            <img id="userImg${i}" src="${userImgArr[i]}"class="userImg">
+                            <div class="userName" id="userName${i}">${backlog[i]['userNames']}</div>
+                            <div id="userImg${i}"></div>
+                            
                         </div>
                         <div class="width33">
                             ${backlog[i]['category']}
@@ -111,7 +112,10 @@ function loadTasksHtmlTemplate(i){
                             </div>
                         </div>
                     </div>`
+                    
 }
+
+
 
 
 function addTaskHTMLTemplate() {
