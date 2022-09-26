@@ -24,7 +24,7 @@ function boardHtmlTemplate() {
 }
 
 function todoHTMLTemplate() {
-    let todoCat = board.filter(t => t['taskCategory'] == 'todo')
+    let todoCat = board.filter(t => t['taskCategory'] == 'todo');
     document.getElementById('todo').innerHTML = '';
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('todo').innerHTML += `
@@ -37,7 +37,7 @@ function todoHTMLTemplate() {
 }
 
 function inProgressHTMLTemplate() {
-    let todoCat = board.filter(t => t['taskCategory'] == 'inProgress')
+    let todoCat = board.filter(t => t['taskCategory'] == 'inProgress');
     document.getElementById('inProgress').innerHTML = '';
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('inProgress').innerHTML += `
@@ -50,7 +50,7 @@ function inProgressHTMLTemplate() {
 }
 
 function testingHTMLTemplate() {
-    let todoCat = board.filter(t => t['taskCategory'] == 'testing')
+    let todoCat = board.filter(t => t['taskCategory'] == 'testing');
     document.getElementById('testing').innerHTML = '';
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('testing').innerHTML += `
@@ -63,7 +63,7 @@ function testingHTMLTemplate() {
 }
 
 function doneHTMLTemplate() {
-    let todoCat = board.filter(t => t['taskCategory'] == 'done')
+    let todoCat = board.filter(t => t['taskCategory'] == 'done');
     document.getElementById('done').innerHTML = '';
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('done').innerHTML += `
@@ -101,14 +101,17 @@ function loadTasksHtmlTemplate(i){
                             <div id="userImg${i}"></div>
                             
                         </div>
-                        <div class="width33">
+                        <div id="category${i}" class="width33">
                             ${backlog[i]['category']}
                         </div>
                         <div class="width33 backlogImg">
-                            ${backlog[i]['description']}
-                            <div>
+                            <div  id="description${i}">
+                                ${backlog[i]['description']}            
+                            </div>
+                            <div id="backlogBtn${i}">
                                 <img class="backlogBtn" id="sendTo${i}" onclick="pushToBoardArray(${i})" src="./img/sendTo.jpg">
                                 <img class="backlogBtn" id="delete${i}" onclick="deleteTask(${i})" src="./img/trash.jpg">
+                                <img class="backlogBtn" id="edit${i}" onclick="editBacklog(${i})" src="./img/edit.png">
                             </div>
                         </div>
                     </div>`
@@ -204,6 +207,46 @@ function renderUsers() {
     }
 }
 
+function editBacklog(i) {
+    const category = document.getElementById(`category${i}`);
+    const description = document.getElementById(`description${i}`);
+    category.contentEditable = true;
+    description.contentEditable = true;
+     
+    document.getElementById(`backlogBtn${i}`).innerHTML = `
+        <div id="${i}">
+            <button type="reset" onclick="resetBacklog(${i})">Cancel</button>
+            <button type="submit" onclick="saveBacklog(${i})">Save</button>
+        </div>
+    `
+}
 
+function resetBacklog(i) {
+    const category = document.getElementById(`category${i}`);
+    const description = document.getElementById(`description${i}`);
+    category.contentEditable = false;
+    description.contentEditable = false;
+    document.getElementById(`backlogBtn${i}`).innerHTML = `
+        <img class="backlogBtn" id="sendTo${i}" onclick="pushToBoardArray(${i})" src="./img/sendTo.jpg">
+        <img class="backlogBtn" id="delete${i}" onclick="deleteTask(${i})" src="./img/trash.jpg">
+        <img class="backlogBtn" id="edit${i}" onclick="editBacklog(${i})" src="./img/edit.png">
+    `
+    category.innerHTML = backlog[i].category;
+    description.innerHTML = backlog[i].description;
+}
+
+function saveBacklog(i) {
+    const category = document.getElementById(`category${i}`);
+    const description = document.getElementById(`description${i}`);
+    category.contentEditable = false;
+    description.contentEditable = false;
+    document.getElementById(`backlogBtn${i}`).innerHTML = `
+        <img class="backlogBtn" id="sendTo${i}" onclick="pushToBoardArray(${i})" src="./img/sendTo.jpg">
+        <img class="backlogBtn" id="delete${i}" onclick="deleteTask(${i})" src="./img/trash.jpg">
+        <img class="backlogBtn" id="edit${i}" onclick="editBacklog(${i})" src="./img/edit.png">
+    `
+    backlog[i].category = category.innerHTML;
+    backlog[i].description = description.innerHTML;
+}
 
 

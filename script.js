@@ -27,6 +27,7 @@ let userImgArr = [];
 let currentDraggedElement;
 
 
+
 setURL('https://gruppe-298.developerakademie.net/smallest_backend_ever/smallest_backend_ever-master');
 
 /**
