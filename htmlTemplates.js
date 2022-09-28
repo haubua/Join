@@ -29,7 +29,11 @@ function todoHTMLTemplate() {
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('todo').innerHTML += `
         <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
-            <div>Due Date: ${todoCat[i]['dates']}</div>
+        <div class="taskTopline">
+                <div>Due Date: ${todoCat[i]['dates']}</div>
+                <img class="boardBtn" onclick="deleteBoardTask(${todoCat[i]['id']})" src="./img/trash.jpg">
+        </div>
+            
             <div>${todoCat[i]['titles']}</div>
             <div>Assigned to: ${todoCat[i]['userName']}</div>
         </div>`      
@@ -42,7 +46,10 @@ function inProgressHTMLTemplate() {
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('inProgress').innerHTML += `
         <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
-            <div>Due Date: ${todoCat[i]['dates']}</div>
+        <div class="taskTopline">
+        <div>Due Date: ${todoCat[i]['dates']}</div>
+        <img class="boardBtn" onclick="deleteBoardTask(${todoCat[i]['id']})" src="./img/trash.jpg">
+</div>
             <div>${todoCat[i]['titles']}</div>
             <div>Assigned to: ${todoCat[i]['userName']}</div>
         </div>`      
@@ -55,7 +62,10 @@ function testingHTMLTemplate() {
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('testing').innerHTML += `
         <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
-            <div>Due Date: ${todoCat[i]['dates']}</div>
+        <div class="taskTopline">
+        <div>Due Date: ${todoCat[i]['dates']}</div>
+        <img class="boardBtn" onclick="deleteBoardTask(${todoCat[i]['id']})" src="./img/trash.jpg">
+</div>
             <div>${todoCat[i]['titles']}</div>
             <div>Assigned to: ${todoCat[i]['userName']}</div>
         </div>`      
@@ -68,7 +78,10 @@ function doneHTMLTemplate() {
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('done').innerHTML += `
         <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
-            <div>Due Date: ${todoCat[i]['dates']}</div>
+        <div class="taskTopline">
+        <div>Due Date: ${todoCat[i]['dates']}</div>
+        <img class="boardBtn" onclick="deleteBoardTask(${todoCat[i]['id']})" src="./img/trash.jpg">
+</div>
             <div>${todoCat[i]['titles']}</div>
             <div>Assigned to: ${todoCat[i]['userName']}</div>
         </div>`      
@@ -210,8 +223,14 @@ function renderUsers() {
 function editBacklog(i) {
     const category = document.getElementById(`category${i}`);
     const description = document.getElementById(`description${i}`);
-    category.contentEditable = true;
-    description.contentEditable = true;
+    category.innerHTML = `<select id="inputCategory${i}"class="inputFieldSize" required="">
+    <option value="" disabled="" selected="" hidden="">${backlog[i]['category']}</option>
+    <option value="Sale">Sale</option>
+    <option value="Marketing">Marketing</option>
+    <option value="Product">Product</option>
+    <option value="Distribution">Distribution</option>
+</select>`
+description.contentEditable = true;
      
     document.getElementById(`backlogBtn${i}`).innerHTML = `
         <div id="${i}">
@@ -219,34 +238,36 @@ function editBacklog(i) {
             <button type="submit" onclick="saveBacklog(${i})">Save</button>
         </div>
     `
+
 }
 
 function resetBacklog(i) {
     const category = document.getElementById(`category${i}`);
     const description = document.getElementById(`description${i}`);
-    category.contentEditable = false;
+   
     description.contentEditable = false;
     document.getElementById(`backlogBtn${i}`).innerHTML = `
         <img class="backlogBtn" id="sendTo${i}" onclick="pushToBoardArray(${i})" src="./img/sendTo.jpg">
         <img class="backlogBtn" id="delete${i}" onclick="deleteTask(${i})" src="./img/trash.jpg">
         <img class="backlogBtn" id="edit${i}" onclick="editBacklog(${i})" src="./img/edit.png">
     `
-    category.innerHTML = backlog[i].category;
-    description.innerHTML = backlog[i].description;
+   loadBacklog();
 }
 
 function saveBacklog(i) {
-    const category = document.getElementById(`category${i}`);
+    const category = document.getElementById(`inputCategory${i}`);
     const description = document.getElementById(`description${i}`);
-    category.contentEditable = false;
+   
     description.contentEditable = false;
     document.getElementById(`backlogBtn${i}`).innerHTML = `
         <img class="backlogBtn" id="sendTo${i}" onclick="pushToBoardArray(${i})" src="./img/sendTo.jpg">
         <img class="backlogBtn" id="delete${i}" onclick="deleteTask(${i})" src="./img/trash.jpg">
         <img class="backlogBtn" id="edit${i}" onclick="editBacklog(${i})" src="./img/edit.png">
     `
-    backlog[i].category = category.innerHTML;
-    backlog[i].description = description.innerHTML;
+    backlog[i].category = category.value;
+    backlog[i].description = description.innerText;
+    setItem();
+    loadBacklog();
 }
 
 

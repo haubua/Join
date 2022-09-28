@@ -126,8 +126,18 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
-    border-radius: 7px;
-    
+    border-radius: 7px;   
+}
+
+.taskTopline {
+    display: flex;
+    justify-content: space-between;
+}
+
+.boardBtn {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
 }
 
 .name {

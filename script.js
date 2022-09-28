@@ -203,13 +203,10 @@ function spliceBacklog(i) {
  * This function is just for testing.. you can clear all arrays with it
  */
 
-async function deleteAllArrays() {
-    await backend.deleteItem('titles');
-    await backend.deleteItem('descriptions');
-    await backend.deleteItem('categorys');
-    await backend.deleteItem('dates');
-    await backend.deleteItem('urgencyStatusArr');
-    await backend.deleteItem('taskCategory')
+async function deleteBoardTask(i) {
+    board.splice(i, 1)
+    setItem();
+    loadBoard();
 }
 
 
