@@ -129,6 +129,16 @@ body {
     border-radius: 7px;   
 }
 
+.popup {
+    position: absolute;
+    min-height: 200px;
+    width: 420px;
+    top:20vh;
+    left: 40vw;
+    background-color: aquamarine;
+    padding: 10px;
+}
+
 .taskTopline {
     display: flex;
     justify-content: space-between;

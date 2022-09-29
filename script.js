@@ -189,6 +189,30 @@ function deleteTask(i) {
     setItem();
 }
 
+function taskPopup(i){
+    document.getElementById('board').innerHTML += `
+                                                <div class="popup">
+                                                    <div class="taskTopline">
+                                                        <div>Due Date: ${board[i]['dates']}</div>
+                                                        <img class="boardBtn" onclick="deleteBoardTask(${board[i]['id']})" src="./img/trash.jpg">
+                                                    </div>
+                                                    <div>Category: ${board[i]['category']}</div>
+                                                    <div>Status: ${board[i]['urgencyStatus']}</div>
+                                                    <div>Title: ${board[i]['titles']}</div>
+                                                    <div>Description: ${board[i]['description']}
+                                                    <div>Assigned to: ${board[i]['userName']}</div>
+                                                    <div id="boardUserImg${i}"</div>
+                                                </div>`
+    renderBoardUserImages(i)
+}
+
+function renderBoardUserImages(i){
+    for (let j = 0; j < board[i]['userImg'].length; j++) {
+        document.getElementById(`boardUserImg${i}`).innerHTML += `
+        <img  class="userImg" src="${board[i]['userImg'][j]}">`
+    }    
+}
+
 
 function spliceBacklog(i) {
     backlog.splice(i, 1);

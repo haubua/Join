@@ -1,6 +1,6 @@
 function boardHtmlTemplate() {
     document.getElementById('rightContainer').innerHTML = `
-        <div class="board">
+        <div class="board" id="board">
             <div class="bgColor" ondrop="moveTo('todo')" ondragover="allowDrop(event)">
                 <h2>TO DO</h2>
                 <div id="todo"></div>
@@ -28,7 +28,7 @@ function todoHTMLTemplate() {
     document.getElementById('todo').innerHTML = '';
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('todo').innerHTML += `
-        <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
+        <div class="todoBox" draggable="true" onclick="taskPopup(${todoCat[i]['id']})" ondragstart="startDragging(${todoCat[i]['id']})" >
         <div class="taskTopline">
                 <div>Due Date: ${todoCat[i]['dates']}</div>
                 <img class="boardBtn" onclick="deleteBoardTask(${todoCat[i]['id']})" src="./img/trash.jpg">
@@ -45,7 +45,7 @@ function inProgressHTMLTemplate() {
     document.getElementById('inProgress').innerHTML = '';
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('inProgress').innerHTML += `
-        <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
+        <div class="todoBox" draggable="true" onclick="taskPopup(${todoCat[i]['id']})" ondragstart="startDragging(${todoCat[i]['id']})" >
         <div class="taskTopline">
         <div>Due Date: ${todoCat[i]['dates']}</div>
         <img class="boardBtn" onclick="deleteBoardTask(${todoCat[i]['id']})" src="./img/trash.jpg">
@@ -61,7 +61,7 @@ function testingHTMLTemplate() {
     document.getElementById('testing').innerHTML = '';
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('testing').innerHTML += `
-        <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
+        <div class="todoBox" draggable="true" onclick="taskPopup(${todoCat[i]['id']})" ondragstart="startDragging(${todoCat[i]['id']})" >
         <div class="taskTopline">
         <div>Due Date: ${todoCat[i]['dates']}</div>
         <img class="boardBtn" onclick="deleteBoardTask(${todoCat[i]['id']})" src="./img/trash.jpg">
@@ -77,7 +77,7 @@ function doneHTMLTemplate() {
     document.getElementById('done').innerHTML = '';
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('done').innerHTML += `
-        <div class="todoBox" draggable="true" ondragstart="startDragging(${todoCat[i]['id']})" >
+        <div class="todoBox" draggable="true" onclick="taskPopup(${todoCat[i]['id']})" ondragstart="startDragging(${todoCat[i]['id']})" >
         <div class="taskTopline">
         <div>Due Date: ${todoCat[i]['dates']}</div>
         <img class="boardBtn" onclick="deleteBoardTask(${todoCat[i]['id']})" src="./img/trash.jpg">
