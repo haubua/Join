@@ -30,12 +30,12 @@ function todoHTMLTemplate() {
         document.getElementById('todo').innerHTML += `
         <div class="todoBox" draggable="true" onclick="taskPopup(${todoCat[i]['id']})" ondragstart="startDragging(${todoCat[i]['id']})" >
         <div class="taskTopline">
-                <div>Due Date: ${todoCat[i]['dates']}</div>
+                <div>Due Date: <b>${todoCat[i]['dates']}</b></div>
                 <img class="boardBtn" onclick="deleteBoardTask(${todoCat[i]['id']})" src="./img/trash.jpg">
         </div>
             
-            <div>${todoCat[i]['titles']}</div>
-            <div>Assigned to: ${todoCat[i]['userName']}</div>
+            <div><b>${todoCat[i]['titles']}</b></div>
+            <div>Assigned to: <b>${todoCat[i]['userName']}</b></div>
         </div>`      
     }
 }
@@ -200,7 +200,29 @@ function addTaskHTMLTemplate() {
 
 function showHelpHtmlTemplate() {
     document.getElementById('rightContainer').innerHTML = `
-    
+    <div class="headHelpSection">
+        <h2>Help</h2>
+        <p class="headHelp2ndRow">Learning Management System Project</p>
+    </div>
+    <div class="helpSection">
+            <h3>
+                In the "Add task" tab, fill in the specified fields. 
+                Then click the "Create task" button to create the task. 
+                <p>Don't forget to assign your task to the right user.</p>
+            </h3>
+            <h3>
+                After that your task will now appear in the tab "Backlog". 
+                There you can click on a task to edit it or to move it to the board.
+            </h3>
+            <h3>
+                Once the task is moved to the board, you can now see the task in the tab "Board",
+                where it is now in the column "To Do".
+            </h3>
+            <h3>
+                You can now drag the task to one of the other columns ("In progress", "Testing" or "Done") 
+                <p>and drop it there to show the progress you've made so far with the specific task.</p>
+            </h3>
+    </div>
     
     `
 }

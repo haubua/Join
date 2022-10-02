@@ -74,8 +74,11 @@ body {
 }
 
 .todoBox {
-    border: 1px solid gray;
+    border: 1px solid blue;
+    border-left: 4px solid blue;
     margin: 8px 0px;
+    border-radius: 6px;
+    background-color: lightblue;
 }
 
 /****   Backlog     ****/
@@ -173,11 +176,35 @@ body {
 }
 
 .headAddTask {
-    margin: 16px;
+    margin-top: 16px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    margin-left: 32px;
+}
+
+.headHelpSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 32px;
+}
+
+.headHelp2ndRow {
+    font-size: 16px;
+    color: #1818d7;
+    font-weight: 600;
+   padding-top: -16px !important;
+}
+
+.helpSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 32px;
+    background-color: #F0F0F0;
 }
 
 form {
@@ -285,6 +312,10 @@ form {
     cursor: pointer;
     font-size: 20px;
     padding: 8px;
+}
+
+.d-none {
+    display: none;
 }
 
 
