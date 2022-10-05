@@ -10,7 +10,7 @@ let users = [
     {
         'firstName': 'Robert',
         'lastName': 'Hahn',
-        'userImg': "./img/profile.png"
+        'userImg': "./img/robert.jpeg"
     },
     {
         'firstName': 'Arsen',
@@ -206,11 +206,13 @@ function taskPopup(i){
             <div>Assigned to: ${board[i]['userName']}</div>
             <div id="boardUserImg${i}"</div>
         </div>`
-    renderBoardUserImages(i)
+    document.getElementById('notClickabel').classList.add('notClickabel');
+    renderBoardUserImages(i);
 }
 
 function closePopup() {
     document.getElementById('board').classList.add('d-none');
+    document.getElementById('notClickabel').classList.remove('notClickabel');
     loadBoard();
 }
 
@@ -220,7 +222,6 @@ function renderBoardUserImages(i){
         <img  class="userImg" src="${board[i]['userImg'][j]}">`
     }    
 }
-
 
 function spliceBacklog(i) {
     backlog.splice(i, 1);

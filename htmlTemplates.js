@@ -1,6 +1,7 @@
 function boardHtmlTemplate() {
     document.getElementById('rightContainer').innerHTML = `
         <div class="board" id="board">
+            <div id="notClickabel"></div>
             <div class="bgColor" ondrop="moveTo('todo')" ondragover="allowDrop(event)">
                 <h2>TO DO</h2>
                 <div id="todo"></div>
@@ -45,7 +46,8 @@ function inProgressHTMLTemplate() {
     document.getElementById('inProgress').innerHTML = '';
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('inProgress').innerHTML += `
-        <div class="todoBox" draggable="true" onclick="taskPopup(${todoCat[i]['id']})" ondragstart="startDragging(${todoCat[i]['id']})" >
+        <div class="todoBox" draggable="true" onclick="taskPopup(${todoCat[i]['id']})" ondragstart="startDragging(${todoCat[i]['id']})" style="
+        background-color: #ef3939;">
         <div class="taskTopline">
         <div>Due Date: ${todoCat[i]['dates']}</div>
         <img class="boardBtn" onclick="deleteBoardTask(${todoCat[i]['id']})" src="./img/trash.jpg">
@@ -61,7 +63,8 @@ function testingHTMLTemplate() {
     document.getElementById('testing').innerHTML = '';
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('testing').innerHTML += `
-        <div class="todoBox" draggable="true" onclick="taskPopup(${todoCat[i]['id']})" ondragstart="startDragging(${todoCat[i]['id']})" >
+        <div class="todoBox" draggable="true" onclick="taskPopup(${todoCat[i]['id']})" ondragstart="startDragging(${todoCat[i]['id']})" style="
+        background-color: orange">
         <div class="taskTopline">
         <div>Due Date: ${todoCat[i]['dates']}</div>
         <img class="boardBtn" onclick="deleteBoardTask(${todoCat[i]['id']})" src="./img/trash.jpg">
@@ -77,7 +80,8 @@ function doneHTMLTemplate() {
     document.getElementById('done').innerHTML = '';
     for (let i = 0; i < todoCat.length; i++) {
         document.getElementById('done').innerHTML += `
-        <div class="todoBox" draggable="true" onclick="taskPopup(${todoCat[i]['id']})" ondragstart="startDragging(${todoCat[i]['id']})" >
+        <div class="todoBox" draggable="true" onclick="taskPopup(${todoCat[i]['id']})" ondragstart="startDragging(${todoCat[i]['id']})" style="
+        background-color: #22c90a;">
         <div class="taskTopline">
         <div>Due Date: ${todoCat[i]['dates']}</div>
         <img class="boardBtn" onclick="deleteBoardTask(${todoCat[i]['id']})" src="./img/trash.jpg">
@@ -121,7 +125,7 @@ function loadTasksHtmlTemplate(i){
                             <div  id="description${i}">
                                 ${backlog[i]['description']}            
                             </div>
-                            <div id="backlogBtn${i}">
+                            <div id="backlogBtn${i}" class="backlogBtnGroup">
                                 <img class="backlogBtn" id="sendTo${i}" onclick="pushToBoardArray(${i})" src="./img/sendTo.jpg">
                                 <img class="backlogBtn" id="delete${i}" onclick="deleteTask(${i})" src="./img/trash.jpg">
                                 <img class="backlogBtn" id="edit${i}" onclick="editBacklog(${i})" src="./img/edit.png">
@@ -144,11 +148,11 @@ function addTaskHTMLTemplate() {
     <form id="inputContain " onsubmit="createNewTask(); return false " class="inputContain">
             <div class="inputBox">
                 <div>
-                    <p>TITLE</p>
+                    <p><b>TITLE</b></p>
                     <input class="inputFieldSize" id="inputTitel" required="" type="text" placeholder="Management meeting preparation">
                 </div>
                 <div>
-                    <p>CATEGORY</p>
+                    <p><b>CATEGORY</b></p>
                     <select id="inputCategory"class="inputFieldSize" required="">
                         <option value="" disabled="" selected="" hidden="">Please select</option>
                         <option value="Sale">Sale</option>
@@ -158,7 +162,7 @@ function addTaskHTMLTemplate() {
                     </select>
                 </div>
                 <div>
-                    <p>DESCRIPTION</p>
+                    <p><b>DESCRIPTION</b></p>
 
                     <textarea class="inputDescriptionField" type="text" id="inputDescription" cols="34" rows="10" required="" placeholder="Note"></textarea>
                 </div>
@@ -167,11 +171,11 @@ function addTaskHTMLTemplate() {
 
             <div class="inputBox">
                 <div>
-                    <p>DUE DATE</p>
+                    <p><b>DUE DATE</b></p>
                     <input id="inputDate" class="inputFieldSize" required="" type="date">
                 </div>
                 <div>
-                    <p>URGENCY</p>
+                    <p><b>URGENCY</b></p>
                     <select id="inputUrgency" class="inputFieldSize" placeholder="Urgency" required="">
                         <option value="" disabled="" selected="" hidden="">Please select </option>
                         <option value="Low">Low</option>
@@ -181,15 +185,15 @@ function addTaskHTMLTemplate() {
                     </select>
                 </div>
                 <div>
-                    <p>ASSIGNED TO</p>
+                    <p><b>ASSIGNED TO</b></p>
                     <div id="avatarPicker" class="avatarPickerMain">
                         <div id="usersAccount"></div>
                         <img id="addUser" onclick="addUser()" class="addButtonAvatar" src="./img/icon plus.png">
                     </div>
                 </div>
                 <div class="buttons">
-                    <button type="reset" id="cancel">Cancel</button>
-                    <button type="submit" id="create">Create Task</button>
+                    <button type="reset" id="cancel"><b>Cancel</b></button>
+                    <button type="submit" id="create"><b>Create Task</b></button>
                 </div>
             </div>
         </form>

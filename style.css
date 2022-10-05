@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: pt-sans-v17-latin-regular;
 }
 
 .container {
@@ -13,9 +13,9 @@ body {
     align-items: center;
     flex-direction: column;
     width: 150px;
-    background-color: blue;
-    height: 100vh;
+    background-color:  #1711a1;
     padding: 32px;
+    z-index: 2;
 }
 
 .rightContainer {
@@ -61,24 +61,34 @@ body {
 .bgColor {
     background-color: lightgray;
     width: 100%;
-    height: 100vh;
-    margin: 8px;
+    min-height: 100vh;
+
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 .bgColor h2 {
     background-color: white;
-    height: 30px;
+    height: 44px;
     width: 100%;
-    margin-top: -1px;
+    margin-top: 0px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .todoBox {
-    border: 1px solid blue;
-    border-left: 4px solid blue;
+    border: 1px solid  #1711a1;
+    border-left: 4px solid  #1711a1;
     margin: 8px 0px;
     border-radius: 6px;
     background-color: lightblue;
+    cursor: pointer;
+}
+
+.todoBox:hover {
+    filter: invert(8%);
 }
 
 /****   Backlog     ****/
@@ -101,7 +111,7 @@ body {
 .headBacklog2ndRow {
     margin-top: -15px;
     font-size: 13px;
-    color: #1818d7;
+    color:  #1711a1;
     font-weight: 600;
 }
 
@@ -112,8 +122,8 @@ body {
     margin-bottom: 20px;
     margin-top: 27px;
     font-size: 21px;
-    color: #1818d7;
-    font-weight: 600;
+    color:  #1711a1;
+    font-weight: bold;
 }
 
 .tasks {
@@ -124,11 +134,11 @@ body {
 
 .task {
     background-color: lightgray;
-    height: 74px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+    padding: 8px;
     border-radius: 7px;   
 }
 
@@ -140,6 +150,16 @@ body {
     left: 40vw;
     background-color: aquamarine;
     padding: 10px;
+    z-index: 5;
+}
+
+.notClickabel {
+    background-color: #828282;
+    opacity: 0.5;
+    z-index: 1;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
 }
 
 .taskTopline {
@@ -151,6 +171,10 @@ body {
     cursor: pointer;
     width: 30px;
     height: 30px;
+    border-top-right-radius: 6px;
+}
+.boardBtn:hover {
+    filter: invert(10%);
 }
 
 .name {
@@ -168,11 +192,18 @@ body {
     align-items: center;
 }
 
+.backlogBtnGroup {
+    margin-right: 10px;
+}
 .backlogBtn {
     cursor: pointer;
-    width: 38px;
-    height: 38px;
-    padding: 8px;
+    width: 34px;
+    height: 34px;
+    padding: 5px;
+}
+
+.backlogBtn:hover {
+    filter: invert(30%);
 }
 
 .headAddTask {
@@ -210,14 +241,14 @@ body {
 form {
     display: flex;
     justify-content: space-around;
-    background-color: #F0F0F0;
+    background-color: #d8dee5;
     border-radius: 10px;
-    margin: 32px;
+    margin-top: 32px;
     padding: 32px;
 }
 
 .inputBox p {
-    color: blue;
+    color:  #1711a1;
 }
 
 .inputFieldSize {
@@ -248,14 +279,20 @@ form {
 .userImg {
     width: 38px;
     height: 38px;
-    padding: 8px;
+    padding-left: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     border-radius: 100%;
 }
 
-.userDiv {
+.userName {
+    padding-left: 8px;
+}
+
+/* .userDiv {
     margin: 16px;
     padding-top: 16px;
-}
+} */
 
 .avatarPickerMain {
     display: flex;
@@ -264,7 +301,6 @@ form {
 
 .profileBorder {
     border:4px solid transparent ;
-    opacity: 0.6;
 }
 
 .profileBorder:hover {
@@ -296,7 +332,7 @@ form {
 }
 
 #cancel {
-    color: blue;
+    color:  #1711a1;
     border: unset;
     cursor: pointer;
     font-size: 20px;
@@ -305,7 +341,7 @@ form {
 }
 
 #create {
-    background-color: blue;
+    background-color:  #1711a1;
     color: white;
     border-radius: 5px;
     border: unset;
