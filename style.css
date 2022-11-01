@@ -5,6 +5,7 @@ body {
 
 .container {
     display: flex;
+    height: 100vh;
 }
 
 .leftContainer {
@@ -12,21 +13,82 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    width: 150px;
+    width: 10%;
     background-color:  #1711a1;
     padding: 32px;
     z-index: 2;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    transition: transform 250ms ease-in-out;
+}
+
+.openLeftContainer {
+    transform: translateX(0%) !important;
+    transition: transform 250ms ease-in-out;
+    width: 100%;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    padding-left: 0px;
+    padding-right: 0px
+}
+
+.closeContainerIcon {
+    position: fixed;
+    height: 50px;
+    right: 15px;
+    top: 15px;
+    filter: invert(1);
 }
 
 .rightContainer {
     width: calc(100% - 150px);
-    height: 100vh;
-    
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-right: 2%;
+    margin-left: 16%;
 }
 
 .board {
     display: flex;
     justify-content: space-around;
+    height: 100%;
+    
+}
+
+.header {
+    background-color:  #1711a1;
+    position: fixed;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    transform: translateY(-101%);
+    transition: transform 250ms ease-in-out;
+}
+
+.sidebarIcon {
+    filter: invert(100%);
+    position: absolute;
+    left: 10px;
+}
+
+.headerLogo {
+    height: 45px;
+    width: 40px;
+}
+
+.translateX {
+    transform: translateX(-101%);
+}
+
+.widht100 {
+    width: 100%;
+}
+
+.translateY {
+    transform: translateY(-101%);
 }
 
 .logo {
@@ -61,8 +123,6 @@ body {
 .bgColor {
     background-color: lightgray;
     width: 100%;
-    min-height: 100vh;
-
     margin-left: 8px;
     margin-right: 8px;
 }
@@ -352,6 +412,117 @@ form {
 
 .d-none {
     display: none;
+}
+
+
+@media (max-width: 1200px) {
+    .rightContainer {
+        margin-top: 3%;
+        margin-bottom: 3%;
+        margin-right: 3%;
+        margin-left: 18%;
+    }
+}
+
+@media (max-width : 1000px) {
+    h2 {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 920px) {
+    .bgColor {
+        width: 140px;
+    } 
+}
+
+@media (max-width: 830px) {
+    .rightContainer {
+        margin-left: 20%;
+    } 
+}
+
+
+@media (max-width: 790px) {
+    .board {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .bgColor {
+        width: 200px;
+        height: 50%;
+    }
+}
+
+/* @media (max-width: 690px) {
+    .rightContainer {
+        margin: 2%;
+    }
+    .bgColor {
+        width: 180px;
+    }
+} */
+
+@media (max-width: 630px) {
+    .leftContainer {
+        transition: transform 250ms ease-in-out;
+        transform: translateX(-100%);
+    }
+
+    .header {
+        transition: transform 250ms ease-in-out;
+        transform: translateY(0%);
+    }
+
+    .rightContainer {
+        margin-bottom: 5%;
+        margin-right: 5%;
+        margin-left: 5%;
+        margin-top: 11%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 560px) {
+    .rightContainer {
+        margin-top: 13%;
+    }
+}
+
+@media (max-width: 490px) {
+    .rightContainer {
+        margin-bottom: 3%;
+        margin-right: 0%;
+        margin-left: 0%;
+        margin-top: 13%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 440px) {
+    .bgColor {
+        width:290px;
+        min-height:300px;
+        height: 0%;
+}
+    .rightContainer {
+        margin-top: 17%;
+    }
+
+    .container {
+        height: fit-content;
+    }
+}
+
+@media (max-width:340px) {
+    .bgColor {
+        width: 230px;
+    }
+
+    .rightContainer {
+        margin-top: 20%;
+    }
 }
 
 

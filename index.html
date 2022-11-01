@@ -19,8 +19,13 @@
 </head>
 
 <body onload="init()">
+    <div class="header">
+        <img class="sidebarIcon" onclick="openLeftContainer()" src="./img/reorder.png" alt="">
+        <img class="headerLogo" src="./img/logo.png" alt="">
+    </div>
     <div class="container">
-        <div class="leftContainer">
+        <div class="leftContainer" id="leftContainer">
+            <img class="closeContainerIcon" onclick="closeContainer()" src="./img/close.svg" alt="">
             <div class="logo">
                 <img src="./img/logo.png" alt="">
             </div>

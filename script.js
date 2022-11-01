@@ -25,16 +25,30 @@ let users = [
 let userNameArr = [];
 let userImgArr = [];
 let currentDraggedElement;
-
-
+let isMobile = false;
+let screenMore630px = window.matchMedia("(max-width: 630px)").matches
+let screenLess900px = window.matchMedia("max-width: 900px").matches
 
 setURL('https://gruppe-298.developerakademie.net/smallest_backend_ever/smallest_backend_ever-master');
+
+
+
+/**
+ * this function will return if the for the game used device is a mobile device
+ */
+
+function checkUsedDevice() {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+        isMobile = true;
+}
+
 
 /**
  * This function will download all arrays from the backend-server, and it will render the start-page
  */
 
 async function init() {
+    checkUsedDevice();
     await downloadFromServer();
     backlog = JSON.parse(backend.getItem('backlog')) || [];
     board = JSON.parse(backend.getItem('board')) || [];
@@ -64,6 +78,8 @@ function loadBoard() {
     testingHTMLTemplate();
     doneHTMLTemplate();
     generateId();
+    if (isMobile || screenMoreWidth) 
+        closeContainer();
 }
 
 function loadBacklog() {
@@ -72,23 +88,29 @@ function loadBacklog() {
         loadTasksHtmlTemplate(i);
         renderUserImages(i);
     }
+    if (isMobile || screenMoreWidth) 
+        closeContainer();
 }
 
-function renderUserImages(i){
+function renderUserImages(i) {
     for (let j = 0; j < backlog[i]['userImages'].length; j++) {
         document.getElementById(`userImg${i}`).innerHTML += `
         <img  class="userImg" src="${backlog[i]['userImages'][j]}">`
-    }    
+    }
 }
 
 
 function showAddTast() {
     addTaskHTMLTemplate();
     renderUsers();
+    if (isMobile || screenMoreWidth) 
+        closeContainer();
 }
 
 function showHelp() {
     showHelpHtmlTemplate();
+    if (isMobile || screenMoreWidth) 
+        closeContainer();
 }
 
 function createNewTask() {
@@ -189,7 +211,7 @@ function deleteTask(i) {
     setItem();
 }
 
-function taskPopup(i){
+function taskPopup(i) {
     document.getElementById('board').innerHTML += `
         <div class="popup">
             <div class="taskTopline">
@@ -216,11 +238,11 @@ function closePopup() {
     loadBoard();
 }
 
-function renderBoardUserImages(i){
+function renderBoardUserImages(i) {
     for (let j = 0; j < board[i]['userImg'].length; j++) {
         document.getElementById(`boardUserImg${i}`).innerHTML += `
         <img  class="userImg" src="${board[i]['userImg'][j]}">`
-    }    
+    }
 }
 
 function spliceBacklog(i) {
@@ -261,4 +283,15 @@ function moveTo(category) {
 
 function startDragging(id) {
     currentDraggedElement = id;
+}
+
+
+function openLeftContainer() {
+    document.getElementById('leftContainer').classList.add('openLeftContainer');
+    document.getElementById('rightContainer').classList.add('d-none');
+}
+
+function closeContainer() {
+    document.getElementById('leftContainer').classList.remove('openLeftContainer');
+    document.getElementById('rightContainer').classList.remove('d-none');
 }
