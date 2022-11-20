@@ -1,0 +1,86 @@
+.board {
+    padding-left: 20%;
+    padding-right: 10%;
+    padding-top: 50px;
+    width: 70%;
+}
+
+h1 {
+    font-size: 55px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.boardTopRow {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.boardTopRowRight {
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+}
+
+.boardInput {
+    border: none;
+    font-size: 16px;
+    width: 150px;
+    background-color: #FFFFFF;
+}
+
+.searchTask {
+    display: flex;
+    border: 1px solid rgb(0, 0, 0, 0.3);
+    align-items: center;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px 1px rgb(0 0 0 / 10%);
+    background-color: #FFFFFF;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+}
+
+.addTaskBtn {
+    background-color: #2A3647;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    padding: 11px;
+    width: 105px;
+    justify-content: space-between;
+    border-radius: 10px;
+}
+
+.categorysContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 4%;
+}
+
+.categorys {
+    width: 250px;
+}
+
+.categorysRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task {
+    min-height: 250px;
+    margin-top: 9%;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.pointer {
+    cursor: pointer;
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <script src="/js/mini_backend.js"></script>
+    <script src="/js/JSON.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/includeHTML.js"></script>
+    <script src="/js/summary.js"></script>
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/summaryStyle.css">
+    <link rel="stylesheet" href="/css/sidbarStyle.css">
+    <link rel="stylesheet" href="/css/generalStyle.css">
+    <link rel="stylesheet" href="/css/headerStyle.css">
+</head>
+
+<body onload="includeHTML(), init()";>
+    <div w3-include-html="templates/sidebarTemplate.html"></div>
+    <div w3-include-html="templates/headerTemplate.html"></div>
+    <div class="summary">
+        <div class="firstRow">
+            <h1 class="summaryHeadline">Summary</h1>
+            <div style="font-size: 20px">Everything in a nutshell!</div>
+        </div>
+        <div class="container">
+            <div class="summaryContainerLeft">
+                <div class="secondRow">
+                    <div class="sections sectionMarginRight section2ndRow">
+                        <div class="sectionNumber">5</div>
+                        <div class="sectionText">Tasks in <br>Board</div>
+                    </div>
+                    <div class="sections sectionMarginRight section2ndRow">
+                        <div class="sectionNumber">2</div>
+                        <div class="sectionText">Tasks in <br>Progress</div>
+                    </div>
+                    <div class="sections section2ndRow">
+                        <div class="sectionNumber">2</div>
+                        <div class="sectionText">Awaiting <br>Feedback</div>
+                    </div>
+                </div>
+                <div class="thirdRow">
+                    <div class="sections section3rdRow">
+                        <div class="thirdRowLeft">
+                            <img src="/img/urgentIcon.svg" class="urgentIcon" alt="">
+                            <div>
+                                <div style="font-size: 47px;">1</div>
+                                <div style="font-size: 16px">Urgent</div>
+                            </div>
+                        </div>
+                        <div class="thirdRowRight">
+                            <h2 class="sectionText">October 16,2022</h2>
+                            <div style="font-size: 16px">Upcoming Deadline</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fourthRow">
+                    <div class="sections sectionMarginRight section4thRow">
+                        <img src="/img/editIcon.svg" class="summaryIcons" alt="">
+                        <div>
+                            <div class="sectionNumber">1</div>
+                            <div class="sectionText">To-do</div>
+                        </div>
+                    </div>
+                    <div class="sections section4thRow">
+                        <img src="/img/doneIcon.svg" class="summaryIcons" alt="">
+                        <div>
+                            <div class="sectionNumber">1</div>
+                            <div class="sectionText">Done</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="summaryContainerRight">
+                <div>Good morning,</div>
+                <div class="summaryName">Sofia Müller</div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

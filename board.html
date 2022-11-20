@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/mini_backend.js"></script>
+    <script src="/js/includeHTML.js"></script>
+    <script src="/js/JSON.js"></script>
+    <script src="/js/script.js"></script>
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/boardStyle.css">
+    <link rel="stylesheet" href="/css/sidbarStyle.css">
+    <link rel="stylesheet" href="/css/generalStyle.css">
+    <link rel="stylesheet" href="/css/headerStyle.css">
+</head>
+
+<body onload="includeHTML(), init()">
+    <div w3-include-html="templates/sidebarTemplate.html"></div>
+    <div w3-include-html="templates/headerTemplate.html"></div>
+    <div class="board">
+        <div class="boardTopRow">
+            <h1>Board</h1>
+            <div class="boardTopRowRight">
+                <div class="searchTask">
+                    <input class="boardInput" type="text" placeholder="Find Task">
+                    <img src="./img/search.svg" alt="">
+                </div>
+                <div class="addTaskBtn pointer"><b>Add task</b><img src="img/plusIcon.svg" alt=""></div>
+            </div>
+        </div>
+        <div class="categorysContainer">
+            <div class="categorys">
+                <div class="categorysRow">
+                    <div>To do</div>
+                    <img class="pointer" src="/img/boardPlusBtn.svg" alt="">
+                </div>
+                <div id="todo" class="task">
+                    <div class="task"></div>
+                </div>
+            </div>
+            <div class="categorys">
+                <div class="categorysRow">
+                    <div>In progress</div>
+                    <img class="pointer" src="/img/boardPlusBtn.svg" alt="">
+                </div>
+                <div id="inProgress" class="task">
+                    <div class="task"></div>
+                </div>
+            </div>
+            <div class="categorys">
+                <div class="categorysRow">
+                    <div>Awaiting Feedback</div>
+                    <img class="pointer" src="/img/boardPlusBtn.svg" alt="">
+                </div>
+                <div id="awaitingFb" class="task">
+                    <div class="task"></div>
+                </div>
+            </div>
+            <div class="categorys">
+                <div class="categorysRow">
+                    <div>Done</div>
+                    <img class="pointer" src="img/boardPlusBtn.svg" alt="">
+                </div>
+                <div id="done">
+                    <div class="task"></div>
+                    <div class="task"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mobileBar"></div>
+</body>
+
+</html>

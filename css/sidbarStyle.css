@@ -1,0 +1,62 @@
+#sidebar {
+    position: fixed;
+    height: 100vh;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #2A3647;
+    color: #CDCDCD;
+    font-size: 20px;
+    z-index: 5;
+}
+
+.sidebarBottomRow {
+    position: absolute;
+    bottom: 10%;
+    width: 85%;
+    font-size: 18px;
+}
+
+.joinLogo {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 10%;
+}
+
+.sidebarLogos {
+    height: 22px;
+    width: 22px;
+    margin-right: 23px;
+
+}
+
+.sidebarNavigation {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 31%;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.sidebarNavRow {
+    display: flex;
+    align-items: center;
+    padding-left: 15%;
+    margin-top: 15px;
+    padding-top: 8.5px;
+    padding-bottom: 8.5px;
+    cursor: pointer;
+}
+
+.sidebarNavRow:hover {
+    background-color: #091931;
+    transition: ease-in-out 255ms;
+}
+
+a {
+    text-decoration: none;
+    color: #CDCDCD;
+}

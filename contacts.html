@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/mini_backend.js"></script>
+    <script src="/js/includeHTML.js"></script>
+    <script src="/js/JSON.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/contacts.js"></script>
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/contactsStyle.css">
+    <link rel="stylesheet" href="/css/sidbarStyle.css">
+    <link rel="stylesheet" href="/css/generalStyle.css">
+    <link rel="stylesheet" href="/css/headerStyle.css">
+</head>
+
+<body onload="initContacts(), includeHTML()">
+    <div w3-include-html="templates/sidebarTemplate.html"></div>
+    <div w3-include-html="templates/headerTemplate.html"></div>
+    <div class="contacts">
+        <div id="contactsContainerLeft">
+
+        </div>
+        <div class="contactsContainerRight">
+            <div class="containerRightRow">
+                <h1 class="contactsHeadline">Contacts</h1>
+                <div style="font-size: 20px">Better with a team</div>
+            </div>
+            <div id="contactDetails"></div>
+            <div class="contactsContainerBtn">
+                <div onclick="addNewContact()" class="addContactBtn">New contact <img class="contactIcon" src="/img/newContact.svg" alt=""></div>
+            </div>
+        </div>
+    </div>
+    <div id="cover" class="d-none">
+        <div class="d-none" id="popup">
+            <div class="popupContainerLeft">
+                <img class="contactsJoinLogo" src="/img/join logo.svg" alt="">
+                <div id="popupDescription" class="editConLeftText"></div>
+                <div class="blueLine"></div>
+            </div>
+            <div id ="popupContainerRight" class="popupContainerRight">
+                
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
