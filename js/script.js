@@ -7,6 +7,12 @@ async function init() {
     tasks = JSON.parse(backend.getItem('tasks')) || [];
 }
 
+async function initTasks() {
+    await downloadFromServer();
+    tasks = JSON.parse(backend.getItem('tasks')) || [];
+    renderTasks();
+}
+
 async function initContacts() {
     await downloadFromServer();
     contacts = JSON.parse(backend.getItem('contacts')) || contactsLocal;

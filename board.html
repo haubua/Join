@@ -8,8 +8,10 @@
     <title>Document</title>
     <script src="/js/mini_backend.js"></script>
     <script src="/js/includeHTML.js"></script>
+    
     <script src="/js/JSON.js"></script>
     <script src="/js/script.js"></script>
+    <script src="/js/board.js"></script>
     <link rel="stylesheet" href="/css/font.css">
     <link rel="stylesheet" href="/css/boardStyle.css">
     <link rel="stylesheet" href="/css/sidbarStyle.css">
@@ -17,7 +19,7 @@
     <link rel="stylesheet" href="/css/headerStyle.css">
 </head>
 
-<body onload="includeHTML(), init()">
+<body onload="includeHTML(), initTasks()">
     <div w3-include-html="templates/sidebarTemplate.html"></div>
     <div w3-include-html="templates/headerTemplate.html"></div>
     <div class="board">
@@ -37,16 +39,14 @@
                     <div>To do</div>
                     <img class="pointer" src="/img/boardPlusBtn.svg" alt="">
                 </div>
-                <div id="todo" class="task">
-                    <div class="task"></div>
-                </div>
+                <div id="todo"></div>
             </div>
             <div class="categorys">
                 <div class="categorysRow">
                     <div>In progress</div>
                     <img class="pointer" src="/img/boardPlusBtn.svg" alt="">
                 </div>
-                <div id="inProgress" class="task">
+                <div id="inProgress">
                     <div class="task"></div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                     <div>Awaiting Feedback</div>
                     <img class="pointer" src="/img/boardPlusBtn.svg" alt="">
                 </div>
-                <div id="awaitingFb" class="task">
+                <div id="awaitingFb">
                     <div class="task"></div>
                 </div>
             </div>

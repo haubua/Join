@@ -15,6 +15,7 @@ let popupPrioStatus = [];
 let popupNewTaskCategory = [];
 let subtasks = [];
 let popupSubtasks = [];
+let taskStatus = ['todo']
 
 
 async function addTask() {
@@ -24,7 +25,7 @@ async function addTask() {
     let dueDate = document.getElementById('addTaskDueDate').value;
     let prio = prioStatus[0];
     let addedSubtasks = subtasks;
-    let newTask = { title, description, category, assignedContacts, dueDate, prio, addedSubtasks }
+    let newTask = { title, description, category, assignedContacts, dueDate, prio, addedSubtasks, taskStatus}
     tasks.push(newTask)
     await backend.setItem('tasks', JSON.stringify(tasks));
     clearInnerHtml();
@@ -137,34 +138,32 @@ function removeSelectedCat() {
 
 function changeSelectedCat(i) {
     newTaskCategory.splice(0, 2)
-        newTaskCategory.push(categorys[i], categoryColor[i])
-        showSelectedCat();
+    newTaskCategory.push(categorys[i], categoryColor[i])
+    showSelectedCat();
 }
 
 
 function showSelectedCat() {
     let dropdown = document.getElementById('categoryDropdown');
     if (newTaskCategory.length > 0) {
-        dropdown.innerHTML = `
-        <div onclick="showCategorys()" class="category categoryPadding">${newTaskCategory[0]}<div class="catColor" style="background-color: ${newTaskCategory[1]}"></div></div>
-    `
+        showSelectedCatHtmlTemplate(dropdown);
     } else {
-        dropdown.innerHTML = `
-        <div onclick="showCategorys()" class="dorpdownRow categoryPadding">Select task category<img src="/img/downIcon.svg" alt=""></div>
-    `
+        noCatSelectedHtmlTemplate(dropdown);
     }
 }
 
 
 function addNewCategory() {
-    document.getElementById('categoryDropdown').innerHTML = `<div class="spacebetween newCat"><input id="newCat" class="catInput" required><div class="newCatBtn"><img class="clearBtn" src="/img/closeIcon.svg"><div class="greyLine"></div><img onclick="saveNewCat()"class="checkBtn" src="/img/checkMark.ico"></div></div>`
+    selectedColor = [];
+    addNewCategoryHtmlTemplate();
     document.getElementById('catColorsSelection').classList.remove('d-none')
     document.getElementById('catColorsSelection').innerHTML = '';
     for (let i = 0; i < 6; i++) {
         getRandomCatColor();
-        document.getElementById('catColorsSelection').innerHTML += `<div onclick="addNewCatColor(${i})" class="catColor" id="addNewCatColor${i}" style="background-color: ${color}"><div class="d-none" id="catColor${i}">${color}</div></div>`
+        newCategoryColorsHtmlTemplate(i);
     }
 }
+
 
 function getRandomCatColor() {
     var letters = '0123456789ABCDEF';
@@ -174,35 +173,77 @@ function getRandomCatColor() {
     }
 }
 
+
 function addNewCatColor(i) {
     let newColor = document.getElementById(`catColor${i}`).innerHTML
     if (selectedColor.length == 0) {
-        selectedColor.push(newColor)
-        document.getElementById(`addNewCatColor${i}`).classList.add('highlightSelectedColor')
+        selectCatColor(i);
     } else {
+        changeCatColor(i)
+
+    }
+
+
+    function selectCatColor(i) {
+        selectedColor.push(newColor);
+        document.getElementById(`addNewCatColor${i}`).classList.add('highlightSelectedColor');
+    }
+
+
+    function changeCatColor(i) {
         selectedColor.splice(0, 1)
         selectedColor.push(newColor)
-        for (let i = 0; i < 6; i++) {
-            document.getElementById(`addNewCatColor${i}`).classList.remove('highlightSelectedColor')
-        }
-        document.getElementById(`addNewCatColor${i}`).classList.add('highlightSelectedColor')
+        removeColorHighlights();
+        document.getElementById(`addNewCatColor${i}`).classList.add('highlightSelectedColor');
     }
 }
 
+
+function removeColorHighlights() {
+    for (let i = 0; i < 6; i++) {
+        document.getElementById(`addNewCatColor${i}`).classList.remove('highlightSelectedColor')
+    }
+}
+
+
 function saveNewCat() {
-    if (document.getElementById('newCat').value) {
-        categorys.push(document.getElementById('newCat').value);
-    } else {
-        newCategory++;
-        categorys.push(`new Category ${newCategory}`);
-    }
-    if (selectedColor.length > 0) {
-        categoryColor.push(selectedColor[0]);
-    } else {
-        categoryColor.push(document.getElementById('catColor0').innerHTML)
-    }
+    getNewCatInput();
+    getNewCatColor();
     document.getElementById('catColorsSelection').classList.add('d-none');
     addCategory(categorys.length - 1)
+}
+
+function getNewCatInput() {
+    if (newCatInputEmpty()) {
+        newCategory++;
+        categorys.push(`new Category ${newCategory}`);
+    } else {
+        categorys.push(document.getElementById('newCat').value);
+    }
+}
+
+function getNewCatColor() {
+    if (newCatColorNotSelected()) {
+        categoryColor.push(document.getElementById('catColor0').innerHTML);
+    } else {
+        categoryColor.push(selectedColor[0]);
+    }
+}
+
+
+function newCatInputEmpty() {
+    return !document.getElementById('newCat').value
+}
+
+
+function newCatColorNotSelected() {
+    return selectedColor.length == 0;
+}
+
+
+function closeNewCat() {
+    showSelectedCat();
+    document.getElementById('catColorsSelection').classList.add('d-none');
 }
 
 
@@ -259,19 +300,11 @@ function clearPrioLow() {
     prioStatus.splice(0, 1)
 }
 
-//* assignet to!! *//
 
 function showContacts() {
     let dropdown = document.getElementById('contactsDropdown');
     dropdown.removeAttribute("onclick");
-    dropdown.innerHTML = `
-        <div onclick="closeContacts()" class="dorpdownRow categoryPadding borderBottom">Select contacts to assign<img src="/img/downIcon.svg" alt=""></div>
-        <div class="dropdownContainer">
-            <div class="categoryPadding category">You</div>
-            <div id="contacts"></div>
-            <div onclick="addNewContact()" class="categoryPadding category spacebetween">Add new contact <img class="newContactIcon" src="/img/newContactIcon.png"></div>
-        </div>
-        `
+    showContactsHtmlTemplate(dropdown);
     renderContacts();
     closeCategorys();
 }
@@ -281,29 +314,19 @@ function renderContacts() {
     for (let i = 0; i < alpha.length; i++) {
         for (let j = 0; j < contacts.length; j++) {
             if (alpha[i] == contacts[j].lastName.charAt(0)) {
-                document.getElementById('contacts').innerHTML += `
-                    <div onclick="addContact(${j})" class="categoryPadding category spacebetween">
-                        ${contacts[j].lastName} ${contacts[j].firstName}
-                        <div class="contactsCheckbox" id="contactsCheckbox${j}"></div>
-                    </div>
-                `
+                renderContactsHtmlTemplate(j);
                 checkContactsCheckbox(j);
             }
         }
     }
 }
 
+
 function closeContacts() {
     let dropdown = document.getElementById('contactsDropdown');
-    dropdown.innerHTML = `
-        <div onclick="showContacts()" class="dorpdownRow categoryPadding">Select contacts to assign<img src="/img/downIcon.svg" alt=""></div>
-     `
-    if (popup) {
-        document.getElementById('popupContactsDropdown').innerHTML = `
-        <div onclick="showPopupContacts()" class="dorpdownRow categoryPadding">Select contacts to assign<img src="/img/downIcon.svg" alt=""></div>
-        `
-    }
+    closeContactsHtmlTemplate(dropdown);
 }
+
 
 function addContact(i) {
     let indexOf = assignedContacts.indexOf(contacts[i])
@@ -316,12 +339,11 @@ function addContact(i) {
     }
 }
 
+
 function checkContactsCheckbox(i) {
     let indexOf = assignedContacts.indexOf(contacts[i])
     if (indexOf >= 0 && document.getElementById(`contactsCheckbox${i}`)) {
-        document.getElementById(`contactsCheckbox${i}`).innerHTML = `
-        <div id="checkboxChecked${i}" class="checkboxChecked"></div>
-    `
+        checkContactsCheckboxHtmlTemplate(i);
     }
 }
 
@@ -330,7 +352,6 @@ function uncheckContactsCheckbox(i) {
     document.getElementById(`checkboxChecked${i}`).classList.remove('checkboxChecked')
 }
 
-// NEW CONTACT POPUP !!!!!!!!!!!!!
 
 function closePopup() {
     document.getElementById('popup').classList.add('popupD-none')
@@ -340,42 +361,12 @@ function closePopup() {
 }
 
 function addNewContact() {
-    setNewContactInnerHtml();
+    setNewContactHtmlTemplate();
     document.getElementById('popup').classList.remove('d-none');
     document.getElementById('popup').classList.remove('popupD-none');
     document.getElementById('cover').classList.remove('d-none');
     document.getElementById('popup').classList.add('popup');
-    document.getElementById('popupDescription').innerHTML = `
-        <div>                                
-            <div>Add Contacts</div>
-            <div class="popupSubtitle">Tasks are better with a team!</div>   
-        </div>
-    `
-}
-
-function setNewContactInnerHtml() {
-    document.getElementById('popupContainerRight').innerHTML = `
-    <img src="/img/contactImg.svg" class="detailsInitial">
-               
-                    <form class="editConRightInputfields" onsubmit="saveNewContact(); return false">
-                        <img class="closeIcon" src="/img/closeIcon.svg" onclick="closePopup()" alt="">
-                        <div class="editContactInputfields">
-                            <input type="text" class="editInputfield" id="newName" placeholder="Name" required>
-                            <img class="editIcons" src="/img/contactIcon.svg" alt="">
-                        </div>
-                        <div class="editContactInputfields">
-                            <input type="email" class="editInputfield" id="newEmail" placeholder="Email" required >
-                            <img class="editIcons" src="/img/emailIcon.svg" alt="">
-                        </div>
-                        <div class="editContactInputfields">
-                            <input type="number" class="editInputfield" id="newPhone" placeholder="Phone" required>
-                            <img class="editIcons" src="/img/phoneIcon.svg" alt="">
-                        </div>
-                        <div class="btnCenter">
-                            <button class="saveBtn" type="submit">Save</button>
-                        </div>
-                    </form>
-    `
+    addNewContactHtmlTemplate();
 }
 
 function saveNewContact() {
@@ -398,13 +389,11 @@ function saveNewContact() {
 }
 
 function showSavedSucess(newLastName) {
-    document.getElementById('popupContainerRight').innerHTML = `
-        <h3>New contact sucessfull added to your contacts!</h3>
-        
-    `
+    showSavedSucessHtmlTemplate();
     let i = contacts.findIndex(obj => obj.lastName == `${newLastName}`);
     setTimeout(() => {
         closePopup();
+        closePopupContacts();
         closeContacts();
         if (popup) {
             popupAddContact(i);
@@ -414,32 +403,23 @@ function showSavedSucess(newLastName) {
     }, 1500)
 }
 
+
+
 //*** SUBTASKS */
 
 function showTasks() {
     let dropdown = document.getElementById('taskDropdown');
     dropdown.removeAttribute("onclick");
-    dropdown.innerHTML = `
-        <div onclick="closeTasks()" class="dorpdownRow categoryPadding borderBottom">Add Subtask<img src="/img/downIcon.svg" alt=""></div>
-        <div class="dropdownContainer">
-            <div id="tasks"></div>
-            <div onclick="addNewTaskPopup()" class="categoryPadding category spacebetween">Add new Task <img class="plus" src="/img/boardPlusBtn.svg"></div>
-        </div>
-        `
+    showTasksHtmlTemplate(dropdown);
     renderTasks();
-    // closeCategorys();
 }
 
 function renderTasks() {
     if (tasks.length == 0) {
-        document.getElementById('tasks').innerHTML = `
-            <div class="categoryPadding category">No task available</div>
-        `
+        noTasksVailableHtmlTemplate();
     } else {
         for (let i = 0; i < tasks.length; i++) {
-            document.getElementById('tasks').innerHTML += `
-            <div onclick="addSubtask(${i})" class="categoryPadding category spacebetween">${tasks[i].title}<div class="contactsCheckbox" id="subtaskCheckbox${i}"></div></div>
-        `
+            renderTasksHtmlTemplate(i);
             checkSubtaskCheckbox(i)
         }
     }
@@ -448,10 +428,9 @@ function renderTasks() {
 
 function closeTasks() {
     let dropdown = document.getElementById('taskDropdown');
-    dropdown.innerHTML = `
-        <div onclick="showTasks()" class="dorpdownRow categoryPadding">Add Subtask<img src="/img/downIcon.svg" alt=""></div>
-     `
+    closeTasksHtmlTemplate(dropdown);
 }
+
 
 function checkNewTaskCheckbox() {
     let lastTask = tasks.length - 1
@@ -473,9 +452,7 @@ function addSubtask(i) {
 function checkSubtaskCheckbox(i) {
     let indexOf = subtasks.indexOf(tasks[i])
     if (indexOf >= 0 && document.getElementById(`subtaskCheckbox${i}`)) {
-        document.getElementById(`subtaskCheckbox${i}`).innerHTML = `
-        <div id="checkboxSubtaskChecked${i}" class="checkboxChecked"></div>
-    `
+        checkSubtaskCheckboxHtmlTemplate(i);
     }
 }
 
@@ -483,8 +460,6 @@ function checkSubtaskCheckbox(i) {
 function uncheckSubtaskCheckbox(i) {
     document.getElementById(`checkboxSubtaskChecked${i}`).classList.remove('checkboxChecked')
 }
-
-//***** NEW TASK POPUP */
 
 
 function closeNewTaskPopupShowSucess() {
@@ -784,6 +759,12 @@ function closePopupContacts() {
      `
 }
 
+// function popupCloseContacts() {
+//     document.getElementById('popupContactsDropdown').innerHTML = `
+//         <div onclick="showPopupContacts()" class="dorpdownRow categoryPadding">Select contacts to assign<img src="/img/downIcon.svg" alt=""></div>
+//         `
+// }
+
 function popupAddContact(i) {
     let indexOf = popupAssignedContacts.indexOf(contacts[i])
     if (indexOf >= 0) {
@@ -814,7 +795,7 @@ function uncheckPopupContactsCheckbox(i) {
 
 function popupAddNewContact() {
     popup = true;
-    setNewContactInnerHtml();
+    setNewContactHtmlTemplate();
     document.getElementById('popup').classList.remove('d-none');
     document.getElementById('popup').classList.remove('popupD-none');
     document.getElementById('cover').classList.remove('d-none');

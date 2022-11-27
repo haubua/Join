@@ -1,8 +1,8 @@
-let colors = ['#FF7A00', '#9327FF', '#29ABE2', '#FC71FF', '#02CF2F', '#AF1616', '#462F8A', '#FFC700', '#EE00D6', '#007CEE', '#4E963D'];
+// let colors = ['#FF7A00', '#9327FF', '#29ABE2', '#FC71FF', '#02CF2F', '#AF1616', '#462F8A', '#FFC700', '#EE00D6', '#007CEE', '#4E963D'];
 let charFirstName = [];
 let charLastName = [];
-let contactColor = [];
-let color;
+// let contactColor = [];
+
 
 function rednerContacts() {
     document.getElementById('contactsContainerLeft').innerHTML = '';
@@ -23,12 +23,10 @@ function rednerContacts() {
                 `
                 renderLetters(i);
                 setInitial(j);
-
             }
         }
     }
-    getRandomColor();
-    fillColor();
+    
 }
 
 function renderLetters(i) {
@@ -46,36 +44,24 @@ function setInitial(j) {
             document.getElementById('initial' + j).innerHTML = `
             <div class="circleBg" id="circleBg${j}">${charLastName[i]}${charFirstName[i]}</div>
         `
+        fillInitialColor(j);
         }
     }
 
 }
 
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    color = '#';
-    for (var j = 0; j < 6; j++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
+
+function fillInitialColor(j) {
+    document.getElementById('circleBg' + j).style.backgroundColor = contacts[j].contactColor;
 }
 
-function fillColor() {
-    for (let j = 0; j < contacts.length; j++) {
-        document.getElementById('circleBg' + j).style.backgroundColor = color;
-        contactColor.push(color);
-        getRandomColor();
-    }
-}
-// detailsInitial
 
-// function saveContactColor(color) {
-//     contactColor.push(color)
-// }
+
 
 function showContactDetails(j) {
     document.getElementById('contactDetails').innerHTML = `
         <div class="detailsFirstRow">
-            <div id="detailsInitial${j}" class="detailsInitial" style="background-color: ${contactColor[j]}";></div>
+            <div id="detailsInitial${j}" class="detailsInitial" style="background-color: ${contacts[j].contactColor}";></div>
             <div class="detailsName">${contacts[j].lastName} ${contacts[j].firstName}</div>
         </div>
         <div class="detailsSecondRow">
@@ -140,7 +126,7 @@ function editContact(j) {
     document.getElementById('popup').classList.remove('editD-none');
     document.getElementById('cover').classList.remove('d-none');
     document.getElementById('popup').classList.add('popup');
-    document.getElementById('editInitial').style.backgroundColor = `${contactColor[j]}`;
+    document.getElementById('editInitial').style.backgroundColor = `${contacts[j].contactColor}`;
     document.getElementById('popupDescription').innerHTML = `Edit contact`
     setEditInitial(j);
 }
@@ -268,11 +254,13 @@ function saveNewContact() {
     let newFirstName = splitName.join(' ');
     newFirstName = newFirstName.charAt(0).toUpperCase() + newFirstName.slice(1);
     newLastName = newLastName.charAt(0).toUpperCase() + newLastName.slice(1);
+    getRandomColor(color);
     contacts.push({
         'firstName': `${newFirstName}`,
         'lastName': `${newLastName}`,
         'email': `${email}`,
-        'phone': `${phone}`
+        'phone': `${phone}`,
+        'contactColor': `${color}`
     })
 
     // contacts[j].firstName = editFirstName.charAt(0).toUpperCase() + editFirstName.slice(1);
