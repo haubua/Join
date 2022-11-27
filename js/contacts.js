@@ -57,7 +57,6 @@ function getRandomColor() {
     for (var j = 0; j < 6; j++) {
         color += letters[Math.floor(Math.random() * 16)];
     }
-    // saveContactColor(color);
 }
 
 function fillColor() {

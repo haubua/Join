@@ -36,7 +36,7 @@ h1 {
 .taskBottomRow {
     display: flex;
     justify-content: end;
-    width: 86%;
+    /* width: 86%; cant chose contacts when active*/
     position: absolute;
     bottom: 90px;
 }
@@ -93,6 +93,8 @@ p {
     border-radius: 10px;
     box-shadow: 0px 0px 2px 1px rgb(0 0 0 / 10%);
     width: 390px;
+    font-size: 21px;
+    height: 23px;
 }
 
 .selectWidth {
@@ -120,7 +122,7 @@ input:focus {
 .prioBtn {
     background-color: #FFFFFF;
     border: 1px solid rgb(0, 0, 0, 0.3);
-    padding: 11px;
+    padding: 10px;
     border-radius: 10px;
     box-shadow: 0px 0px 2px 1px rgb(0 0 0 / 10%);
     width: 100px;
@@ -161,7 +163,7 @@ input:focus {
     border: 1px solid rgb(0, 0, 0, 0.3);
     border-radius: 10px;
     box-shadow: 0px 0px 2px 1px rgb(0 0 0 / 10%);
-    width: 390px;
+    width: 414px;
     cursor: pointer;
 }
 
@@ -566,10 +568,15 @@ input::-webkit-inner-spin-button {
 }
 
 .addedToBoard {
-    height: 200px;
-    width: 200px;
-    background-color: black;
-    animation: fadeIn 1s ease 0s 1 normal forwards;
+    height: 55px;
+    width: 268px;
+    background-color: #2A3647;
+    color: white;
+    animation: fadeInY 1s ease 0s 1 normal forwards;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 15px;
 }
 
 /* */
@@ -588,7 +595,7 @@ input::-webkit-inner-spin-button {
     display: flex;
 } */
 
-@keyframes fadeIn {
+@keyframes fadeInY {
     from {
         opacity: 0;
     }
@@ -607,10 +614,10 @@ input::-webkit-inner-spin-button {
 }
 
 .addedToBoardD-none {
-    animation: fadeOut 1s ease 0s 1 normal backwards;
+    animation: fadeOutY 1s ease 0s 1 normal backwards;
 }
 
-@keyframes fadeOut {
+@keyframes fadeOutY {
     from {
         opacity: 1;
     }
@@ -626,4 +633,51 @@ input::-webkit-inner-spin-button {
     100% {
         transform: translateY(100%);
     }
+}
+
+.clearBtn {
+    height: 25px;
+    width: 25px;
+    padding: 11px;
+}
+
+.checkBtn {
+    height: 18px;
+    width: 18px;
+    padding: 14px;
+    filter: invert(0.8);
+}
+
+.newCat{
+    height: 47px;
+   
+}
+
+.newCatBtn {
+    display: flex;
+    align-items: center;
+}
+
+.greyLine{
+    border-right: 1px solid rgb(0, 0, 0, 0.3);
+    height: 33px;
+}
+
+.catInput {
+    width: 300px;
+    border: none;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    font-size: 21px;
+    padding: 11px;
+}
+
+.catColorsSelection{
+    display: flex;
+    margin-top: 14px;
+}
+
+.highlightSelectedColor {
+    box-shadow: 0px 2px 1px 1px rgb(0 0 0 / 30%);
+    border: 3px solid #fffbfb;
 }

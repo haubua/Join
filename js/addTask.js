@@ -1,74 +1,144 @@
 setURL('https://robert-hahn.developerakademie.net/smallest_backend_ever-master');
-let categorys = ['Sales', 'Backoffice', 'Sales', 'Backoffice', 'Sales', 'Backoffice'];
+let categorys = ['Sales', 'Backoffice'];
 let categoryColor = ['#FC71FF', '#1FD7C1']
+let colorSelection = ['#9B5D27', '#97BD16', '#868CD8', '#223595', '#08CE33', '#F54EBD'];
+let color;
+let selectedColor = [];
+let popupSelectedColor = [];
 let newTaskCategory = [];
+let newCategory = 0;
 let prioStatus = [];
 let assignedContacts = [];
 let popupAssignedContacts = [];
 let popup = false;
 let popupPrioStatus = [];
 let popupNewTaskCategory = [];
+let subtasks = [];
+let popupSubtasks = [];
 
-//  category, assignetTo, , prio, subtasks 
 
 async function addTask() {
     let title = document.getElementById('addTaskTitle').value;
     let description = document.getElementById('addTaskDescription').value;
     let category = newTaskCategory;
-    // let assignetTo = document.getElementById('addTaskAssignetTo').value;
     let dueDate = document.getElementById('addTaskDueDate').value;
     let prio = prioStatus[0];
-    // let subtasks = document.getElementById('addTaskSubtasks').value;
-    let newTask = { title, description, dueDate, category, prio }
+    let addedSubtasks = subtasks;
+    let newTask = { title, description, category, assignedContacts, dueDate, prio, addedSubtasks }
     tasks.push(newTask)
     await backend.setItem('tasks', JSON.stringify(tasks));
+    clearInnerHtml();
+    showSucess()
+}
+
+
+function clearInnerHtml() {
+    setTimeout(() => {
+        clearValue();
+        clearArrays();
+        clearPrioUrgent();
+        clearPrioMedium();
+        clearPrioLow();
+        closeCategorys();
+        clearCheckboxes();
+        closeContacts();
+        closeTasks();
+    }, 800)
+}
+
+
+function clearValue() {
+    document.getElementById('addTaskTitle').value = '';
+    document.getElementById('addTaskDescription').value = '';
+    document.getElementById('addTaskDueDate').value = '';
+}
+
+
+function clearArrays() {
+    newTaskCategory = [];
+    prioStatus = [];
+    subtasks = [];
+    assignedContacts = [];
+}
+
+
+function clearCheckboxes() {
+    for (let i = 0; i < contacts.length; i++) {
+        if (document.getElementById(`checkboxChecked${i}`)) {
+            uncheckContactsCheckbox(i);
+        }
+    }
+    for (let i = 0; i < tasks.length; i++) {
+        if (document.getElementById(`checkboxSubtaskChecked${i}`)) {
+            uncheckSubtaskCheckbox(i);
+        }
+    }
+}
+
+
+function showSucess() {
+    document.getElementById('cover1').classList.remove('d-none');
+    setTimeout(() => {
+        document.getElementById('addedToBoard').classList.add('addedToBoard');
+        document.getElementById('addedToBoard').classList.remove('d-none');
+    }, 300)
+    setTimeout(() => {
+        document.getElementById('addedToBoard').classList.add('addedToBoardD-none')
+    }, 2300)
+    setTimeout(() => {
+        document.getElementById('cover1').classList.add('d-none')
+        document.getElementById('addedToBoard').classList.remove('addedToBoardD-none')
+        document.getElementById('addedToBoard').classList.remove('addedToBoard');
+        document.getElementById('addedToBoard').classList.add('d-none');
+    }, 3200)
 }
 
 
 function showCategorys() {
     let dropdown = document.getElementById('categoryDropdown');
     dropdown.removeAttribute("onclick");
-    dropdown.innerHTML = `
-        <div onclick="closeCategorys()" class="dorpdownRow categoryPadding borderBottom">Select task category <img src="/img/downIcon.svg" alt=""></div>
-        <div class="dropdownContainer">
-            <div class="categoryPadding category spacebetween">New category <img class="plus" src="/img/boardPlusBtn.svg"></div>
-            <div id="savedCategorys"></div>
-        </div>
-        `
+    showCategorysHtmlTemplate(dropdown)
     renderSavedCategorys();
     closeContacts();
 }
 
+
 function renderSavedCategorys() {
     for (let i = 0; i < categorys.length; i++) {
-        document.getElementById('savedCategorys').innerHTML += `
-        <div onclick="addCategory(${i})" class="categoryPadding category">${categorys[i]}<div class="catColor" style="background-color: ${categoryColor[i]}"></div></div>
-    `
+        renderSavedCatHtmlTemplate(i);
     }
 }
+
 
 function closeCategorys() {
     let dropdown = document.getElementById('categoryDropdown');
     if (newTaskCategory.length == 0) {
-        dropdown.innerHTML = `
-        <div onclick="showCategorys()" class="dorpdownRow categoryPadding">Select task category<img src="/img/downIcon.svg" alt=""></div>
-    `} else {
-        dropdown.innerHTML = `
-        <div onclick="showCategorys()" class="category categoryPadding">${newTaskCategory[0]}<div class="catColor" style="background-color: ${newTaskCategory[1]}"></div></div>
-    `
+        closeCategorysEmptyHtmlTemplate(dropdown);
+    } else {
+        closeCategoryHtmlTemplate(dropdown);
     }
-
 }
+
 
 function addCategory(i) {
     if (newTaskCategory.indexOf(categorys[i]) >= 0) {
-        newTaskCategory.splice(0, 2)
-        showSelectedCat();
+        removeSelectedCat()
     } else {
-        newTaskCategory.splice(0, 2)
+        changeSelectedCat(i)
+    }
+}
+
+
+function removeSelectedCat() {
+    newTaskCategory.splice(0, 2)
+    showSelectedCat();
+}
+
+
+function changeSelectedCat(i) {
+    newTaskCategory.splice(0, 2)
         newTaskCategory.push(categorys[i], categoryColor[i])
         showSelectedCat();
-    }
 }
 
 
@@ -83,7 +153,56 @@ function showSelectedCat() {
         <div onclick="showCategorys()" class="dorpdownRow categoryPadding">Select task category<img src="/img/downIcon.svg" alt=""></div>
     `
     }
+}
 
+
+function addNewCategory() {
+    document.getElementById('categoryDropdown').innerHTML = `<div class="spacebetween newCat"><input id="newCat" class="catInput" required><div class="newCatBtn"><img class="clearBtn" src="/img/closeIcon.svg"><div class="greyLine"></div><img onclick="saveNewCat()"class="checkBtn" src="/img/checkMark.ico"></div></div>`
+    document.getElementById('catColorsSelection').classList.remove('d-none')
+    document.getElementById('catColorsSelection').innerHTML = '';
+    for (let i = 0; i < 6; i++) {
+        getRandomCatColor();
+        document.getElementById('catColorsSelection').innerHTML += `<div onclick="addNewCatColor(${i})" class="catColor" id="addNewCatColor${i}" style="background-color: ${color}"><div class="d-none" id="catColor${i}">${color}</div></div>`
+    }
+}
+
+function getRandomCatColor() {
+    var letters = '0123456789ABCDEF';
+    color = '#';
+    for (var j = 0; j < 6; j++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+}
+
+function addNewCatColor(i) {
+    let newColor = document.getElementById(`catColor${i}`).innerHTML
+    if (selectedColor.length == 0) {
+        selectedColor.push(newColor)
+        document.getElementById(`addNewCatColor${i}`).classList.add('highlightSelectedColor')
+    } else {
+        selectedColor.splice(0, 1)
+        selectedColor.push(newColor)
+        for (let i = 0; i < 6; i++) {
+            document.getElementById(`addNewCatColor${i}`).classList.remove('highlightSelectedColor')
+        }
+        document.getElementById(`addNewCatColor${i}`).classList.add('highlightSelectedColor')
+    }
+}
+
+function saveNewCat() {
+    if (document.getElementById('newCat').value) {
+        categorys.push(document.getElementById('newCat').value);
+    } else {
+        newCategory++;
+        categorys.push(`new Category ${newCategory}`);
+    }
+    if (selectedColor.length > 0) {
+        categoryColor.push(selectedColor[0]);
+    } else {
+        categoryColor.push(document.getElementById('catColor0').innerHTML)
+    }
+    document.getElementById('catColorsSelection').classList.add('d-none');
+    addCategory(categorys.length - 1)
 }
 
 
@@ -256,7 +375,6 @@ function setNewContactInnerHtml() {
                             <button class="saveBtn" type="submit">Save</button>
                         </div>
                     </form>
-                
     `
 }
 
@@ -319,13 +437,12 @@ function renderTasks() {
         `
     } else {
         for (let i = 0; i < tasks.length; i++) {
-
             document.getElementById('tasks').innerHTML += `
-            <div onclick="addSubtask(${i})" class="categoryPadding category">${tasks[i].title}</div>
+            <div onclick="addSubtask(${i})" class="categoryPadding category spacebetween">${tasks[i].title}<div class="contactsCheckbox" id="subtaskCheckbox${i}"></div></div>
         `
+            checkSubtaskCheckbox(i)
         }
     }
-
 }
 
 
@@ -336,28 +453,64 @@ function closeTasks() {
      `
 }
 
+function checkNewTaskCheckbox() {
+    let lastTask = tasks.length - 1
+    addSubtask(lastTask);
+}
+
 
 function addSubtask(i) {
+    let indexOf = subtasks.indexOf(tasks[i])
+    if (indexOf >= 0) {
+        subtasks.splice(indexOf, 1)
+        uncheckSubtaskCheckbox(i);
+    } else {
+        subtasks.push(tasks[i]);
+        checkSubtaskCheckbox(i);
+    }
+}
 
+function checkSubtaskCheckbox(i) {
+    let indexOf = subtasks.indexOf(tasks[i])
+    if (indexOf >= 0 && document.getElementById(`subtaskCheckbox${i}`)) {
+        document.getElementById(`subtaskCheckbox${i}`).innerHTML = `
+        <div id="checkboxSubtaskChecked${i}" class="checkboxChecked"></div>
+    `
+    }
+}
+
+
+function uncheckSubtaskCheckbox(i) {
+    document.getElementById(`checkboxSubtaskChecked${i}`).classList.remove('checkboxChecked')
 }
 
 //***** NEW TASK POPUP */
 
 
-function closeNewTaskPopup() {
+function closeNewTaskPopupShowSucess() {
     document.getElementById('addTaskPopup').classList.add('popupD-none')
     setTimeout(() => {
-        document.getElementById('addTaskPopup').classList.add('d-none')
-        document.getElementById('addedToBoard').classList.remove('d-none')
-        document.getElementById('addedToBoard').classList.add('addedToBoard')
+        document.getElementById('addedToBoard').classList.add('addedToBoard');
+        document.getElementById('addTaskPopup').classList.add('d-none');
+        document.getElementById('addedToBoard').classList.remove('d-none');
     }, 800)
     setTimeout(() => {
         document.getElementById('addedToBoard').classList.add('addedToBoardD-none')
-        document.getElementById('addedToBoard').classList.remove('addedToBoard')
-    }, 1600)
+    }, 2300)
     setTimeout(() => {
         document.getElementById('cover1').classList.add('d-none')
-    }, 2000)
+        document.getElementById('addedToBoard').classList.remove('addedToBoardD-none')
+        document.getElementById('addedToBoard').classList.remove('addedToBoard');
+        document.getElementById('addedToBoard').classList.add('d-none');
+    }, 3200)
+}
+
+function closeNewTaskPopup() {
+    document.getElementById('addTaskPopup').classList.add('popupD-none')
+    setTimeout(() => {
+        document.getElementById('addTaskPopup').classList.add('d-none');
+        document.getElementById('cover1').classList.add('d-none');
+    }, 800)
 }
 
 function addNewTaskPopup() {
@@ -388,16 +541,48 @@ async function popupAddTask() {
     let title = document.getElementById('popupAddTaskTitle').value;
     let description = document.getElementById('popupAddTaskDescription').value;
     let category = popupNewTaskCategory;
-    // let assignetTo = document.getElementById('addTaskAssignetTo').value;
     let dueDate = document.getElementById('popupAddTaskDueDate').value;
     let prio = popupPrioStatus[0];
-    // let subtasks = document.getElementById('addTaskSubtasks').value;
-    let newTask = { title, description, dueDate, category, prio }
+    let addedSubtasks = popupSubtasks;
+    let newTask = { title, description, dueDate, category, prio, addedSubtasks }
     tasks.push(newTask)
     await backend.setItem('tasks', JSON.stringify(tasks));
-    closeNewTaskPopup();
+    clarPopupInnerHtml();
+    closeNewTaskPopupShowSucess();
+    closeTasks();
+    showTasks();
+    checkNewTaskCheckbox();
 }
 
+
+function clarPopupInnerHtml() {
+    setTimeout(() => {
+        document.getElementById('popupAddTaskTitle').value = '';
+        document.getElementById('popupAddTaskDescription').value = '';
+        popupNewTaskCategory = [];
+        document.getElementById('popupAddTaskDueDate').value = '';
+        popupPrioStatus = [];
+        popupSubtasks = [];
+        clearPopupPrioUrgent();
+        clearPopupPrioMedium();
+        clearPopupPrioLow();
+        closePopupCategorys()
+        popupAssignedContacts = [];
+        for (let i = 0; i < contacts.length; i++) {
+            if (document.getElementById(`popupCheckboxChecked${i}`)) {
+                uncheckPopupContactsCheckbox(i);
+            }
+        }
+        for (let i = 0; i < contacts.length; i++) {
+            if (document.getElementById(`popupSubtaskCheckboxChecked${i}`)) {
+                uncheckPopupSubtaskCheckbox(i);
+            }
+        }
+        closePopupContacts();
+        popupCloseTasks();
+    }, 800)
+
+}
 
 function showPopupCategorys() {
     let dropdown = document.getElementById('popupCategoryDropdown');
@@ -405,7 +590,7 @@ function showPopupCategorys() {
     dropdown.innerHTML = `
         <div onclick="closePopupCategorys()" class="dorpdownRow categoryPadding borderBottom">Select task category <img src="/img/downIcon.svg" alt=""></div>
         <div class="popupDropdownContainer">
-            <div class="categoryPadding category spacebetween">New category <img class="plus" src="/img/boardPlusBtn.svg"></div>
+            <div onclick="popupAddNewCategory()" class="categoryPadding category spacebetween">New category <img class="plus" src="/img/boardPlusBtn.svg"></div>
             <div id="popupSavedCategorys"></div>
         </div>
         `
@@ -457,8 +642,52 @@ function showSelectedPopupCat() {
         <div onclick="showPopupCategorys()" class="dorpdownRow categoryPadding">Select task category<img src="/img/downIcon.svg" alt=""></div>
     `
     }
-
 }
+
+function popupAddNewCategory() {
+    document.getElementById('popupCategoryDropdown').innerHTML = `<div class="spacebetween newCat"><input id="popupNewCat" class="catInput"><div class="newCatBtn"><img class="clearBtn" src="/img/closeIcon.svg"><div class="greyLine"></div><img onclick="popupSaveNewCat()"class="checkBtn" src="/img/checkMark.ico"></div></div>`
+    document.getElementById('popupCatColorsSelection').classList.remove('d-none');
+    document.getElementById('popupCatColorsSelection').innerHTML = '';
+    for (let i = 0; i < 6; i++) {
+        getRandomCatColor();
+        document.getElementById('popupCatColorsSelection').innerHTML += `<div onclick="popupAddNewCatColor(${i})" class="catColor" id="popupAddNewCatColor${i}" style="background-color: ${color}"><div class="d-none" id="popupCatColor${i}">${color}</div></div>`
+    }
+}
+
+
+function popupAddNewCatColor(i) {
+    let newColor = document.getElementById(`popupCatColor${i}`).innerHTML
+    if (popupSelectedColor.length == 0) {
+        popupSelectedColor.push(newColor)
+        document.getElementById(`popupAddNewCatColor${i}`).classList.add('highlightSelectedColor')
+    } else {
+        popupSelectedColor.splice(0, 1)
+        popupSelectedColor.push(newColor)
+        for (let i = 0; i < 6; i++) {
+            document.getElementById(`popupAddNewCatColor${i}`).classList.remove('highlightSelectedColor')
+        }
+        document.getElementById(`popupAddNewCatColor${i}`).classList.add('highlightSelectedColor')
+    }
+}
+
+
+function popupSaveNewCat() {
+    if (document.getElementById('popupNewCat').value) {
+        categorys.push(document.getElementById('popupNewCat').value);
+    } else {
+        newCategory++;
+        categorys.push(`new Category ${newCategory}`);
+    }
+    if (popupSelectedColor.length > 0) {
+        categoryColor.push(popupSelectedColor[0]);
+    } else {
+        categoryColor.push(document.getElementById('popupCatColor0').innerHTML)
+    }
+    document.getElementById('popupCatColorsSelection').classList.add('d-none');
+    addPopupCategory(categorys.length - 1);
+}
+
+
 
 
 function popupPrioUrgent() {
@@ -582,12 +811,6 @@ function uncheckPopupContactsCheckbox(i) {
 
 // NEW CONTACT POPUP !!!!!!!!!!!!!
 
-// function closePopup() {
-//     document.getElementById('popup').classList.add('popupD-none')
-//     setTimeout(() => {
-//         document.getElementById('cover').classList.add('d-none')
-//     }, 800)
-// }
 
 function popupAddNewContact() {
     popup = true;
@@ -603,64 +826,6 @@ function popupAddNewContact() {
         </div>
     `
 }
-
-// function setNewContactInnerHtml() {
-//     document.getElementById('popupContainerRight').innerHTML = `
-//     <img src="/img/contactImg.svg" class="detailsInitial">
-
-//                     <form class="editConRightInputfields" onsubmit="saveNewContact(); return false">
-//                         <img class="closeIcon" src="/img/closeIcon.svg" onclick="closePopup()" alt="">
-//                         <div class="editContactInputfields">
-//                             <input type="text" class="editInputfield" id="newName" placeholder="Name" required>
-//                             <img class="editIcons" src="/img/contactIcon.svg" alt="">
-//                         </div>
-//                         <div class="editContactInputfields">
-//                             <input type="email" class="editInputfield" id="newEmail" placeholder="Email" required >
-//                             <img class="editIcons" src="/img/emailIcon.svg" alt="">
-//                         </div>
-//                         <div class="editContactInputfields">
-//                             <input type="number" class="editInputfield" id="newPhone" placeholder="Phone" required>
-//                             <img class="editIcons" src="/img/phoneIcon.svg" alt="">
-//                         </div>
-//                         <div class="btnCenter">
-//                             <button class="saveBtn" type="submit">Save</button>
-//                         </div>
-//                     </form>
-
-//     `
-// }
-
-// function saveNewContact() {
-//     let name = document.getElementById('newName');
-//     let email = document.getElementById('newEmail').value;
-//     let phone = document.getElementById('newPhone').value;
-//     let splitName = name.value.split(' ');
-//     let newLastName = splitName.shift();
-//     let newFirstName = splitName.join(' ');
-//     newFirstName = newFirstName.charAt(0).toUpperCase() + newFirstName.slice(1);
-//     newLastName = newLastName.charAt(0).toUpperCase() + newLastName.slice(1);
-//     contacts.push({
-//         'firstName': `${newFirstName}`,
-//         'lastName': `${newLastName}`,
-//         'email': `${email}`,
-//         'phone': `${phone}`
-//     })
-//     saveContactsBackend();
-//     showSavedSucess(newLastName);
-// }
-
-// function showSavedSucess(newLastName) {
-//     document.getElementById('popupContainerRight').innerHTML = `
-//         <h3>New contact sucessfull added to your contacts!</h3>
-
-//     `
-//     let i = contacts.findIndex(obj => obj.lastName == `${newLastName}`);
-//     setTimeout(() => {
-//         closePopup();
-//         addContact(i);
-//         closeContacts();
-//     }, 1500)
-// }
 
 //*** SUBTASKS */
 
@@ -684,10 +849,11 @@ function popupRenderTasks() {
         `
     } else {
         for (let i = 0; i < tasks.length; i++) {
-
             document.getElementById('popupTasks').innerHTML += `
-            <div onclick="popupAddSubtask(${i})" class="categoryPadding category">${tasks[i].title}</div>
+            <div onclick="popupAddSubtask(${i})" class="categoryPadding category spacebetween">${tasks[i].title} <div class="contactsCheckbox" id="popupSubtaskCheckbox${i}"></div></div>
+            
         `
+            checkPopupSubtaskCheckbox(i)
         }
     }
 
@@ -699,4 +865,31 @@ function popupCloseTasks() {
     dropdown.innerHTML = `
         <div onclick="popupShowTasks()" class="dorpdownRow categoryPadding">Add Subtask<img src="/img/downIcon.svg" alt=""></div>
      `
+}
+
+///***** POPUP SUBTASKS */
+
+
+function popupAddSubtask(i) {
+    let indexOf = popupSubtasks.indexOf(tasks[i])
+    if (indexOf >= 0) {
+        popupSubtasks.splice(indexOf, 1)
+        uncheckPopupSubtaskCheckbox(i);
+    } else {
+        popupSubtasks.push(tasks[i]);
+        checkPopupSubtaskCheckbox(i);
+    }
+}
+
+function checkPopupSubtaskCheckbox(i) {
+    let indexOf = popupSubtasks.indexOf(tasks[i])
+    if (indexOf >= 0 && document.getElementById(`popupSubtaskCheckbox${i}`)) {
+        document.getElementById(`popupSubtaskCheckbox${i}`).innerHTML = `
+        <div id="popupCheckboxSubtaskChecked${i}" class="checkboxChecked"></div>
+    `
+    }
+}
+
+function uncheckPopupSubtaskCheckbox(i) {
+    document.getElementById(`popupCheckboxSubtaskChecked${i}`).classList.remove('checkboxChecked')
 }
