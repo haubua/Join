@@ -17,30 +17,41 @@
     <link rel="stylesheet" href="/css/sidbarStyle.css">
     <link rel="stylesheet" href="/css/generalStyle.css">
     <link rel="stylesheet" href="/css/headerStyle.css">
+    <link rel="stylesheet" href="/css/mobilebar.css">
+    <link rel="stylesheet" href="/css/mobileHeaderStyle.css">
 </head>
 
-<body onload="initContacts(), includeHTML()">
+<body onload="initContacts(), includeHTML(), setCurrentPageContacts(), checkWindowSize()">
     <div w3-include-html="templates/sidebarTemplate.html"></div>
     <div w3-include-html="templates/headerTemplate.html"></div>
+    <div w3-include-html="templates/mobileBarTemplate.html"></div>
+    <div w3-include-html="templates/mobileHeaderTemplate.html"></div>
     <div class="contacts">
-        <div id="contactsContainerLeft">
-
+        <div class="contactsContainerLeft" id="contactsContainer">
+            <div class="mobileLeftAddContactBtn d-none" id="mobileLeftAddContactBtn">
+                <div id="addNewContactBtn" onclick="addNewContact()" class="addContactBtn">New contact <img class="contactIcon" src="/img/newContact.svg" alt=""></div>
+            </div>
+            <div id="contactsContainerLeft"></div>
         </div>
-        <div class="contactsContainerRight">
+        <div id="contactsContainerRight" class="contactsContainerRight">
             <div class="containerRightRow">
                 <h1 class="contactsHeadline">Contacts</h1>
-                <div style="font-size: 20px">Better with a team</div>
+                <div class="contactsSubHeadline">Better with a team</div>
+                <div class="mobileBlueLine"></div>
             </div>
             <div id="contactDetails"></div>
-            <div class="contactsContainerBtn">
-                <div onclick="addNewContact()" class="addContactBtn">New contact <img class="contactIcon" src="/img/newContact.svg" alt=""></div>
+            <div class="contactsContainerBtn" id="contactsContainerBtn">
+                <div id="addNewContactBtn" onclick="addNewContact()" class="addContactBtn">New contact <img class="contactIcon" src="/img/newContact.svg" alt=""></div>
             </div>
         </div>
     </div>
     <div id="cover" class="d-none">
         <div class="d-none" id="popup">
             <div class="popupContainerLeft">
-                <img class="contactsJoinLogo" src="/img/join logo.svg" alt="">
+                <div class="mobileAddContact">
+                    <img class="contactsJoinLogo" src="/img/join logo.svg" alt="">
+                    <img class="mobileCloseIcon" src="/img/closeIcon.svg" onclick="closePopup()" alt="">
+                </div>
                 <div id="popupDescription" class="editConLeftText"></div>
                 <div class="blueLine"></div>
             </div>

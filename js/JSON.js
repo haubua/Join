@@ -2,6 +2,7 @@ let alpha = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
     'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
     'Y', 'Z']
 let tasks = [];
+let taskID = [];
 let contacts = [];
 let contactsLocal = [
     {   
@@ -89,3 +90,5 @@ let contactsLocal = [
         "contactColor": '#9827C6'
     }
 ]
+let users = [];
+let currentUser = [];

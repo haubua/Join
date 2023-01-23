@@ -66,7 +66,7 @@ function showContactDetails(j) {
         </div>
         <div class="detailsSecondRow">
             <div style="font-size: 21px;">Contact Information</div>
-            <div onclick="editContact(${j})" class="editContactRow"><img src="/img/pencil.svg" class="pencilImg"> Edit Contact</div>    
+            <div onclick="editContact(${j})" class="editContactRow" id="editContacBtn"><img src="/img/pencil.svg" class="pencilImg"> Edit Contact</div>    
         </div>
         <div class="detailsThirdRow">
             <div class="emailDetails">Email</div>
@@ -76,9 +76,56 @@ function showContactDetails(j) {
             <div class="phoneDetails">Phone</div>
             <div>${contacts[j].phone}</div>
         </div>
-            `
+        <div class="contactsContainerBtn" id="ContactsBtn">
+            <div id="mobileEditContacBtn" onclick="editContact(${j})" class="addContactBtn d-none"><img src="/img/pencilImgWhite.svg" class="pencilImg"> Edit Contact</div>
+            <div id="addNewContactBtn" onclick="addNewContact()" class="addContactBtn d-none">New contact <img class="contactIcon" src="/img/newContact.svg" alt=""></div>
+        </div>
+        <div>
+            <img src="img/backBtn.svg" class="detailsBackBtn d-none" id="detailsBackBtn" onclick="closeContactDetails()">
+        </div>
+        
+        
+        `
+
+        // document.getElementById('contactsContainerBtn').classList.add('d-none')
+    if (w < 950) {
+        document.getElementById('contactsContainerRight').classList.remove('d-none');
+        document.getElementById('contactsContainerLeft').classList.add('d-none');
+        document.getElementById('contactsContainer').classList.add('d-none');
+        document.getElementById('detailsBackBtn').classList.remove('d-none');
+        currentPage = 'contactDetails'
+    } 
+    
+    setContactsBtn();
     setDetailsInitial(j);
     addBackgroundColor(j);
+}
+
+function setContactsBtn() {
+    // if (w <= 950) {
+    //     document.getElementById('mobileLeftAddContactBtn').classList.remove('d-none');
+    // } else {
+    //     document.getElementById('mobileLeftAddContactBtn').classList.add('d-none');
+    // }
+    if (w <= 450) {
+        document.getElementById('contactsContainerBtn').classList.add('d-none');
+        document.getElementById('editContacBtn').classList.add('d-none');
+        document.getElementById('mobileEditContacBtn').classList.remove('d-none');
+        
+    } else {
+        document.getElementById('contactsContainerBtn').classList.remove('d-none');
+        document.getElementById('editContacBtn').classList.remove('d-none');
+        document.getElementById('mobileEditContacBtn').classList.add('d-none');
+    }
+}
+
+
+function closeContactDetails(){
+    document.getElementById('detailsBackBtn').classList.add('d-none');
+    document.getElementById('contactsContainerRight').classList.add('d-none');
+        document.getElementById('contactsContainerLeft').classList.remove('d-none');
+        document.getElementById('contactsContainer').classList.remove('d-none');
+        currentPage = 'contacts'
 }
 
 function setDetailsInitial(j) {
@@ -134,7 +181,7 @@ function editContact(j) {
 
 function setEditInnerHtml(j) {
     document.getElementById('popupContainerRight').innerHTML = `
-    <div id="editInitial" class="detailsInitial"></div>
+    <div id="editInitial" class="popupInitial"></div>
                
                     <form class="editConRightInputfields" onsubmit="saveChanges(${j}); return false">
                         <img class="closeIcon" src="/img/closeIcon.svg" onclick="closePopup()" alt="">
@@ -163,7 +210,11 @@ function closePopup() {
     document.getElementById('popup').classList.add('editD-none')
     setTimeout(() => {
         document.getElementById('cover').classList.add('d-none')
+        document.getElementById('popup').classList.remove('editD-none')
+        document.body.classList.remove('overflowHidden');
+        document.getElementById('contactsContainer').classList.remove('overflowHidden');
     }, 800)
+
 }
 
 
@@ -211,6 +262,7 @@ function addNewContact() {
     document.getElementById('popup').classList.remove('editD-none');
     document.getElementById('cover').classList.remove('d-none');
     document.getElementById('popup').classList.add('popup');
+    document.getElementById('contactsContainer').classList.add('overflowHidden');
     document.getElementById('popupDescription').innerHTML = `
         <div>                                
             <div>Add Contacts</div>
@@ -221,7 +273,7 @@ function addNewContact() {
 
 function setNewContactInnerHtml() {
     document.getElementById('popupContainerRight').innerHTML = `
-    <img src="/img/contactImg.svg" class="detailsInitial">
+    <img src="/img/contactImg.svg" class="popupInitial">
                
                     <form class="editConRightInputfields" onsubmit="saveNewContact(); return false">
                         <img class="closeIcon" src="/img/closeIcon.svg" onclick="closePopup()" alt="">
@@ -279,7 +331,47 @@ function showSavedSucess(newLastName) {
     `
     let j = contacts.findIndex(obj => obj.lastName == `${newLastName}`);
     setTimeout(() => {
-        closePopup()
-        showContactDetails(j)
+        closePopup();
+        showContactDetails(j);
     }, 1500)
 }
+
+function hideRightContainer(w) {
+    if (w <= 950) {
+        // document.getElementById('detailsBackBtn').classList.remove('d-none');
+        document.getElementById('contactsContainerRight').classList.add('d-none');
+        document.getElementById('mobileLeftAddContactBtn').classList.remove('d-none');
+    } else {
+        document.getElementById('contactsContainerRight').classList.remove('d-none');
+        // document.getElementById('contactsContainerLeft').classList.remove('d-none');
+        // document.getElementById('detailsBackBtn').classList.add('d-none');
+        document.getElementById('mobileLeftAddContactBtn').classList.add('d-none');
+    }
+}
+
+function hideLeftContainer(w) {
+    if (w <= 950) {
+        document.getElementById('contactsContainerLeft').classList.add('d-none');
+        document.getElementById('detailsBackBtn').classList.remove('d-none');
+        document.getElementById('contactsContainer').classList.add('d-none');
+        
+        
+    } else {
+        // document.getElementById('contactsContainerRight').classList.remove('d-none');
+        document.getElementById('contactsContainerLeft').classList.remove('d-none');
+        document.getElementById('detailsBackBtn').classList.add('d-none');
+        document.getElementById('contactsContainer').classList.remove('d-none');
+       
+    }
+}
+
+
+// function setAddContactBtn() {
+//     if (w >= 450) {
+//         document.getElementById('ContactsBtn').innerHTML = `<div onclick="addNewContact()" class="addContactBtn">New contact <img class="contactIcon" src="/img/newContact.svg" alt=""></div>`
+//     }
+// }
+
+
+
+

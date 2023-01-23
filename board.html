@@ -8,71 +8,326 @@
     <title>Document</title>
     <script src="/js/mini_backend.js"></script>
     <script src="/js/includeHTML.js"></script>
-    
     <script src="/js/JSON.js"></script>
     <script src="/js/script.js"></script>
+    <script src="/js/addTask.js"></script>
+    <script src="/js/htmlTemplates.js/addTaskHtmlTemplates.js"></script>
+    <script src="/js/contacts.js"></script>
     <script src="/js/board.js"></script>
+    <link rel="stylesheet" href="/css/addTaskStyle.css">
     <link rel="stylesheet" href="/css/font.css">
     <link rel="stylesheet" href="/css/boardStyle.css">
     <link rel="stylesheet" href="/css/sidbarStyle.css">
     <link rel="stylesheet" href="/css/generalStyle.css">
     <link rel="stylesheet" href="/css/headerStyle.css">
+    <link rel="stylesheet" href="/css/mobilebar.css">
+    <link rel="stylesheet" href="/css/mobileHeaderStyle.css">
 </head>
 
-<body onload="includeHTML(), initTasks()">
+<body onload="loadContacts(), includeHTML(), initTasks(), init(), setCurrentPageBoard()">
     <div w3-include-html="templates/sidebarTemplate.html"></div>
     <div w3-include-html="templates/headerTemplate.html"></div>
-    <div class="board">
+    <div w3-include-html="templates/mobileBarTemplate.html"></div>
+    <div w3-include-html="templates/mobileHeaderTemplate.html"></div>
+    <div class="board" id="board">
         <div class="boardTopRow">
             <h1>Board</h1>
             <div class="boardTopRowRight">
-                <div class="searchTask">
-                    <input class="boardInput" type="text" placeholder="Find Task">
+                <div class="searchTask" id="searchTaskInput">
+                    <input class="boardInput" id="searchTask" type="text" onkeyup="filterTasks()"
+                        placeholder="Find Task">
                     <img src="./img/search.svg" alt="">
                 </div>
-                <div class="addTaskBtn pointer"><b>Add task</b><img src="img/plusIcon.svg" alt=""></div>
+                <div class="addTaskBtn pointer" onclick="addNewTaskPopup('todo')"><b>Add task</b><img
+                        src="img/plusIcon.svg" alt=""></div>
             </div>
+            <div class="mobileAddTaskBtn pointer d-none" onclick="addNewTaskPopup('todo')"><b id="mobileAddTask">Add task</b><img
+                src="img/plusIcon.svg" alt=""></div>
+        </div>
+        <div class="mobileSearchTask d-none">
+            <input class="boardInput" id="searchTask" type="text" onkeyup="filterTasks()"
+                placeholder="Find Task">
+            <img src="./img/search.svg" alt="">
         </div>
         <div class="categorysContainer">
-            <div class="categorys">
+            <div class="categorys" ondrop="moveTo('todo')" ondragover="allowDrop(event)">
                 <div class="categorysRow">
                     <div>To do</div>
-                    <img class="pointer" src="/img/boardPlusBtn.svg" alt="">
+                    <img class="pointer" src="/img/boardPlusBtn.svg" alt="" onclick="addNewTaskPopup('todo')">
                 </div>
                 <div id="todo"></div>
             </div>
-            <div class="categorys">
+            <div class="categorys" ondrop="moveTo('inProgress')" ondragover="allowDrop(event)">
                 <div class="categorysRow">
                     <div>In progress</div>
-                    <img class="pointer" src="/img/boardPlusBtn.svg" alt="">
+                    <img class="pointer" src="/img/boardPlusBtn.svg" alt="" onclick="addNewTaskPopup('inProgress')">
                 </div>
-                <div id="inProgress">
-                    <div class="task"></div>
-                </div>
+                <div id="inProgress"></div>
             </div>
-            <div class="categorys">
+            <div class="categorys" ondrop="moveTo('awaitingFb')" ondragover="allowDrop(event)">
                 <div class="categorysRow">
                     <div>Awaiting Feedback</div>
-                    <img class="pointer" src="/img/boardPlusBtn.svg" alt="">
+                    <img class="pointer" src="/img/boardPlusBtn.svg" alt="" onclick="addNewTaskPopup('awaitingFb')">
                 </div>
                 <div id="awaitingFb">
-                    <div class="task"></div>
                 </div>
             </div>
-            <div class="categorys">
+            <div class="categorys" ondrop="moveTo('done')" ondragover="allowDrop(event)">
                 <div class="categorysRow">
                     <div>Done</div>
-                    <img class="pointer" src="img/boardPlusBtn.svg" alt="">
+                    <img class="pointer" src="img/boardPlusBtn.svg" alt="" onclick="addNewTaskPopup('done')">
                 </div>
                 <div id="done">
-                    <div class="task"></div>
-                    <div class="task"></div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="cover1" class="d-none">
+        <div class="d-none" id="addedToBoard">Task added to board <img src="/img/addedIcon.svg" alt=""></div>
+        <div id="addTaskPopup" class="d-none">
+            <form onsubmit="popupAddTask(); return false">
+                <div class="popupHeadline">
+                    <div>Add Task</div>
+                    <img onclick="closeNewTaskPopup()" class="popupCloseIcon" src="/img/closeIcon.svg" alt="">
+                </div>
+                <div class="popupContainer">
+                    <div class="addTaskPopupConLeft">
+                        <div class="taskContainerSections">
+                            <p>Title</p>
+                            <input required class="inputField" id="popupAddTaskTitle" type="text">
+                        </div>
+                        <div class="taskContainerSections">
+                            <p>Description</p>
+                            <textarea class="textarea inputField" name="Description" id="popupAddTaskDescription"
+                                cols="30" rows="10" required></textarea>
+                        </div>
+                        <div class="taskContainerSections">
+                            <p>Category</p>
+                            <div onclick="showPopupCategorys()" id="popupCategoryDropdown" class="dropdown">
+                                <div class="dorpdownRow categoryPadding">Select task category <img
+                                        src="/img/downIcon.svg" alt=""></div>
+                            </div>
+                            <div class="d-none catColorsSelection" id="popupCatColorsSelection"></div>
+                        </div>
+                        <div class="taskContainerSections">
+                            <p>Assignet to</p>
+                            <div onclick="showPopupContacts()" id="popupContactsDropdown" class="dropdown">
+                                <div class="dorpdownRow  categoryPadding">Select contacts to assign<img
+                                        src="/img/downIcon.svg" alt=""></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="addTaskPopupConRight">
+                        <div class="taskContainerSections">
+                            <p>Due date</p>
+                            <input class="inputField" id="popupAddTaskDueDate" type="date" required>
+                        </div>
+                        <div class="taskContainerSections">
+                            <p>Prio</p>
+                            <div class="selectWidth prio">
+                                <div onclick=popupPrioUrgent() id="popupPrioUrgent" class="prioBtn">Urgent <img
+                                        class="prioIcon" id="popupPrioUrgentIcon" src="img/highIcon.svg" alt=""></div>
+                                <div onclick=popupPrioMedium() id="popupPrioMedium" class="prioBtn">Medium <img
+                                        class="prioIcon" id="popupPrioMediumIcon" src="img/mediumIcon.svg" alt=""></div>
+                                <div onclick=popupPrioLow() id="popupPrioLow" class="prioBtn">Low <img class="prioIcon"
+                                        id="popupPrioLowIcon" src="img/lowIcon.svg" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="taskContainerSections">
+                            <p>Subtasks</p>
+                            <div onclick="popupShowTasks()" id="popupTaskDropdown" class="dropdown selectWidth ">
+                                <div class="dorpdownRow  categoryPadding">Add Subtask<img src="/img/downIcon.svg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div id="popupSubtasks"></div>
+                        </div>
+                        <div class="popupTaskBottomRow">
+                            <div class="taskBottomBtn">
+                                <div id="popupClearBtn" onclick="instantClearPopup()">Clear <img class="taskBtnIcon"
+                                        src="img/cancel.svg" alt="">
+                                </div>
+                                <button id="popupCreateTaskBtn" type="submit" value="">Create Task<img
+                                        class="taskBtnIcon" src="img/check.svg" alt=""></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="coverFull d-none" id="cover2">
+        <div class="detailsPopup" id="detailsPopup">
+            <div class="detailsTop">
+                <div id="detailsHeadline"></div>
+                <div class="closeDetails"><img onclick="closeDetails()" src="/img/closeIcon.svg" alt="" id="closeDetails"></div>
+            </div>
+            <div id="detailsTitle" class="detailsTitle detailsContainer"></div>
+            <div id="detailsDescription" class="detailsContainer detailsDescription"></div>
+            <div id="detailsDueDate" class="detailsContainer"></div>
+            <div id="detailsPrio" class="detailsContainer"></div>
+            <div class="detailsSubHeadline detailsContainer">Assignet to:</div>
+            <div id="detailsAssignetTo"></div>
+            <div id="detailsEdit"></div>
+        </div>
 
-    <div id="mobileBar"></div>
+        <div id="editTaskPopup" class="d-none addTaskPopup">
+            <form onsubmit="saveEditTask(); return false">
+                <div class="popupHeadline">
+                    <div>Edit Task</div>
+                    <img onclick="closeEditTask()" class="popupCloseIcon" src="/img/closeIcon.svg" alt="">
+                </div>
+                <div class="popupContainer">
+                    <div class="editPopupConLeft">
+                        <div class="taskContainerSections">
+                            <p>Title</p>
+                            <input required class="inputField" id="editTilte" type="text">
+                        </div>
+                        <div class="taskContainerSections">
+                            <p>Description</p>
+                            <textarea class="textarea inputField" name="Description" id="editDescription" cols="30"
+                                rows="10" required></textarea>
+                        </div>
+                        <div class="taskContainerSections">
+                            <p>Category</p>
+                            <div onclick="editShowCategorys()" id="editCategory" class="dropdown">
+                                <div class="dorpdownRow categoryPadding">Show Category here <img src="/img/downIcon.svg"
+                                        alt=""></div>
+                            </div>
+                            <div class="d-none catColorsSelection" id="editCatColor"></div>
+                        </div>
+                        <div class="taskContainerSections">
+                            <p>Assignet to</p>
+                            <div onclick="editShowContacts()" id="editContacts" class="dropdown">
+                                <div class="dorpdownRow  categoryPadding">Select contacts to assign<img
+                                        src="/img/downIcon.svg" alt=""></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="editPopupConRight">
+                        <div class="taskContainerSections">
+                            <p>Due date</p>
+                            <input class="inputField" id="editDueDate" type="date" required>
+                        </div>
+                        <div class="taskContainerSections">
+                            <p>Prio</p>
+                            <div class="selectWidth prio">
+                                <div onclick=editPrioUrgent() id="editPrioUrgent" class="prioBtn">Urgent <img
+                                        class="prioIcon" id="editPrioUrgentIcon" src="img/highIcon.svg" alt=""></div>
+                                <div onclick=editPrioMedium() id="editPrioMedium" class="prioBtn">Medium <img
+                                        class="prioIcon" id="editPrioMediumIcon" src="img/mediumIcon.svg" alt=""></div>
+                                <div onclick=editPrioLow() id="editPrioLow" class="prioBtn">Low <img class="prioIcon"
+                                        id="editPrioLowIcon" src="img/lowIcon.svg" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="taskContainerSections">
+                            <p>Subtasks</p>
+                            <div id="editShowTasks"></div>
+
+                            <div id="editSubtasks"></div>
+                        </div>
+                        <div class="popupTaskBottomRow">
+                            <div class="taskBottomBtn contentEnd">
+                                <button id="popupCreateTaskBtn" type="submit" value="">Edit Task<img class="taskBtnIcon"
+                                        src="img/check.svg" alt=""></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="cover1" class="d-none">
+            <div class="d-none" id="addedToBoard">Task added to board <img src="/img/addedIcon.svg" alt=""></div>
+            <div id="addTaskPopup" class="d-none">
+                <form onsubmit="popupAddTask(); return false">
+                    <div class="popupHeadline">
+                        <div>Add Task</div>
+                        <img onclick="closeNewTaskPopup()" class="popupCloseIcon" src="/img/closeIcon.svg" alt="">
+                    </div>
+                    <div class="popupContainer">
+                        <div class="addTaskPopupConLeft">
+                            <div class="taskContainerSections">
+                                <p>Title</p>
+                                <input required class="inputField" id="popupAddTaskTitle" type="text">
+                            </div>
+                            <div class="taskContainerSections">
+                                <p>Description</p>
+                                <textarea class="textarea inputField" name="Description" id="popupAddTaskDescription"
+                                    cols="30" rows="10" required></textarea>
+                            </div>
+                            <div class="taskContainerSections">
+                                <p>Category</p>
+                                <div onclick="showPopupCategorys()" id="popupCategoryDropdown" class="dropdown">
+                                    <div class="dorpdownRow categoryPadding">Select task category <img
+                                            src="/img/downIcon.svg" alt=""></div>
+                                </div>
+                                <div class="d-none catColorsSelection" id="popupCatColorsSelection"></div>
+                            </div>
+                            <div class="taskContainerSections">
+                                <p>Assignet to</p>
+                                <div onclick="showPopupContacts()" id="popupContactsDropdown" class="dropdown">
+                                    <div class="dorpdownRow  categoryPadding">Select contacts to assign<img
+                                            src="/img/downIcon.svg" alt=""></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="addTaskPopupConRight">
+                            <div class="taskContainerSections">
+                                <p>Due date</p>
+                                <input class="inputField" id="popupAddTaskDueDate" type="date" required>
+                            </div>
+                            <div class="taskContainerSections">
+                                <p>Prio</p>
+                                <div class="selectWidth prio">
+                                    <div onclick=popupPrioUrgent() id="popupPrioUrgent" class="prioBtn">Urgent <img
+                                            class="prioIcon" id="popupPrioUrgentIcon" src="img/highIcon.svg" alt="">
+                                    </div>
+                                    <div onclick=popupPrioMedium() id="popupPrioMedium" class="prioBtn">Medium <img
+                                            class="prioIcon" id="popupPrioMediumIcon" src="img/mediumIcon.svg" alt="">
+                                    </div>
+                                    <div onclick=popupPrioLow() id="popupPrioLow" class="prioBtn">Low <img
+                                            class="prioIcon" id="popupPrioLowIcon" src="img/lowIcon.svg" alt=""></div>
+                                </div>
+                            </div>
+                            <div class="taskContainerSections">
+                                <p>Subtasks</p>
+                                <div onclick="popupShowTasks()" id="popupTaskDropdown" class="dropdown selectWidth ">
+                                    <div class="dorpdownRow  categoryPadding">Add Subtask<img src="/img/downIcon.svg"
+                                            alt="">
+                                    </div>
+                                </div>
+                                <div id="popupSubtasks"></div>
+                            </div>
+                            <div class="popupTaskBottomRow">
+                                <div class="taskBottomBtn">
+                                    <div id="popupClearBtn" onclick="instantClearPopup()">Clear <img class="taskBtnIcon"
+                                            src="img/cancel.svg" alt="">
+                                    </div>
+                                    <button id="popupCreateTaskBtn" type="submit" value="">Create Task<img
+                                            class="taskBtnIcon" src="img/check.svg" alt=""></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="cover" class="d-none">
+        <div class="d-none" id="popup">
+            <div class="popupContainerLeft">
+                <div class="mobileAddContact">
+                    <img class="contactsJoinLogo" src="/img/join logo.svg" alt="">
+                    <img class="mobileCloseIcon" src="/img/closeIcon.svg" onclick="closePopup()" alt="">
+                </div>
+                <div id="popupDescription" class="editConLeftText"></div>
+                <div class="blueLine"></div>
+            </div>
+            <div id="popupContainerRight" class="popupContainerRight">
+
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

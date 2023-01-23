@@ -68,9 +68,9 @@ function showContactsHtmlTemplate(dropdown) {
          Select contacts to assign<img src="/img/downIcon.svg" alt="">
         </div>
         <div class="dropdownContainer">
-            <div class="categoryPadding category">You</div>
+            <div class="categoryPadding category spacebetween" onclick="addCurrentUser()">You<div class="contactsCheckbox" id="currentUserCheckbox"></div></div>
             <div id="contacts"></div>
-            <div onclick="addNewContact()" class="categoryPadding category spacebetween">
+            <div onclick="taskAddNewContact()" class="categoryPadding category spacebetween">
                 Add new contact <img class="newContactIcon" src="/img/newContactIcon.png">
             </div>
         </div>
@@ -102,7 +102,7 @@ function checkContactsCheckboxHtmlTemplate(i) {
 function setNewContactHtmlTemplate() {
     document.getElementById('popupContainerRight').innerHTML = `
         <img src="/img/contactImg.svg" class="detailsInitial">
-        <form class="editConRightInputfields" onsubmit="saveNewContact(); return false">
+        <form class="editConRightInputfields" onsubmit="taskSaveNewContact(); return false">
             <img class="closeIcon" src="/img/closeIcon.svg" onclick="closePopup()" alt="">
             <div class="editContactInputfields">
                 <input type="text" class="editInputfield" id="newName" placeholder="Name" required>
@@ -144,7 +144,7 @@ function showTasksHtmlTemplate(dropdown) {
         <div onclick="closeTasks()" class="dorpdownRow categoryPadding borderBottom">Add Subtask<img src="/img/downIcon.svg" alt=""></div>
         <div class="dropdownContainer">
             <div id="tasks"></div>
-            <div onclick="addNewTaskPopup()" class="categoryPadding category spacebetween">Add new Task <img class="plus" src="/img/boardPlusBtn.svg"></div>
+            <div onclick="addNewTaskPopup('todo')" class="categoryPadding category spacebetween">Add new Task <img class="plus" src="/img/boardPlusBtn.svg"></div>
         </div>
         `
 }

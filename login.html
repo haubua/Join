@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/generalStyle.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/font.css">
+
+    <script src="/js/mini_backend.js"></script>
+    <script src="/js/JSON.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/login.js"></script>
+
+    <title>Document</title>
+</head>
+
+<body onload="loginAnimation(), loadUsers(), setCurrentPageLogin()">
+    <div class="head">
+        <a href="login.html">
+            <img class="joinLogo" src="/img/joinLogoBlack.svg" alt="">
+        </a>
+
+        <div class="signUpCenter">
+            <div class="signUp d-none" id="signUpBtn">
+                <div>Not a Join user?</div>
+                <div class="signUpBtn" onclick="showSignUp()">Sign up</div>
+            </div>
+        </div>
+    </div>
+    <form id="loginContainer" onsubmit="logIn(event)">
+        <div class="center d-none" id="center">
+            <div class="loginContainer">
+                <div class="headline">Log in</div>
+                <div class="blueLine"></div>
+                <div class="loginInputfields">
+                    <input type="email" class="inputfield" id="email" placeholder="Email" required>
+                    <img class="editIcons" src="/img/emailIcon.svg" alt="">
+                </div>
+                <div class="loginInputfields">
+                    <input type="password" class="inputfield" id="password" placeholder="Password" required>
+                    <img class="editIcons" src="/img/lockIcon.svg" alt="">
+                </div>
+                <div class="loginFail d-none" id="loginFail">
+                    Your log-in has failed because email or password is incorrect.
+                </div>
+                <div class="bottomRows fontSize16" id="bottomRow1">
+                    <div class="rememberContainer">
+                        <div class="checkbox" onclick="rememberUser()" id="remember">
+                            <div id="checkbox"></div>
+                        </div>
+                        <div>Remember me</div>
+                    </div>
+                    <a href="#" class="forgotLink" onclick="showForgotPW()">Forgot my password</a>
+                </div>
+                <div class="bottomRows fontSize21" id="bottomRow2">
+                    <button class="loginBtn" type="submit">Log in</button>
+                    <div class="guestBtn" onclick="guestLogIn()">Guest Log in</div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+
+    <form onsubmit="signUp(event)" class="d-none" id="signUpContainer">
+        <div class="center">
+            <div class="loginContainer">
+                <div class="topRow">
+                    <img class="backBtn" src="/img/backBtn.svg" alt="" onclick="closeSignUp()">
+                    <div class="headline" id="signUpHeadline">Sign up</div>
+                </div>
+
+                <div class="blueLine"></div>
+                <div class="loginInputfields">
+                    <input type="text" class="inputfield" id="signUpName" placeholder="Name" required>
+                    <img class="editIcons" src="/img/lockIcon.svg" alt="">
+                </div>
+                <div class="loginInputfields">
+                    <input type="email" class="inputfield" id="signUpEmail" placeholder="Email" required>
+                    <img class="editIcons" src="/img/emailIcon.svg" alt="">
+                </div>
+                <div class="loginInputfields">
+                    <input type="password" class="inputfield" id="signUpPassword" placeholder="Password" required>
+                    <img class="editIcons" src="/img/lockIcon.svg" alt="">
+                </div>
+                <div class="bottomRows fontSize21">
+                    <button class="loginBtn" type="submit" id="signUpBtn2">Sign up</button>
+                </div>
+                <div class="loginFail  d-none" id="emailExists">This E-mail already exists, please use a other E-mail
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <form onsubmit="onSubmit(event)" class="d-none" id="forgotContainerWidth">
+        <div class="center">
+            <div class="forgotContainer d-none" id="forgotContainer">
+                <div class="topRow">
+                    <img class="backBtn" src="/img/backBtn.svg" alt="" onclick="closeForgotPW()">
+                    <div class="forgotHeadline">I forgot my password</div>
+                </div>
+                <div class="blueLine"></div>
+                <div class="containerText">
+                    Don´t worry! We wil send you an email with the instructions to reset your password.
+                </div>
+                <div class="loginInputfields">
+                    <input name="email" type="email" class="inputfield" id="sendEmail" placeholder="Email" required>
+                    <img class="editIcons" src="/img/emailIcon.svg" alt="">
+                </div>
+                <div class="loginFail  d-none" id="emailNotRegistered">
+                    This e-mail address is not registered, pleas sign up first!
+                </div>
+                <div class="loginFail  d-none" id="emailEmpty">
+                    please enter email address
+                </div>
+                <div class="bottomRows fontSize21" id="bottomRow3">
+                    <button class="sendnBtn" type="submit">Send me the email</button>
+                    <div class="d-none">just placeholder onclick="sendEmail()"</div>
+
+                </div>
+            </div>
+            <div id="emailSend" class="d-none">
+                <img class="sendIcon" src="/img/sendCheck.svg" alt="">
+                An E-Mail has been sent to you
+            </div>
+        </div>
+    </form>
+    <div class="d-none" id="mobileSignUpBtn">
+        <div class="mobileSignUpBtn" id="signUpBtn">
+            <div>Not a Join user?</div>
+            <div class="signUpBtn" onclick="showSignUp()">Sign up</div>
+        </div>
+    </div>
+</body>
+
+</html>

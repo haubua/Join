@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="/js/greeting.js"></script>
+    <script src="/js/mini_backend.js"></script>
+    <script src="/js/JSON.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/includeHTML.js"></script>
+    <script src="/js/login.js"></script>
+    
+    <link rel="stylesheet" href="/css/greeting.css">
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/generalStyle.css">
+    <link rel="stylesheet" href="/css/mobilebar.css">
+    <link rel="stylesheet" href="/css/mobileHeaderStyle.css">
+    
+    
+</head>
+
+<body onload="includeHTML(), initGreeting()" ;>
+   
+    <div w3-include-html="templates/mobileBarTemplate.html"></div>
+    <div w3-include-html="templates/mobileHeaderTemplate.html"></div>
+    
+    <div class="greetingContainer">
+        <div id="greeting"></div>
+        <div class="name" id="name"></div>
+    </div>
+</body>
+
+</html>

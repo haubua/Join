@@ -8,21 +8,27 @@
     <title>Document</title>
     <script src="/js/mini_backend.js"></script>
     <script src="/js/includeHTML.js"></script>
-    <script src="/js/addTask.js"></script>
     <script src="/js/JSON.js"></script>
+    <script src="/js/addTask.js"></script>
     <script src="/js/script.js"></script>
     <script src="/js/htmlTemplates.js/addTaskHtmlTemplates.js"></script>
-
+    <script src="/js/contacts.js"></script>
     <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/contactsStyle.css">
     <link rel="stylesheet" href="/css/addTaskStyle.css">
     <link rel="stylesheet" href="/css/sidbarStyle.css">
     <link rel="stylesheet" href="/css/generalStyle.css">
     <link rel="stylesheet" href="/css/headerStyle.css">
+    <link rel="stylesheet" href="/css/mobilebar.css">
+    <link rel="stylesheet" href="/css/mobileHeaderStyle.css">
+    
 </head>
 
-<body onload="loadContacts(), includeHTML(), init()">
+<body onload="loadContacts(), includeHTML(), init(), setCurrentPageAddTask()">
     <div w3-include-html="templates/sidebarTemplate.html"></div>
     <div w3-include-html="templates/headerTemplate.html"></div>
+    <div w3-include-html="templates/mobileBarTemplate.html"></div>
+    <div w3-include-html="templates/mobileHeaderTemplate.html"></div>
     <div class="addTask">
         <form onsubmit="addTask(); return false">
             <h1>Add Task</h1>
@@ -79,7 +85,7 @@
                     </div>
                     <div class="taskBottomRow">
                         <div class="taskBottomBtn">
-                            <div id="clearBtn">Clear <img class="taskBtnIcon" src="img/cancel.svg" alt=""></div>
+                            <div id="clearBtn" onclick="instantClearInnerHtml()">Clear <img class="taskBtnIcon" src="img/cancel.svg" alt=""></div>
                             <button id="createTaskBtn" type="submit" value="">Create Task<img class="taskBtnIcon"
                                     src="img/check.svg" alt=""></button>
                         </div>
@@ -93,7 +99,10 @@
     <div id="cover" class="d-none">
         <div class="d-none" id="popup">
             <div class="popupContainerLeft">
-                <img class="contactsJoinLogo" src="/img/join logo.svg" alt="">
+                <div class="mobileAddContact">
+                    <img class="contactsJoinLogo" src="/img/join logo.svg" alt="">
+                    <img class="mobileCloseIcon" src="/img/closeIcon.svg" onclick="closePopup()" alt="">
+                </div>
                 <div id="popupDescription" class="editConLeftText"></div>
                 <div class="blueLine"></div>
             </div>
@@ -164,7 +173,7 @@
                         </div>
                         <div class="popupTaskBottomRow">
                             <div class="taskBottomBtn">
-                                <div id="popupClearBtn">Clear <img class="taskBtnIcon" src="img/cancel.svg" alt="">
+                                <div id="popupClearBtn" onclick="instantClearPopup()">Clear <img class="taskBtnIcon" src="img/cancel.svg" alt="">
                                 </div>
                                 <button id="popupCreateTaskBtn" type="submit" value="">Create Task<img
                                         class="taskBtnIcon" src="img/check.svg" alt=""></button>
@@ -175,7 +184,6 @@
             </form>
         </div>
     </div>
-    <div id="mobileBar"></div>
 </body>
 
 </html>
