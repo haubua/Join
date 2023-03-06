@@ -1,6 +1,7 @@
-setURL('https://robert-hahn.developerakademie.net/smallest_backend_ever-master');
+setURL('https://hahn-robert.com/smallest_backend_ever-master');
 let w = window.innerWidth;
 let currentPage;
+
 
 async function init() {
     await downloadFromServer();
@@ -8,6 +9,26 @@ async function init() {
     taskID = JSON.parse(backend.getItem('taskID')) || [];
     categorys = JSON.parse(backend.getItem('categorys')) || [];
     categoryColor = JSON.parse(backend.getItem('categoryColor')) || [];
+    hightlightCurrentPage();
+}
+
+
+function hightlightCurrentPage() {
+    if (currentPage == 'summary') {
+        document.getElementById('sidebarSummary').classList.add('sidebarHighlight')
+        document.getElementById('mobilebarSummary').classList.add('sidebarHighlight')
+    } else if (currentPage == 'board') {
+        document.getElementById('sidebarBoard').classList.add('sidebarHighlight')
+        document.getElementById('mobilebarBoard').classList.add('sidebarHighlight')
+    } else if (currentPage == 'addTask') {
+        document.getElementById('sidebarAddTask').classList.add('sidebarHighlight')
+        document.getElementById('mobilebarAddTask').classList.add('sidebarHighlight')
+    } else if (currentPage == 'contacts') {
+        document.getElementById('sidebarContacts').classList.add('sidebarHighlight')
+        document.getElementById('mobilebarContacts').classList.add('sidebarHighlight')
+    } else if (currentPage == 'legalNotice') {
+        document.getElementById('sidebarLegalNotice').classList.add('sidebarHighlight')
+    }
 }
 
 async function initTasks() {
@@ -16,6 +37,7 @@ async function initTasks() {
     boardRenderTasks();
     checkWindowSize();
 }
+
 
 async function initContacts() {
     await downloadFromServer();
@@ -26,32 +48,38 @@ async function initContacts() {
     rednerContacts();
 }
 
+
 async function loadContacts() {
     await downloadFromServer();
     contacts = JSON.parse(backend.getItem('contacts')) || contactsLocal;
 }
 
+
 async function saveContactsBackend() {
-    await backend.setItem('contacts', JSON.stringify(contacts))
+    await backend.setItem('contacts', JSON.stringify(contacts));
 }
 
 
 async function saveAndRenderContacts() {
-    await backend.setItem('contacts', JSON.stringify(contacts))
+    await backend.setItem('contacts', JSON.stringify(contacts));
     initContacts();
 }
 
 
 async function deleteBackend() {
-    await backend.deleteItem('tasks')
-    await backend.deleteItem('contacts')
-    await backend.deleteItem('taskID')
-    await backend.deleteItem('users')
+    await backend.deleteItem('tasks');
+    await backend.deleteItem('contacts');
+    await backend.deleteItem('taskID');
+    await backend.deleteItem('users');
+    await backend.deleteItem('categorys');
+    await backend.deleteItem('categoryColor');
 }
+
 
 async function saveBoard() {
     await backend.setItem('tasks', JSON.stringify(tasks));
 }
+
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
@@ -61,6 +89,7 @@ function getRandomColor() {
     }
 }
 
+
 function fillColor() {
     for (let j = 0; j < contacts.length; j++) {
         if (!contacts[j].contactColor) {
@@ -69,6 +98,7 @@ function fillColor() {
         }
     }
 }
+
 
 async function initSummary() {
     await init();
@@ -82,19 +112,23 @@ async function loadUsers() {
     autofill();
 }
 
+
 function openDropdownLogout() {
     document.getElementById('logoutDropdown').classList.remove('d-none');
     document.getElementById('headerUser').onclick = closeDropdownLogout;
 }
+
 
 function closeDropdownLogout() {
     document.getElementById('logoutDropdown').classList.add('d-none');
     document.getElementById('headerUser').onclick = openDropdownLogout;
 }
 
+
 function logout() {
     window.open("login.html", "_self");
 }
+
 
 function openMobileDropdownLogout() {
     document.getElementById('mobileLogoutDropdown').classList.remove('d-none');
@@ -103,6 +137,7 @@ function openMobileDropdownLogout() {
     document.getElementById('mobileHeaderUser').onclick = closeMobileDropdownLogout;
 }
 
+
 function closeMobileDropdownLogout() {
     document.getElementById('mobileLogoutDropdown').classList.add('d-none');
     document.getElementById('mobileHelp').classList.add('d-none');
@@ -110,33 +145,41 @@ function closeMobileDropdownLogout() {
     document.getElementById('mobileHeaderUser').onclick = openMobileDropdownLogout;
 }
 
+
 function setCurrentPageBoard() {
-    currentPage = 'board'
+    currentPage = 'board';
 }
+
 
 function setCurrentPageAddTask() {
     currentPage = 'addTask'
 }
 
+
 function setCurrentPageSummary() {
     currentPage = 'summary'
 }
+
 
 function setCurrentPageLogin() {
     currentPage = 'login'
 }
 
+
 function setCurrentPageLegalNotice() {
     currentPage = 'legalNotice'
 }
+
 
 function setCurrentPageContacts() {
     currentPage = 'contacts'
 }
 
+
 function setCurrentPageHelp() {
     currentPage = 'help'
 }
+
 
 function setCurrentResetPassword() {
     currentPage = 'resetpassword'
@@ -146,36 +189,34 @@ function setCurrentResetPassword() {
 window.addEventListener("resize", function () {
     w = window.innerWidth;
     if (currentPage == 'board') {
-        tasksNotDraggableStatus(w)
-        changeDetailsSymbol(w)
+        tasksNotDraggableStatus(w);
+        changeDetailsSymbol(w);
     }
     if (currentPage == 'login') {
         setSignUpBtn();
     } 
     if (currentPage == 'contacts') {
-        hideRightContainer(w)
+        hideRightContainer(w);
     }
     if (currentPage == 'contactDetails') {
-        hideLeftContainer(w)
-        setContactsBtn(w)
-        
+        hideLeftContainer(w);
+        setContactsBtn(w);
     }
 })
 
 
 function checkWindowSize() {
     if (currentPage == 'board') {
-        tasksNotDraggableStatus(w)
-        changeDetailsSymbol(w)
+        tasksNotDraggableStatus(w);
+        changeDetailsSymbol(w);
     }
-    if (currentPage == 'login') {
+    if (currentPage == 'login'|| currentPage == 'signUp') {
         nextPage(w);
     }
     if (currentPage == 'contacts') {
-        hideRightContainer(w)
-        // setContactsBtn(w)
+        hideRightContainer(w);
     }
     if (currentPage == 'contactDetails') {
-        setContactsBtn(w)
+        setContactsBtn(w);
     }
 }

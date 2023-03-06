@@ -3,11 +3,9 @@ let cleanFilter = [];
 let currentTask = [];
 let splicePosition = [];
 
+
 function boardRenderTasks() {
-    document.getElementById('todo').innerHTML = '';
-    document.getElementById('inProgress').innerHTML = '';
-    document.getElementById('awaitingFb').innerHTML = '';
-    document.getElementById('done').innerHTML = '';
+    emptyBoard();
     for (let i = 0; i < tasks.length; i++) {
         if (todo(i)) {
             renderTasksHtmlTemplate(i, 'todo');
@@ -23,85 +21,64 @@ function boardRenderTasks() {
         renderTaskSubtasks(i);
         renderTaskPrio(i);
     }
-    renderEmptySpace();
+    renderEmptySpaceHtmlTemplate();
 }
+
+
+function emptyBoard() {
+    document.getElementById('todo').innerHTML = '';
+    document.getElementById('inProgress').innerHTML = '';
+    document.getElementById('awaitingFb').innerHTML = '';
+    document.getElementById('done').innerHTML = '';
+}
+
 
 function todo(i) {
     return tasks[i].taskStatus == 'todo';
 }
 
+
 function inProgress(i) {
     return tasks[i].taskStatus == 'inProgress';
 }
 
+
 function awaitingFb(i) {
     return tasks[i].taskStatus == 'awaitingFb';
 }
+
 
 function done(i) {
     return tasks[i].taskStatus == 'done';
 }
 
 
-function renderTasksHtmlTemplate(i, statusID) {
-    document.getElementById(statusID).innerHTML += `
-            <div class="task" draggable="true" id="task${i}" ondragstart="startDragging(${i})" ondragend="endDragging(${i})" onclick="taskDetails(${i})">
-                <div class="taskCategory"style="background-color: ${tasks[i].category[1]}">${tasks[i].category[0]}</div>
-                <div class="taskTitle">${tasks[i].title}</div>
-                <div class="taskDescription">${tasks[i].description}</div>
-                <div id="subtasks${i}" class="d-none"></div>
-                <div class="tasksBottomRow">
-                    <div id="contacts${i}" class="taskContacts"></div>
-                    <div id="taskPrioIcon${i}" class="prioIconMargin"></div>
-                </div>
-            </div>`
-}
-
-function renderEmptySpace() {
-    document.getElementById('todo').innerHTML += `<div id="emptySpaceTodo" class="task emptySpace d-none"></div>`
-    document.getElementById('inProgress').innerHTML += `<div id="emptySpaceInProgress" class="task emptySpace d-none"></div>`
-    document.getElementById('awaitingFb').innerHTML += `<div id="emptySpaceAwaitingFb" class="task emptySpace d-none"></div>`
-    document.getElementById('done').innerHTML += `<div id="emptySpaceDone" class="task emptySpace d-none"></div>`
-}
-
-
 function renderTaskContacts(i) {
     if (tasks[i].assignedContacts.length > 3) {
-        document.getElementById(`contacts${i}`).innerHTML = `
-        <div class="contactInitials" style="background-color: ${tasks[i].assignedContacts[0].contactColor}">${tasks[i].assignedContacts[0].lastName.charAt(0).toUpperCase()}${tasks[i].assignedContacts[0].firstName.charAt(0).toUpperCase()}</div>
-        <div class="contactInitials" style="background-color: ${tasks[i].assignedContacts[1].contactColor}">${tasks[i].assignedContacts[1].lastName.charAt(0).toUpperCase()}${tasks[i].assignedContacts[1].firstName.charAt(0).toUpperCase()}</div>
-        <div id="moreContacts${i}" class="contactInitials" style="background-color: #2A3647"></div>
-        `
-        getMoreContactsAmount(i)
+        render2ContactsHtmlTemplate(i);
+        getMoreContactsAmount(i);
     } else {
         for (let j = 0; j < tasks[i].assignedContacts.length; j++) {
-            document.getElementById(`contacts${i}`).innerHTML += `
-            <div class="contactInitials" style="background-color: ${tasks[i].assignedContacts[j].contactColor}">
-                ${tasks[i].assignedContacts[j].lastName.charAt(0).toUpperCase()}${tasks[i].assignedContacts[j].firstName.charAt(0).toUpperCase()}
-            </div>`
+            render3ContactsHtmlTemplate(i, j);
         }
     }
 }
 
+
 function getMoreContactsAmount(i) {
-    document.getElementById(`moreContacts${i}`).innerHTML = `+${tasks[i].assignedContacts.length - 2}`
+    document.getElementById(`moreContacts${i}`).innerHTML = `+${tasks[i].assignedContacts.length - 2}`;
 }
+
 
 function renderTaskSubtasks(i) {
     if (tasks[i].addedSubtasks.length > 0) {
-        document.getElementById(`subtasks${i}`).classList.remove('d-none')
+        document.getElementById(`subtasks${i}`).classList.remove('d-none');
         let countDoneSubtasks = 0;
         for (let j = 0; j < tasks[i].addedSubtasks.length; j++) {
             if (tasks[i].addedSubtasks[j].taskStatus == 'done') {
                 countDoneSubtasks++;
             }
-            document.getElementById(`subtasks${i}`).innerHTML = `
-                <div class="flex center marginTopBtm4">
-                    <div class="subtaskProgressbar">
-                        <div id="progress${i}" class="subtaskProgress"></div>
-                    </div>
-                    <div class="progressFont">${countDoneSubtasks}/${tasks[i].addedSubtasks.length} Done</div>
-                </div>`
+            renderSubtasksHtmlTemplate(i, countDoneSubtasks);
             showProgress(countDoneSubtasks, i);
         }
     }
@@ -110,25 +87,27 @@ function renderTaskSubtasks(i) {
 
 function renderTaskPrio(i) {
     if (tasks[i].prio == 'Urgent') {
-        document.getElementById(`taskPrioIcon${i}`).innerHTML = `<img src=/img/taskIconUrgent.svg class="taskPrioIcon">`
+        renderUrgentPrioHtmlTemplate(i);
     }
     if (tasks[i].prio == 'Medium') {
-        document.getElementById(`taskPrioIcon${i}`).innerHTML = `<img src=/img/mediumIcon.svg class="taskPrioIcon">`
+        renderMediumPrioHtmlTemplate(i);
     }
     if (tasks[i].prio == 'Low') {
-        document.getElementById(`taskPrioIcon${i}`).innerHTML = `<img src=/img/lowIcon.svg class="taskPrioIcon">`
+        renderLowPrioHtmlTemplate(i);
     }
 }
 
+
 function showProgress(countDoneSubtasks, i) {
-    let progress = `${Math.round((countDoneSubtasks) * (100 / tasks[i].addedSubtasks.length))}`
-    // document.getElementById('progress').innerHTML = `${progress}%`;
+    let progress = `${Math.round((countDoneSubtasks) * (100 / tasks[i].addedSubtasks.length))}`;
     document.getElementById(`progress${i}`).style = `width: ${progress}%`;
 }
+
 
 function allowDrop(ev) {
     ev.preventDefault();
 }
+
 
 function moveTo(status) {
     tasks[currentDraggedElement]['taskStatus'] = status;
@@ -136,6 +115,7 @@ function moveTo(status) {
     saveBoard();
     hideEmptySpace();
 }
+
 
 function startDragging(id) {
     currentDraggedElement = id;
@@ -145,23 +125,26 @@ function startDragging(id) {
 
 
 function showEmptySpace() {
-    document.getElementById('emptySpaceTodo').classList.remove('d-none')
-    document.getElementById('emptySpaceInProgress').classList.remove('d-none')
-    document.getElementById('emptySpaceAwaitingFb').classList.remove('d-none')
-    document.getElementById('emptySpaceDone').classList.remove('d-none')
+    document.getElementById('emptySpaceTodo').classList.remove('d-none');
+    document.getElementById('emptySpaceInProgress').classList.remove('d-none');
+    document.getElementById('emptySpaceAwaitingFb').classList.remove('d-none');
+    document.getElementById('emptySpaceDone').classList.remove('d-none');
 }
 
+
 function hideEmptySpace() {
-    document.getElementById('emptySpaceTodo').classList.add('d-none')
-    document.getElementById('emptySpaceInProgress').classList.add('d-none')
-    document.getElementById('emptySpaceAwaitingFb').classList.add('d-none')
-    document.getElementById('emptySpaceDone').classList.add('d-none')
+    document.getElementById('emptySpaceTodo').classList.add('d-none');
+    document.getElementById('emptySpaceInProgress').classList.add('d-none');
+    document.getElementById('emptySpaceAwaitingFb').classList.add('d-none');
+    document.getElementById('emptySpaceDone').classList.add('d-none');
 }
+
 
 function endDragging(id) {
     hideEmptySpace();
     document.getElementById('task' + id).classList.remove('rotate');
 }
+
 
 function setSubtaskStatus(i) {
     for (let j = 0; j < tasks.length; j++) {
@@ -173,19 +156,36 @@ function setSubtaskStatus(i) {
     }
 }
 
+
 function filterTasks() {
     let search = document.getElementById('searchTask').value;
     search = search.toLowerCase();
     let filteredTitles = tasks.filter(task => String(task.title.toLowerCase()).includes(search));
     let filteredDescriptions = tasks.filter(task => String(task.description.toLowerCase()).includes(search));
-    filteredTasks = filteredTitles.concat(filteredDescriptions)
+    filteredTasks = filteredTitles.concat(filteredDescriptions);
     cleanFilter = filteredTasks;
+    clearFilteredTasks(filteredTitles, filteredDescriptions, filteredTasks, cleanFilter);
+    checkSearchValue(search);
+    splicePosition = [];
+}
+
+
+function checkSearchValue(search) {
+    if (search.length > 0) {
+        renderFilteredTasks();
+    } else {
+        boardRenderTasks();
+    }
+}
+
+
+function clearFilteredTasks(filteredTitles, filteredDescriptions, filteredTasks, cleanFilter) {
     if (filteredTitles.length > 0) {
         for (let i = 0; i < filteredTitles.length; i++) {
             if (filteredDescriptions.length > 0) {
                 for (let j = filteredDescriptions.length - 1; j > -1; j--) {
                     if (filteredTitles[i].id == filteredDescriptions[j].id) {
-                        splicePosition.push(filteredTitles.length + j)
+                        splicePosition.push(filteredTitles.length + j);
                     }
                 }
             } else {
@@ -199,19 +199,11 @@ function filterTasks() {
     } else if (filteredDescriptions.length > 0) {
         cleanFilter = filteredTasks;
     }
-    if (search.length > 0) {
-        renderFilteredTasks()
-    } else {
-        boardRenderTasks();
-    }
-    splicePosition = [];
 }
 
+
 function renderFilteredTasks() {
-    document.getElementById('todo').innerHTML = '';
-    document.getElementById('inProgress').innerHTML = '';
-    document.getElementById('awaitingFb').innerHTML = '';
-    document.getElementById('done').innerHTML = '';
+    clearBoardInnerHtml();
     for (let i = 0; i < cleanFilter.length; i++) {
         if (filteredTodo(i)) {
             renderFilterTasksHtmlTemplate(i, 'todo');
@@ -229,35 +221,34 @@ function renderFilteredTasks() {
     }
 }
 
+
+function clearBoardInnerHtml() {
+    document.getElementById('todo').innerHTML = '';
+    document.getElementById('inProgress').innerHTML = '';
+    document.getElementById('awaitingFb').innerHTML = '';
+    document.getElementById('done').innerHTML = '';
+}
+
+
 function filteredTodo(i) {
     return cleanFilter[i].taskStatus == 'todo';
 }
+
 
 function filteredInProgress(i) {
     return cleanFilter[i].taskStatus == 'inProgress';
 }
 
+
 function filteredAwaitingFb(i) {
     return cleanFilter[i].taskStatus == 'awaitingFb';
 }
+
 
 function filteredDone(i) {
     return cleanFilter[i].taskStatus == 'done';
 }
 
-function renderFilterTasksHtmlTemplate(i, statusID) {
-    document.getElementById(statusID).innerHTML += `
-            <div class="task" draggable="true" id="task${i}" ondragstart="startDragging(${i})" ondragend="endDragging(${i})" onclick="filteredTaskDetails(${i})">
-                <div class="taskCategory"style="background-color: ${cleanFilter[i].category[1]}">${cleanFilter[i].category[0]}</div>
-                <div class="taskTitle">${cleanFilter[i].title}</div>
-                <div class="taskDescription">${cleanFilter[i].description}</div>
-                <div id="subtasks${i}" class="d-none"></div>
-                <div class="tasksBottomRow">
-                    <div id="contacts${i}" class="taskContacts"></div>
-                    <div id="taskPrioIcon${i}" class="prioIconMargin"></div>
-                </div>
-            </div>`
-}
 
 function setFilteredSubtaskStatus(i) {
     for (let j = 0; j < cleanFilter.length; j++) {
@@ -269,27 +260,23 @@ function setFilteredSubtaskStatus(i) {
     }
 }
 
+
 function renderFilteredTaskContacts(i) {
     if (cleanFilter[i].assignedContacts.length > 3) {
-        document.getElementById(`contacts${i}`).innerHTML = `
-        <div class="contactInitials" style="background-color: ${cleanFilter[i].assignedContacts[0].contactColor}">${cleanFilter[i].assignedContacts[0].lastName.charAt(0).toUpperCase()}${cleanFilter[i].assignedContacts[0].firstName.charAt(0).toUpperCase()}</div>
-        <div class="contactInitials" style="background-color: ${cleanFilter[i].assignedContacts[1].contactColor}">${cleanFilter[i].assignedContacts[1].lastName.charAt(0).toUpperCase()}${cleanFilter[i].assignedContacts[1].firstName.charAt(0).toUpperCase()}</div>
-        <div id="moreContacts${i}" class="contactInitials" style="background-color: #2A3647"></div>
-        `
-        getMoreContactsAmountFiltered(i)
+        renderFilteredTasks2ContactsHtmlTemplate(i);
+        getMoreContactsAmountFiltered(i);
     } else {
         for (let j = 0; j < cleanFilter[i].assignedContacts.length; j++) {
-            document.getElementById(`contacts${i}`).innerHTML += `
-            <div class="contactInitials" style="background-color: ${cleanFilter[i].assignedContacts[j].contactColor}">
-                ${cleanFilter[i].assignedContacts[j].lastName.charAt(0).toUpperCase()}${cleanFilter[i].assignedContacts[j].firstName.charAt(0).toUpperCase()}
-            </div>`
+            renderFilteredTasks3ContactsHtmlTemplate(i, j);
         }
     }
 }
 
+
 function getMoreContactsAmountFiltered(i) {
-    document.getElementById(`moreContacts${i}`).innerHTML = `+${cleanFilter[i].assignedContacts.length - 2}`
+    document.getElementById(`moreContacts${i}`).innerHTML = `+${cleanFilter[i].assignedContacts.length - 2}`;
 }
+
 
 function renderFilteredTaskSubtasks(i) {
     if (cleanFilter[i].addedSubtasks.length > 0) {
@@ -299,95 +286,78 @@ function renderFilteredTaskSubtasks(i) {
             if (cleanFilter[i].addedSubtasks[j].taskStatus == 'done') {
                 countDoneSubtasks++;
             }
-            document.getElementById(`subtasks${i}`).innerHTML = `
-                <div class="flex center marginTopBtm4">
-                    <div class="subtaskProgressbar">
-                        <div id="progress${i}" class="subtaskProgress"></div>
-                    </div>
-                    <div class="progressFont">${countDoneSubtasks}/${cleanFilter[i].addedSubtasks.length} Done</div>
-                </div>`
+            renderFilteredTaskSubtasksHtmlTemplates(i);
             showFilteredTasksProgress(countDoneSubtasks, i);
         }
     }
 }
 
+
 function showFilteredTasksProgress(countDoneSubtasks, i) {
     let progress = `${Math.round((countDoneSubtasks) * (100 / cleanFilter[i].addedSubtasks.length))}`
-    // document.getElementById('progress').innerHTML = `${progress}%`;
     document.getElementById(`progress${i}`).style = `width: ${progress}%`;
 }
 
 
 function renderFilteredTaskPrio(i) {
     if (cleanFilter[i].prio == 'Urgent') {
-        document.getElementById(`taskPrioIcon${i}`).innerHTML = `<img src=/img/taskIconUrgent.svg class="taskPrioIcon">`
+        renderFilteredTaskUrgentPrioHtmlTemplate(i);
     }
     if (cleanFilter[i].prio == 'Medium') {
-        document.getElementById(`taskPrioIcon${i}`).innerHTML = `<img src=/img/mediumIcon.svg class="taskPrioIcon">`
+        renderFilteredTaskMediumPrioHtmlTemplate(i);
     }
     if (cleanFilter[i].prio == 'Low') {
-        document.getElementById(`taskPrioIcon${i}`).innerHTML = `<img src=/img/lowIcon.svg class="taskPrioIcon">`
+        renderFilteredTaskLowPrioHtmlTemplate(i);
     }
 }
 
 
-// function renderTasksHtmlTemplate(i, statusID) {
-//     document.getElementById(statusID).innerHTML += `
-//             <div class="task" draggable="true" id="task${i}" ondragstart="startDragging(${i})" ondragend="endDragging(${i})" onclick="taskDetails(${i})">
-//                 <div class="taskCategory"style="background-color: ${tasks[i].category[1]}">${tasks[i].category[0]}</div>
-//                 <div class="taskTitle">${tasks[i].title}</div>
-//                 <div class="taskDescription">${tasks[i].description}</div>
-//                 <div id="subtasks${i}" class="d-none"></div>
-//                 <div class="tasksBottomRow">
-//                     <div id="contacts${i}" class="taskContacts"></div>
-//                     <div id="taskPrioIcon${i}" class="prioIconMargin"></div>
-//                 </div>
-//             </div>`
-// }
-
 function taskDetails(i) {
-    document.getElementById('cover2').classList.remove('d-none')
+    document.getElementById('cover2').classList.remove('d-none');
     if (w < 800) {
-        document.getElementById('board').classList.add('d-none')
+        document.getElementById('board').classList.add('d-none');
     }
-    document.getElementById('detailsHeadline').innerHTML = `${tasks[i].category[0]}`
-    document.getElementById('detailsHeadline').style.backgroundColor = `${tasks[i].category[1]}`
-    document.getElementById('detailsTitle').innerHTML = `${tasks[i].title}`
-    document.getElementById('detailsDescription').innerHTML = `${tasks[i].description}`
-    document.getElementById('detailsDueDate').innerHTML = `
-    <div class="detailsSubHeadline">Due date: </div><div class="detailsDueDate">${tasks[i].dueDate}</div>
-`
-    document.getElementById('detailsPrio').innerHTML = `
-        <div class="detailsSubHeadline">Priority: </div><div id="prioStatus">${tasks[i].prio}</div>
-        `
-    document.getElementById('editSubtasks').innerHTML = `
-    <div onclick="editShowTasks(${i})" id="editTaskDropdown" class="dropdown selectWidth">
-        <div class="dorpdownRow  categoryPadding">Add Subtask<img src="/img/downIcon.svg" alt=""></div>
-    </div>
-    `
+    renderTasksDetailsHtmlTemplate(i);
     for (let j = 0; j < tasks[i].assignedContacts.length; j++) {
-        document.getElementById('detailsAssignetTo').innerHTML += `
-        <div class="detailsContainer">
-            <div id="taskInitial${j}" class="circleBg"></div>
-            <div class="detailsContactName">${tasks[i].assignedContacts[j].lastName} ${tasks[i].assignedContacts[j].firstName}</div>
-        </div>`
-        taskSetInitial(i, j)
+        renderDetailsAssignetContactsHtmltemplate(i, j);
+        taskSetInitial(i, j);
     }
-    document.getElementById('detailsEdit').innerHTML = `
-    <div class="detailsEdit" onclick="openEditTask(${i})"><img class="pencil" src="/img/pencilWhite.svg"></div>
-`
+    renderDetailsEditBtnHtmltemplate(i);
+    renderDetailsSubtasks(i);
     setPrioColor(i);
+}
+
+
+
+function renderDetailsSubtasks(i) {
+    if (tasks[i].addedSubtasks.length > 0) {
+        document.getElementById(`detailsSubtasks`).classList.remove('d-none');
+        let countDoneSubtasks = 0;
+        for (let j = 0; j < tasks[i].addedSubtasks.length; j++) {
+            if (tasks[i].addedSubtasks[j].taskStatus == 'done') {
+                countDoneSubtasks++;
+            }
+
+            renderDetailsSubtasksHtmlTemplate(i, countDoneSubtasks);
+            showDetailsSubtaksProgress(countDoneSubtasks, i);
+        }
+    }
+}
+
+
+function showDetailsSubtaksProgress(countDoneSubtasks, i) {
+    let progress = `${Math.round((countDoneSubtasks) * (100 / tasks[i].addedSubtasks.length))}`;
+    document.getElementById(`detailsSubtasksProgress`).style = `width: ${progress}%`;
 }
 
 
 function taskSetInitial(i, j) {
     if (document.getElementById('taskInitial' + j)) {
-        let charLastName = tasks[i].assignedContacts[j].lastName.charAt(0)
-        let charFirstName = tasks[i].assignedContacts[j].firstName.charAt(0)
+        let charLastName = tasks[i].assignedContacts[j].lastName.charAt(0);
+        let charFirstName = tasks[i].assignedContacts[j].firstName.charAt(0);
         document.getElementById('taskInitial' + j).innerHTML = `
             ${charLastName}${charFirstName}
         `
-        // fillInitialColor(j);
         document.getElementById('taskInitial' + j).style.backgroundColor = tasks[i].assignedContacts[j].contactColor;
     }
 }
@@ -395,153 +365,131 @@ function taskSetInitial(i, j) {
 
 function setPrioColor(i) {
     if (tasks[i].prio == 'Urgent') {
-        document.getElementById('prioStatus').style.backgroundColor = '#FF551F'
-        document.getElementById('prioStatus').innerHTML += `<img class="detailPrioIcon" src="img/urgentIcon.svg">`
+        document.getElementById('prioStatus').style.backgroundColor = '#FF551F';
+        document.getElementById('prioStatus').innerHTML += `<img class="detailPrioIcon" src="img/urgentIcon.svg">`;
     }
     if (tasks[i].prio == 'Medium') {
-        document.getElementById('prioStatus').style.backgroundColor = '#FFA800'
-        document.getElementById('prioStatus').innerHTML += `<img class="detailPrioIcon" src="img/mediumIcon.svg">`
+        document.getElementById('prioStatus').style.backgroundColor = '#FFA800';
+        document.getElementById('prioStatus').innerHTML += `<img class="detailPrioIcon" src="img/mediumIcon.svg">`;
     }
     if (tasks[i].prio == 'Low') {
-        document.getElementById('prioStatus').style.backgroundColor = '#7AE229'
-        document.getElementById('prioStatus').innerHTML += `<img class="detailPrioIcon" src="img/lowIcon.svg">`
+        document.getElementById('prioStatus').style.backgroundColor = '#7AE229';
+        document.getElementById('prioStatus').innerHTML += `<img class="detailPrioIcon" src="img/lowIcon.svg">`;
     }
 }
 
+
 function filteredTaskDetails(i) {
-    document.getElementById('cover2').classList.remove('d-none')
-    document.getElementById('detailsHeadline').innerHTML = `${cleanFilter[i].category[0]}`
-    document.getElementById('detailsHeadline').style.backgroundColor = `${cleanFilter[i].category[1]}`
-    document.getElementById('detailsTitle').innerHTML = `${cleanFilter[i].title}`
-    document.getElementById('detailsDescription').innerHTML = `${cleanFilter[i].description}`
-    document.getElementById('detailsDueDate').innerHTML = `
-    <div class="detailsSubHeadline">Due date: </div><div class="detailsDueDate">${cleanFilter[i].dueDate}</div>
-`
-    document.getElementById('detailsPrio').innerHTML = `
-        <div class="detailsSubHeadline">Priority: </div><div id="prioStatus">${cleanFilter[i].prio}</div>
-        `
-    document.getElementById('editSubtasks').innerHTML = `
-    <div onclick="editShowTasks(${i})" id="editTaskDropdown" class="dropdown selectWidth">
-        <div class="dorpdownRow  categoryPadding">Add Subtask<img src="/img/downIcon.svg" alt=""></div>
-    </div>
-    `
+    renderFilteredTaskDetailHtmlTemplate(i);
     for (let j = 0; j < cleanFilter[i].assignedContacts.length; j++) {
-        document.getElementById('detailsAssignetTo').innerHTML += `
-        <div class="detailsContainer">
-            <div id="taskInitial${j}" class="circleBg"></div>
-            <div class="detailsContactName">${cleanFilter[i].assignedContacts[j].lastName} ${cleanFilter[i].assignedContacts[j].firstName}</div>
-        </div>`
-        filteredTaskSetInitial(i, j)
+        renderFilteredTaskDetailsAssignetContactsHtmlTemp(i, j);
+        filteredTaskSetInitial(i, j);
     }
-    document.getElementById('detailsEdit').innerHTML = `
-    <div class="detailsEdit" onclick="openEditTask(${i})"><img class="pencil" src="/img/pencilWhite.svg"></div>
-`
+    renderFilteredTasksEditBtnHtmltemplate(i);
     setPrioColorFiltered(i);
 }
 
+
 function filteredTaskSetInitial(i, j) {
     if (document.getElementById('taskInitial' + j)) {
-        let charLastName = cleanFilter[i].assignedContacts[j].lastName.charAt(0)
-        let charFirstName = cleanFilter[i].assignedContacts[j].firstName.charAt(0)
+        let charLastName = cleanFilter[i].assignedContacts[j].lastName.charAt(0);
+        let charFirstName = cleanFilter[i].assignedContacts[j].firstName.charAt(0);
         document.getElementById('taskInitial' + j).innerHTML = `
             ${charLastName}${charFirstName}
         `
-        // fillInitialColor(j);
         document.getElementById('taskInitial' + j).style.backgroundColor = cleanFilter[i].assignedContacts[j].contactColor;
     }
-
 }
 
 
 function setPrioColorFiltered(i) {
     if (cleanFilter[i].prio == 'Urgent') {
-        document.getElementById('prioStatus').style.backgroundColor = '#FF551F'
-        document.getElementById('prioStatus').innerHTML += `<img class="detailPrioIcon" src="img/urgentIcon.svg">`
+        document.getElementById('prioStatus').style.backgroundColor = '#FF551F';
+        document.getElementById('prioStatus').innerHTML += `<img class="detailPrioIcon" src="img/urgentIcon.svg">`;
     }
     if (cleanFilter[i].prio == 'Medium') {
-        document.getElementById('prioStatus').style.backgroundColor = '#FFA800'
-        document.getElementById('prioStatus').innerHTML += `<img class="detailPrioIcon" src="img/mediumIcon.svg">`
+        document.getElementById('prioStatus').style.backgroundColor = '#FFA800';
+        document.getElementById('prioStatus').innerHTML += `<img class="detailPrioIcon" src="img/mediumIcon.svg">`;
     }
     if (cleanFilter[i].prio == 'Low') {
-        document.getElementById('prioStatus').style.backgroundColor = '#7AE229'
-        document.getElementById('prioStatus').innerHTML += `<img class="detailPrioIcon" src="img/lowIcon.svg">`
+        document.getElementById('prioStatus').style.backgroundColor = '#7AE229';
+        document.getElementById('prioStatus').innerHTML += `<img class="detailPrioIcon" src="img/lowIcon.svg">`;
     }
 }
-
-// function taskFillInitialColor(j) {
-//     document.getElementById('circleBg' + j).style.backgroundColor = contacts[j].contactColor;
-// }
-
 
 
 function closeDetails() {
-    document.getElementById('cover2').classList.add('d-none')
-    document.getElementById('board').classList.remove('d-none')
+    document.getElementById('cover2').classList.add('d-none');
+    document.getElementById('board').classList.remove('d-none');
     document.getElementById('detailsAssignetTo').innerHTML = '';
 }
 
-function openEditTask(i) {
-    document.getElementById('detailsPopup').classList.add('d-none')
-    document.getElementById('editTaskPopup').classList.remove('d-none');
-    document.getElementById('editTilte').value = `${tasks[i].title}`
-    document.getElementById('editDescription').value = `${tasks[i].description}`
-    selectedCatHtmlTemplate(i)
-    popupNewTaskCategory = tasks[i].category;
-    // popupSubtasks = tasks[i].addedSubtasks;
-    currentTask = [i]
-    for (let j = 0; j < tasks[i].assignedContacts.length; j++) {
-        rednerCheckoxSelectedContact(j, i)
-    }
+
+function showDetailsSubtasks(i) {
+    document.getElementById('detailsSubtasks').innerHTML = '';
+    document.getElementById('detailsSubtasks').classList.add('subtasksColomn')
     for (let j = 0; j < tasks[i].addedSubtasks.length; j++) {
-        rednerCheckoxSelectedSubtasks(j, i)
+        document.getElementById('detailsSubtasks').innerHTML += `
+            <div class="subtasksSpace"><div>${tasks[i].addedSubtasks[j].title}</div><div>${tasks[i].addedSubtasks[j].taskStatus}</div></div>
+            `
     }
-    document.getElementById('editDueDate').value = `${tasks[i].dueDate}`
+   
+}
+
+
+
+function openEditTask(i) {
+    document.getElementById('detailsPopup').classList.add('d-none');
+    document.getElementById('editTaskPopup').classList.remove('d-none');
+    document.getElementById('editTilte').value = `${tasks[i].title}`;
+    document.getElementById('editDescription').value = `${tasks[i].description}`;
+    document.getElementById('editDueDate').value = `${tasks[i].dueDate}`;
+    selectedCatHtmlTemplate(i);
+    popupNewTaskCategory = tasks[i].category;
+    currentTask = [i];
+    renderEditCheckboxes(i);
+    setEditPrioStatus(i);
+}
+
+
+function setEditPrioStatus(i) {
+    document.getElementById('editDueDate').value = `${tasks[i].dueDate}`;
     if (tasks[i].prio == 'Urgent') {
-        editPrioUrgent()
+        editPrioUrgent();
     }
     if (tasks[i].prio == 'Medium') {
-        editPrioMedium()
+        editPrioMedium();
     }
     if (tasks[i].prio == 'Low') {
-        editPrioLow()
+        editPrioLow();
+    }
+}
+    
+
+function renderEditCheckboxes(i) {
+    for (let j = 0; j < tasks[i].assignedContacts.length; j++) {
+        rednerCheckoxSelectedContact(j, i);
+    }
+    for (let j = 0; j < tasks[i].addedSubtasks.length; j++) {
+        rednerCheckoxSelectedSubtasks(j, i);
     }
 }
 
+
 function closeEditTask() {
     for (let i = 0; i < contacts.length; i++) {
-        uncheckEditContactsCheckbox(i)
+        uncheckEditContactsCheckbox(i);
     }
     for (let i = 0; i < tasks.length; i++) {
-        uncheckEditSubtaskCheckbox(i)
+        uncheckEditSubtaskCheckbox(i);
     }
-    document.getElementById('detailsPopup').classList.remove('d-none')
-    document.getElementById('editTaskPopup').classList.add('d-none')
+    document.getElementById('detailsPopup').classList.remove('d-none');
+    document.getElementById('editTaskPopup').classList.add('d-none');
     popupAssignedContacts = [];
     popupSubtasks = [];
     editCloseContacts();
     editCloseTasks();
 }
-
-function selectedCatHtmlTemplate(i) {
-    document.getElementById('editCategory').innerHTML = `
-        <div onclick="editShowCategorys(${i})" class="category categoryPadding">${tasks[i].category[0]}<div class="catColor" style="background-color: ${tasks[i].category[1]}"></div></div>
-        `
-}
-
-function editCloseContactsHtmlTemplate(dropdown) {
-    dropdown.innerHTML = `
-        <div onclick="showContacts()" class="dorpdownRow categoryPadding">Select contacts to assign<img src="/img/downIcon.svg" alt=""></div>
-     `
-}
-
-// function editShowCategorys(i) {
-//     let dropdown = document.getElementById('popupCategoryDropdown');
-//     dropdown.removeAttribute("onclick");
-//     selectedCatHtmlTemplate(i)
-//     renderSavedCategorys(); //access addTask
-//     closeContacts();
-// }
-
 
 
 function closeCategorys() {
@@ -553,33 +501,16 @@ function closeCategorys() {
     }
 }
 
-// function editCloseTasks() {
-//     let dropdown = document.getElementById('editCategory');
-//     closeTasksHtmlTemplate(dropdown);
-// }
 
-// function showPopupCategorys(i) {
-//     let dropdown = document.getElementById('popupCategoryDropdown');
-//     dropdown.removeAttribute("onclick");
-//     selectedCatHtmlTemplate(i)
-//     renderPopupSavedCategorys();
-//     closePopupContacts();
-// }
 function editShowCategorys() {
     editLoadSavedCategorys();
     let dropdown = document.getElementById('editCategory');
     dropdown.removeAttribute("onclick");
-    dropdown.innerHTML = `
-        <div onclick="editCloseCategorys()" class="dorpdownRow categoryPadding borderBottom">Select task category <img src="/img/downIcon.svg" alt=""></div>
-        <div class="popupDropdownContainer">
-            <div onclick="editCategory()" class="categoryPadding category spacebetween">New category <img class="plus" src="/img/boardPlusBtn.svg"></div>
-            <div id="popupSavedCategorys"></div>
-        </div>
-        `
+    editShowCategorysHtmltemplate(dropdown);
     editRenderPopupSavedCategorys();
     editCloseContacts();
-
 }
+
 
 async function editLoadSavedCategorys() {
     await downloadFromServer();
@@ -587,48 +518,35 @@ async function editLoadSavedCategorys() {
 
 }
 
+
 function editRenderPopupSavedCategorys() {
     document.getElementById('popupSavedCategorys').innerHTML = '';
     for (let i = 0; i < categorys.length; i++) {
-        document.getElementById('popupSavedCategorys').innerHTML += `
-        <div onclick="editAddPopupCategory(${i})" class="categoryPadding category">${categorys[i]}<div class="catColor" style="background-color: ${categoryColor[i]}"></div></div>
-    `
+        editSavedCategorysHtmlTemplate(i);
     }
 }
+
 
 function editCloseCategorys() {
     let dropdown = document.getElementById('editCategory');
     if (popupNewTaskCategory.length == 0) {
-        dropdown.innerHTML = `
-        <div onclick="editShowCategorys()" class="dorpdownRow categoryPadding">Select task category<img src="/img/downIcon.svg" alt=""></div>
-    `} else {
-        dropdown.innerHTML = `
-        <div onclick="editShowCategorys()" class="category categoryPadding">${popupNewTaskCategory[0]}<div class="catColor" style="background-color: ${popupNewTaskCategory[1]}"></div></div>
-    `
+        noselectedCategoryHtmlTemplate(dropdown);
+    } else {
+        showselectedCategoryHtmlTemplate(dropdown);
     }
-
 }
 
+
 function editCategory() {
-    document.getElementById('editCategory').innerHTML = `
-    <div class="spacebetween newCat">
-        <input id="editCat" class="catInput">
-        <div class="newCatBtn">
-            <img class="clearBtn" src="/img/closeIcon.svg">
-            <div class="greyLine"></div>
-            <img onclick="saveCatEdit()"class="checkBtn" src="/img/checkMark.ico">
-        </div>
-    </div>`
+    editCategoryHtmlTemplate();
     document.getElementById('editCatColor').classList.remove('d-none');
     document.getElementById('editCatColor').innerHTML = '';
     for (let i = 0; i < 6; i++) {
         getRandomCatColor();
-        document.getElementById('editCatColor').innerHTML += `
-        <div onclick="popupAddNewCatColor(${i})" class="catColor" id="popupAddNewCatColor${i}" style="background-color: ${color}">
-            <div class="d-none" id="popupCatColor${i}">${color}</div>
-        </div>`
+        rendernewCategorysColor(i);
     }
 }
+
 
 function saveCatEdit() {
     if (document.getElementById('editCat').value) {
@@ -640,33 +558,31 @@ function saveCatEdit() {
     if (popupSelectedColor.length > 0) {
         categoryColor.push(popupSelectedColor[0]);
     } else {
-        categoryColor.push(document.getElementById('popupCatColor0').innerHTML)
+        categoryColor.push(document.getElementById('popupCatColor0').innerHTML);
     }
     document.getElementById('editCatColor').classList.add('d-none');
     editAddPopupCategory(categorys.length - 1);
 }
 
+
 function editAddPopupCategory(i) {
     if (popupNewTaskCategory.indexOf(categorys[i]) >= 0) {
-        popupNewTaskCategory.splice(0, 2)
+        popupNewTaskCategory.splice(0, 2);
         showEditCat();
     } else {
-        popupNewTaskCategory.splice(0, 2)
-        popupNewTaskCategory.push(categorys[i], categoryColor[i])
+        popupNewTaskCategory.splice(0, 2);
+        popupNewTaskCategory.push(categorys[i], categoryColor[i]);
         showEditCat();
     }
 }
 
+
 function showEditCat() {
     let dropdown = document.getElementById('editCategory');
     if (popupNewTaskCategory.length > 0) {
-        dropdown.innerHTML = `
-        <div onclick="editShowCategorys()" class="category categoryPadding">${popupNewTaskCategory[0]}<div class="catColor" style="background-color: ${popupNewTaskCategory[1]}"></div></div>
-    `
+        popupShowselectedCatHtmlTemplate(dropdown);
     } else {
-        dropdown.innerHTML = `
-        <div onclick="editShowCategorys()" class="dorpdownRow categoryPadding">Select task category<img src="/img/downIcon.svg" alt=""></div>
-    `
+        popupShowNoCatSelectedHtmlTemplate(dropdown);
     }
 }
 
@@ -677,7 +593,7 @@ function editPrioUrgent() {
     clearPrioLow();
     clearPrioMedium();
     document.getElementById('editPrioUrgent').onclick = clearPrioUrgent;
-    popupPrioStatus.push('Urgent')
+    popupPrioStatus.push('Urgent');
 }
 
 
@@ -687,7 +603,7 @@ function editPrioMedium() {
     clearPrioLow();
     clearPrioUrgent();
     document.getElementById('editPrioMedium').onclick = clearPrioMedium;
-    popupPrioStatus.push('Medium')
+    popupPrioStatus.push('Medium');
 }
 
 
@@ -697,7 +613,7 @@ function editPrioLow() {
     clearPrioUrgent();
     clearPrioMedium();
     document.getElementById('editPrioLow').onclick = clearPrioLow;
-    popupPrioStatus.push('Low')
+    popupPrioStatus.push('Low');
 }
 
 
@@ -705,7 +621,7 @@ function clearPrioUrgent() {
     document.getElementById('editPrioUrgent').classList.remove('prioUrgent');
     document.getElementById('editPrioUrgentIcon').classList.remove('prioIconFilter');
     document.getElementById('editPrioUrgent').onclick = editPrioUrgent;
-    popupPrioStatus.splice(0, 1)
+    popupPrioStatus.splice(0, 1);
 }
 
 
@@ -713,7 +629,7 @@ function clearPrioMedium() {
     document.getElementById('editPrioMedium').classList.remove('prioMedium');
     document.getElementById('editPrioMediumIcon').classList.remove('prioIconFilter');
     document.getElementById('editPrioMedium').onclick = editPrioMedium;
-    popupPrioStatus.splice(0, 1)
+    popupPrioStatus.splice(0, 1);
 }
 
 
@@ -721,61 +637,24 @@ function clearPrioLow() {
     document.getElementById('editPrioLow').classList.remove('prioLow');
     document.getElementById('editPrioLowIcon').classList.remove('prioIconFilter');
     document.getElementById('editPrioLow').onclick = editPrioLow;
-    popupPrioStatus.splice(0, 1)
+    popupPrioStatus.splice(0, 1);
 }
 
-
-// function editShowSavedContacts() {
-//     let dropdown = document.getElementById('editContacts');
-//     dropdown.removeAttribute("onclick");
-//     dropdown.innerHTML = `
-//         <div onclick="editCloseContacts()" class="dorpdownRow categoryPadding borderBottom">Select contacts to assign<img src="/img/downIcon.svg" alt=""></div>
-//         <div class="popupDropdownContainer">
-//             <div class="categoryPadding category">You</div>
-//             <div id="editContactsContainer"></div>
-//             <div onclick="popupAddNewContact()" class="categoryPadding category spacebetween">Add new contact <img class="newContactIcon" src="/img/newContactIcon.png"></div>
-//         </div>
-//         `
-//     pushSavedContacts();
-//     renderEditContacts();
-//     editCloseCategorys();
-// }
-
-
-// function pushSavedContacts() {
-//     for (let i = 0; i < tasks[i].length; i++) {
-//         const element = array[i];
-
-//     }
-
-//     editAddContact(i)
-// }
 
 function editShowContacts() {
     let dropdown = document.getElementById('editContacts');
     dropdown.removeAttribute("onclick");
-    dropdown.innerHTML = `
-        <div onclick="editCloseContacts()" class="dorpdownRow categoryPadding borderBottom">Select contacts to assign<img src="/img/downIcon.svg" alt=""></div>
-        <div class="popupDropdownContainer">
-            <div class="categoryPadding category spacebetween" onclick="popupAddCurrentUser()">You<div class="contactsCheckbox" id="popupCurrentUserCheckbox"></div></div>
-            <div id="editContactsContainer"></div>
-            <div onclick="popupAddNewContact()" class="categoryPadding category spacebetween">Add new contact <img class="newContactIcon" src="/img/newContactIcon.png"></div>
-        </div>
-        `
+    editShowContactsHtlmTemplate(dropdown);
     renderEditContacts();
     editCloseCategorys();
 }
+
 
 function renderEditContacts() {
     for (let i = 0; i < alpha.length; i++) {
         for (let j = 0; j < contacts.length; j++) {
             if (alpha[i] == contacts[j].lastName.charAt(0)) {
-                document.getElementById('editContactsContainer').innerHTML += `
-                    <div onclick="editAddContact(${j})" class="categoryPadding category spacebetween">
-                        ${contacts[j].lastName} ${contacts[j].firstName}
-                        <div class="contactsCheckbox" id="editContactsCheckbox${j}"></div>
-                    </div>
-                `
+                renderEditContactsHtmlTemplate(j);
                 checkEditContactsCheckbox(j);
             }
         }
@@ -783,12 +662,12 @@ function renderEditContacts() {
     checkPopupCurrentUserCheckbox();
 }
 
+
 function editCloseContacts() {
     let dropdown = document.getElementById('editContacts');
-    dropdown.innerHTML = `
-        <div onclick="editShowContacts()" class="dorpdownRow categoryPadding">Select contacts to assign<img src="/img/downIcon.svg" alt=""></div>
-     `
+    editCloseContactsHtmlTemplate(dropdown);
 }
+
 
 function rednerCheckoxSelectedContact(j, i) {
     for (let k = 0; k < contacts.length; k++) {
@@ -816,103 +695,50 @@ function editAddContact(i) {
     }
 }
 
+
 function checkEditContactsCheckbox(i) {
     let indexOf = JSON.stringify(popupAssignedContacts).indexOf(JSON.stringify(contacts[i]))
     if (indexOf >= 0 && document.getElementById(`editContactsCheckbox${i}`)) {
-        document.getElementById(`editContactsCheckbox${i}`).innerHTML = `
-        <div id="editCheckboxChecked${i}" class="checkboxChecked"></div>
-    `
+        editContactsCheckboxHtmlTemplate(i);
     }
 }
 
 
 function uncheckEditContactsCheckbox(i) {
     if (document.getElementById(`editCheckboxChecked${i}`)) {
-        document.getElementById(`editCheckboxChecked${i}`).classList.remove('checkboxChecked')
+        document.getElementById(`editCheckboxChecked${i}`).classList.remove('checkboxChecked');
     }
 
 }
-
-// function editAddCurrentUser() {
-//     let indexOf = -1;
-//     let currentUserName = localStorage.getItem('currentUserName');
-//     let currentUserEmail = localStorage.getItem('currentUserEmail');
-//     let currentUserColor = localStorage.getItem('currentUserColor');
-//     let splitName = currentUserName.split(' ');
-//     let curretUserFirstName = splitName.shift();
-//     let curretUserLastName = splitName.join(' ');
-//     curretUserFirstName = curretUserFirstName.charAt(0).toUpperCase() + curretUserFirstName.slice(1);
-//     curretUserLastName = curretUserLastName.charAt(0).toUpperCase() + curretUserLastName.slice(1);
-//     currentUser = { firstName: curretUserFirstName, lastName: curretUserLastName, email: currentUserEmail, 'phone': '', 'contactColor': currentUserColor }
-//     for (let i = 0; i < popupAssignedContacts.length; i++) {
-//         if (JSON.stringify(popupAssignedContacts[i]) == JSON.stringify(currentUser)) {
-//             indexOf = i;
-//         }
-//     }
-//     if (indexOf >= 0) {
-//         popupAssignedContacts.splice(indexOf, 1)
-//         uncheckPopupCurrentUserCheckbox();
-//     } else {
-//         popupAssignedContacts.push(currentUser);
-//         checkPopupCurrentUserCheckbox();
-//     }
-// }
-
-// function checkEditCurrentUserCheckbox() {
-//     let indexOf = popupAssignedContacts.indexOf(currentUser)
-//     if (indexOf >= 0) {
-//         document.getElementById('popupCurrentUserCheckbox').innerHTML = `
-//         <div id="checkboxChecked" class="checkboxChecked"></div>
-//     `}
-// }
-
-
-// function uncheckEditCurrentUserCheckbox() {
-//     document.getElementById(`checkboxChecked`).classList.remove('checkboxChecked')
-// }
-
-
-
 
 
 function editShowTasks(i) {
     let dropdown = document.getElementById('editTaskDropdown');
     dropdown.removeAttribute("onclick");
-    dropdown.innerHTML = `
-        <div onclick="editCloseTasks()" class="dorpdownRow categoryPadding borderBottom">Add Subtask<img src="/img/downIcon.svg" alt=""></div>
-        <div class="dropdownContainer">
-            <div id="editTasks"></div>
-        </div>
-        `
+    editShowAddSubtaskHtmlTemplate(dropdown);
     editRenderTasks(i);
-    // closeCategorys();
+    document.getElementById('editTaskBottomRow').classList.remove('margin231')
 }
+
 
 function editRenderTasks(j) {
     if (tasks.length == 0) {
-        document.getElementById('editTasks').innerHTML = `
-            <div class="categoryPadding category">No task available</div>
-        `
+        editShowEmptySubtaskHtmlTemplate();
     } else {
         for (let i = 0; i < tasks.length; i++) {
             if (tasks[i] != tasks[j]) {
-                document.getElementById('editTasks').innerHTML += `
-            <div onclick="editSubtask(${i})" class="categoryPadding category spacebetween">${tasks[i].title} <div class="contactsCheckbox" id="editSubtaskCheckbox${i}"></div></div>
-            
-        `
-                checkEditSubtaskCheckbox(i)
+                editShowSubtaskHtmlTemplate(i);
+                checkEditSubtaskCheckbox(i);
             }
         }
     }
-
 }
 
 
 function editCloseTasks() {
     let dropdown = document.getElementById('editTaskDropdown');
-    dropdown.innerHTML = `
-        <div onclick="editShowTasks()" class="dorpdownRow categoryPadding">Add Subtask<img src="/img/downIcon.svg" alt=""></div>
-     `
+    editCloseTasksHtmlTemplate(dropdown);
+    document.getElementById('editTaskBottomRow').classList.add('margin231')
 }
 
 
@@ -920,18 +746,14 @@ function rednerCheckoxSelectedSubtasks(j, i) {
     for (let k = 0; k < tasks.length; k++) {
         if (JSON.stringify(tasks[k]) == JSON.stringify(tasks[i].addedSubtasks[j])) {
             popupSubtasks.push(tasks[i].addedSubtasks[j]);
-            // checkEditSubtaskCheckbox(k);
         }
     }
 
 }
 
 
-
-
 function editSubtask(i) {
     let indexOf = -1;
-
     for (let j = 0; j < popupSubtasks.length; j++) {
         if (JSON.stringify(popupSubtasks[j]) == JSON.stringify(tasks[i])) {
             indexOf = j;
@@ -946,6 +768,7 @@ function editSubtask(i) {
     }
 }
 
+
 function checkEditSubtaskCheckbox(i) {
     let indexOf = -1;
     for (let j = 0; j < popupSubtasks.length; j++) {
@@ -953,7 +776,6 @@ function checkEditSubtaskCheckbox(i) {
             indexOf = i;
         }
     }
-    // = JSON.stringify(popupSubtasks).indexOf(JSON.stringify(tasks[i]))
     if (indexOf >= 0 && document.getElementById(`editSubtaskCheckbox${i}`)) {
         document.getElementById(`editSubtaskCheckbox${i}`).innerHTML = `
         <div id="editCheckboxSubtaskChecked${i}" class="checkboxChecked"></div>
@@ -961,30 +783,27 @@ function checkEditSubtaskCheckbox(i) {
     }
 }
 
+
 function uncheckEditSubtaskCheckbox(i) {
     if (document.getElementById(`editCheckboxSubtaskChecked${i}`)) {
-        document.getElementById(`editCheckboxSubtaskChecked${i}`).classList.remove('checkboxChecked')
+        document.getElementById(`editCheckboxSubtaskChecked${i}`).classList.remove('checkboxChecked');
     }
 }
 
 
 function saveEditTask() {
-    tasks[currentTask].title = document.getElementById('editTilte').value
-    tasks[currentTask].description = document.getElementById('editDescription').value
-    tasks[currentTask].category = popupNewTaskCategory
-    tasks[currentTask].assignedContacts = popupAssignedContacts
-    tasks[currentTask].dueDate = document.getElementById('editDueDate').value
+    tasks[currentTask].title = document.getElementById('editTilte').value;
+    tasks[currentTask].description = document.getElementById('editDescription').value;
+    tasks[currentTask].category = popupNewTaskCategory;
+    tasks[currentTask].assignedContacts = popupAssignedContacts;
+    tasks[currentTask].dueDate = document.getElementById('editDueDate').value;
     tasks[currentTask].prio = popupPrioStatus;
-    tasks[currentTask].addedSubtasks = popupSubtasks
+    tasks[currentTask].addedSubtasks = popupSubtasks;
     closeEditTask();
     saveBoard();
     boardRenderTasks();
     closeDetails();
 }
-
-//* Mobile version */
-
-
 
 
 function tasksNotDraggableStatus(w) {
@@ -1000,14 +819,13 @@ function tasksNotDraggableStatus(w) {
     }
 }
 
+
 function changeDetailsSymbol(w) {
     if (w < 800) {
-        document.getElementById('closeDetails').src = '/img/backBtn.svg'
+        document.getElementById('closeDetails').src = 'img/backBtn.svg';
         document.getElementById('closeDetails').style.filter = 'invert(50%)';
     } else {
-        document.getElementById('closeDetails').src = '/img/closeIcon.svg';
+        document.getElementById('closeDetails').src = 'img/closeIcon.svg';
         document.getElementById('closeDetails').style.filter = 'invert(0%)';
     }
-    
 }
-

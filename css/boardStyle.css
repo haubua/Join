@@ -2,6 +2,7 @@
     padding-left: 20%;
     padding-right: 10%;
     padding-top: 50px;
+    padding-bottom: 50px;
     width: 70%;
 }
 
@@ -41,12 +42,35 @@ h1 {
     background-color: #FFFFFF;
 }
 
+.mobileSearchTask {
+    border: 1px solid rgb(0, 0, 0, 0.3);
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px 1px rgb(0 0 0 / 10%);
+    background-color: #FFFFFF;
+    width: 50%;
+    margin-top: 30px;
+    justify-content: space-between;
+}
+
 textarea:focus,
 input:focus {
     outline: none;
 }
 
 .addTaskBtn {
+    background-color: #2A3647;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    padding: 11px;
+    width: 105px;
+    justify-content: space-between;
+    border-radius: 10px;
+}
+
+.mobileAddTaskBtn {
     background-color: #2A3647;
     display: flex;
     align-items: center;
@@ -72,10 +96,13 @@ input:focus {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 19px;
+    font-weight: 600;
+    height: 46px;
 }
 
 .task {
-    min-height: 228px;
+    min-height: 214px;
     margin-top: 9%;
     background-color: #FFFFFF;
     border-radius: 30px;
@@ -83,7 +110,9 @@ input:focus {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: 11px;
+    padding: 18px;
+    overflow-wrap: break-word;
+    cursor: pointer;
 }
 
 .pointer {
@@ -97,6 +126,8 @@ input:focus {
 .taskContacts {
     display: flex;
     margin-left: 5px;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 .contactInitials {
@@ -113,7 +144,7 @@ input:focus {
 }
 
 .taskCategory {
-    height: 27px;
+    min-height: 27px;
     max-width: fit-content;
     padding-left: 25px;
     padding-right: 25px;
@@ -128,10 +159,641 @@ input:focus {
     font-size: 16px;
     font-weight: 700;
     color: #2A3647;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 .taskDescription {
     font-size: 16px;
     color: #A8A8A8;
     font-weight: 400;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.subtaskProgressbar {
+    width: 60%;
+    background-color: #c9c6c6;
+    height: 8px;
+    border-radius: 2px;
+
+}
+
+.flex {
+    display: flex;
+}
+
+.marginTopBtm4 {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.center {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.subtaskProgress {
+    background-color: #7AE229;
+    width: 0%;
+    height: 8px;
+    border-radius: 2px;
+}
+
+.progressFont {
+    font-size: 12px;
+}
+
+.cover {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    background-color: rgb(0, 0, 0, 0.3);
+    padding-left: 220px;
+}
+
+.coverFull {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    background-color: rgb(0, 0, 0, 0.3);
+    padding-left: 220px;
+}
+
+.detailsPopup {
+    background-color: #FFFFFF;
+    max-height: 610px;
+    min-height: 371px;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    border-radius: 30px;
+    width: 450px;
+    position: relative;
+    padding-bottom: 100px;
+}
+
+.circleBg {
+    font-size: 16px;
+    color: white;
+    height: 32px;
+    width: 32px;
+    padding: 2px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #FFFFFF;
+    margin-right: 20px;
+}
+
+.detailsContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.detailsContactName {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.detailsSubHeadline {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.prioIcon {
+    height: 15px;
+    width: 15px;
+    margin-left: 10px;
+
+}
+
+.detailPrioIcon {
+    height: 15px;
+    width: 15px;
+    margin-left: 10px;
+    filter: brightness(0) invert(1);
+}
+
+#prioStatus {
+    margin-left: 20px;
+    padding-top: 4px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 4px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 19px;
+}
+
+.detailsDueDate {
+    margin-left: 20px;
+    font-size: 19px;
+}
+
+.detailsTitle {
+    font-size: 61px;
+    font-weight: 700;
+    color: #2A3647;
+    overflow-wrap: anywhere;
+}
+
+.detailsDescription {
+    font-size: 21px;
+}
+
+#detailsHeadline {
+    padding-top: 4px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 4px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 19px;
+}
+
+.detailsTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.closeDetails {
+    position: relative;
+    top: -25px;
+    right: -20px;
+    cursor: pointer;
+}
+
+.closeDetails:hover {
+    filter: invert(85%);
+}
+
+#detailsAssignetTo {
+    overflow: auto;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #C1C1C1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #9f9f9f;
+}
+
+.rotate {
+    transition: 225ms;
+    transform: rotate(6deg);
+}
+
+.emptySpace {
+    background-color: #f6f7f8;
+    border: 2px dotted rgb(0, 0, 0, 0.3);
+}
+
+
+.detailsEdit {
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    background-color: #2A3647;
+    padding: 10px;
+    border-radius: 10px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.pencil {
+    width: 30px;
+    height: 30px;
+}
+
+.editTask {
+    height: 610px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    border-radius: 30px;
+    width: 450px;
+    position: relative;
+    font-size: 18px;
+}
+
+.editContainerMargin {
+    margin-top: 10px;
+}
+
+.editPrio {
+    display: flex;
+    justify-content: space-around;
+}
+
+.editInputFiled {
+    background-color: #FFFFFF;
+    border: 1px solid rgb(0, 0, 0, 0.3);
+    padding: 11px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px 1px rgb(0 0 0 / 10%);
+    width: 390px;
+    font-size: 21px;
+    height: 23px;
+}
+
+.editPopupConLeft {
+    width: 500px;
+    height: 600px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #D1D1D1;
+}
+
+.editPopupConRight {
+    width: 500px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tasksBottomRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.prioIconMargin {
+    margin-right: 5px;
+}
+
+.taskPrioIcon {
+    height: 19px;
+    width: 19px;
+}
+
+.contentEnd {
+    justify-content: end;
+}
+
+.marginRight10px {
+    margin-right: 10px;
+}
+
+
+.detailsSubtasks {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.subtasksColomn {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.subtasksSpace {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+@media screen and (max-width: 1600px) {
+    .board {
+        padding-left: 18%;
+        padding-right: 0%;
+        width: 78%;
+    }
+}
+
+
+@media screen and (max-width: 1400px) {
+    .categorys {
+        width: 215px;
+    }
+
+    .board {
+        padding-left: 19%;
+        width: 78%;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .categorys {
+        width: 190px;
+    }
+
+    .board {
+        padding-left: 21%;
+        width: 75%;
+    }
+
+    .prioIconMargin {
+        margin: 0px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    #cover2 {
+        left: 0px;
+        top: 50px;
+        bottom: 90px;
+    }
+
+    .cover {
+        padding-left: unset;
+    }
+    .coverFull {
+        padding-left: unset;
+    }
+
+    .board {
+        padding-left: unset;
+    }
+}
+
+@media screen and (max-width: 1150px) {
+    .categorys {
+        width: 170px;
+    }
+
+    .prioIconMargin {
+        margin: 0px;
+    }
+
+    .task {
+        padding: 15px;
+    }
+
+    .boardTopRowRight {
+        width: 45%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .categorysContainer {
+        flex-direction: column;
+    }
+
+    .categorysContainer {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .categorys {
+        width: 100%;
+    }
+
+    .task {
+        margin-top: 20px;
+    }
+
+    .boardTopRowRight {
+        width: 49%;
+    }
+
+    .boardInput {
+        width: 110px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    .boardInput {
+        width: 80px;
+    }
+
+    .boardTopRow {
+        width: 95%;
+    }
+
+    .addTaskBtn {
+        width: 98px;
+    }
+
+    .boardTopRowRight {
+        width: 51%;
+    }
+}
+
+@media screen and (max-width: 835px) {
+    .editPopupConLeft {
+        border: none;
+        width: 100%;
+        height: unset;
+    }
+    .editPopupConRight {
+        width: 100%;
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .board {
+        padding-left: 5%;
+        width: 90%;
+        padding-right: 5%;
+        padding-top: 70px;
+        margin-bottom: 130px;
+    }
+
+    .boardTopRow {
+        width: 100%;
+    }
+
+    .boardTopRowRight {
+        width: 0%;
+    }
+
+    #sidebar {
+        display: none !important;
+    }
+
+    #mobileBar {
+        display: flex !important;
+    }
+
+    #header {
+        display: none !important;
+    }
+
+    #searchTaskInput {
+        display: none !important;
+    }
+
+    .addTaskBtn {
+        display: none;
+    }
+
+    .mobileAddTaskBtn {
+        display: flex !important;
+    }
+
+    .mobileSearchTask {
+        display: flex !important;
+    }
+
+    .coverFull {
+        padding-left: 0px;
+        background-color: #f6f7f8;
+        justify-content: unset;
+        align-items: unset;
+    }
+
+    .detailsPopup {
+        background-color: #f6f7f8;
+        width: 100%;
+        max-height: unset;
+    }
+
+    .detailsEdit {
+        right: 50px;
+    }
+
+    .closeDetails {
+        right: 0px;
+        top: -5px;
+    }
+}
+
+
+@media screen and (max-width: 500px) {
+    .mobileAddTaskBtn {
+        display: flex !important;
+        background-color: #2A3647;
+        align-items: center;
+        color: #FFFFFF;
+        padding: 7px;
+        border-radius: 10px;
+        width: 17px;
+    }
+
+    #mobileAddTask {
+        display: none;
+    }
+
+    .detailsTitle {
+        font-size: 56px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .detailsPopup {
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-top: 0px;
+        margin-top: 55px;
+    }
+
+    .detailsEdit {
+        right: 40px;
+    }
+
+    .closeDetails {
+        right: 0px;
+    }
+}
+
+
+
+
+
+@media screen and (max-width: 350px) {
+    .detailsPopup {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    .detailsEdit {
+        right: 25px;
+    }
+
+    .closeDetails {
+        right: 0px;
+    }
+
+    .detailsTitle {
+        font-size: 51px;
+    }
+
+    .detailsSubHeadline {
+        font-size: 18px;
+    }
+
+    .detailsDueDate {
+        font-size: 16px;
+    }
+
+    #prioStatus {
+        font-size: 17px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .detailsPopup {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .detailsEdit {
+        right: 14px;
+    }
+}
+
+@media screen and (max-height: 760px) {
+    .detailsTitle {
+        font-size: 55px;
+    }
+    .detailsPopup {
+        padding: 35px;
+    }
+    .detailsContainer {
+        margin-top: 15px;
+    }
+}
+
+@media screen and (max-height: 760px) and (max-width: 1200px){
+    .detailsTitle {
+        font-size: 47px;
+    }
+    .detailsPopup {
+        height: 415px;
+    }
+    .detailsEdit {
+        right: 50px;
+    }
 }

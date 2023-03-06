@@ -1,5 +1,9 @@
 body {
     margin: 0px;
     font-family: 'inter';
-    background-color: #F6F7F8;
+    background-color: #f6f7f8;
+}
+
+.d-none {
+    display: none !important;
 }

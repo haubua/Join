@@ -1,50 +1,9 @@
-.legalNotice {
-    padding-left: 370px;
-    width: 1000px;
-    margin-bottom: 100px;
-}
-
-h1 {
-    font-size: 55px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-}
-
-.containerTwo {
-    margin-top: 100px;
-}
-
-
-@media screen and (max-width: 1500px) {
-    .legalNotice {
-        margin-right: 150px;
-        width: unset;
-
-    }
-}
-
 @media screen and (max-width: 1100px) {
     body {
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    .legalNotice {
-        padding-left: unset;
-        width: unset;
-        margin-bottom: 100px;
-        width: 80%;
-        margin-top: 30px;
-        margin-right: unset;
-    }
-
-    #sidebar {
-        display: none !important;
-    }
-
-    #header {
-        display: none !important;
+        height: 100vh;
     }
 
     #mobileHeader {
@@ -105,4 +64,52 @@ h1 {
         color: #CDCDCD;
     }
 
+    .greetingContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #greeting {
+        font-size: 51px;
+    }
+
+    .name {
+        font-size: 55px;
+        font-weight: 600;
+        color: #29ABE2;
+        ;
+    }
+
 }
+
+@media screen and (max-width: 400px) {
+    #greeting {
+        font-size: 45px;
+    }
+
+    .name {
+        font-size: 48px;
+        font-weight: 500;
+
+    }
+}
+
+@media screen and (max-width: 350px) {
+    #greeting {
+        font-size: 40px;
+        margin-right: 10px;
+        margin-left: 10px;
+        text-align: center;
+    }
+    .name {
+        font-size: 43px;
+        font-weight: 500;
+        text-align: center;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+}
+
+

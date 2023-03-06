@@ -5,31 +5,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="/js/mini_backend.js"></script>
-    <script src="/js/includeHTML.js"></script>
-    <script src="/js/JSON.js"></script>
-    <script src="/js/script.js"></script>
-    <script src="/js/summary.js"></script>
-    <script src="/js/contacts.js"></script>
-    <link rel="stylesheet" href="/css/font.css">
-    <link rel="stylesheet" href="/css/contactsStyle.css">
-    <link rel="stylesheet" href="/css/sidbarStyle.css">
-    <link rel="stylesheet" href="/css/generalStyle.css">
-    <link rel="stylesheet" href="/css/headerStyle.css">
-    <link rel="stylesheet" href="/css/mobilebar.css">
-    <link rel="stylesheet" href="/css/mobileHeaderStyle.css">
+    <title>JOIN</title>
+    <script src="js/mini_backend.js"></script>
+    <script src="js/includeHTML.js"></script>
+    <script src="js/JSON.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/summary.js"></script>
+    <script src="js/contacts.js"></script>
+    <script src="js/htmlTemplates.js/contactsHtmlTemplate.js"></script>
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/contactsStyle.css">
+    <link rel="stylesheet" href="css/sidbarStyle.css">
+    <link rel="stylesheet" href="css/generalStyle.css">
+    <link rel="stylesheet" href="css/headerStyle.css">
+    <link rel="stylesheet" href="css/mobileNavBar.css">
+    <link rel="stylesheet" href="css/mobileHeaderStyle.css">
+    <link rel="icon" type="image/x-icon" href="img/joinLogoBlack.svg">
 </head>
 
-<body onload="initContacts(), includeHTML(), setCurrentPageContacts(), checkWindowSize()">
+<body onload="initContacts(), includeHTML(), init(), setCurrentPageContacts(), checkWindowSize()">
     <div w3-include-html="templates/sidebarTemplate.html"></div>
-    <div w3-include-html="templates/headerTemplate.html"></div>
     <div w3-include-html="templates/mobileBarTemplate.html"></div>
+    <div w3-include-html="templates/headerTemplate.html"></div>
     <div w3-include-html="templates/mobileHeaderTemplate.html"></div>
     <div class="contacts">
         <div class="contactsContainerLeft" id="contactsContainer">
             <div class="mobileLeftAddContactBtn d-none" id="mobileLeftAddContactBtn">
-                <div id="addNewContactBtn" onclick="addNewContact()" class="addContactBtn">New contact <img class="contactIcon" src="/img/newContact.svg" alt=""></div>
+                <div id="addNewContactBtn" onclick="addNewContact()" class="addContactBtn">New contact <img class="contactIcon" src="img/newContact.svg" alt=""></div>
             </div>
             <div id="contactsContainerLeft"></div>
         </div>
@@ -41,7 +43,7 @@
             </div>
             <div id="contactDetails"></div>
             <div class="contactsContainerBtn" id="contactsContainerBtn">
-                <div id="addNewContactBtn" onclick="addNewContact()" class="addContactBtn">New contact <img class="contactIcon" src="/img/newContact.svg" alt=""></div>
+                <div id="addNewContactBtn" onclick="addNewContact()" class="addContactBtn">New contact <img class="contactIcon" src="img/newContact.svg" alt=""></div>
             </div>
         </div>
     </div>
@@ -49,8 +51,8 @@
         <div class="d-none" id="popup">
             <div class="popupContainerLeft">
                 <div class="mobileAddContact">
-                    <img class="contactsJoinLogo" src="/img/join logo.svg" alt="">
-                    <img class="mobileCloseIcon" src="/img/closeIcon.svg" onclick="closePopup()" alt="">
+                    <img class="contactsJoinLogo" src="img/join logo.svg" alt="">
+                    <img class="mobileCloseIcon" src="img/closeIcon.svg" onclick="closePopup()" alt="">
                 </div>
                 <div id="popupDescription" class="editConLeftText"></div>
                 <div class="blueLine"></div>

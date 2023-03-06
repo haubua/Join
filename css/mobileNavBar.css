@@ -1,0 +1,148 @@
+#mobileBar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    width: 98vw;
+    height: 90px;
+    align-items: center;
+    background-color: #2A3647;
+    color: #CDCDCD;
+    font-size: 20px;
+    z-index: 5;
+    padding-right: 10px;
+}
+
+.mobileNav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.mobileText {
+    margin-top: 10px;
+}
+
+.mobileLogos {
+    height: 32px;
+    width: 32px;
+}
+
+
+@media screen and (max-width: 800px) {
+    #mobileHeader {
+        display: flex !important;
+        height: 50px;
+        width: 80%;
+        justify-content: space-between;
+        padding-left: 10%;
+        padding-right: 10%;
+        display: flex;
+        align-items: center;
+        background-color: #FFFFFF;
+        z-index: 1;
+        box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.26);
+        top: 0;
+    }
+
+    .headerIcons {
+        display: flex;
+        align-items: center;
+    }
+
+    .headerUser {
+        height: 33px;
+        width: 33px;
+        padding: 1.5px;
+        border-radius: 100%;
+        border: 2px solid #2A3647;
+        margin-left: 15px;
+        cursor: pointer;
+    }
+
+    .headerHelp {
+        height: 20px;
+        width: 20px;
+        cursor: pointer;
+    }
+
+    
+}
+
+@media screen and (max-width: 800px) {
+    #mobileBar {
+        justify-content: space-around;
+    }
+    .joinLogoMobile {
+        width: 30px;
+        height: 32px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    #mobileBar {
+        display: flex !important;
+        width: 90% !important;
+        padding-right: 5% !important;
+        padding-left: 5% !important;
+        justify-content: space-around !important;
+    }
+
+}
+
+
+@media screen and (max-width: 600px) {
+    #mobileBar {
+        display: flex  !important;
+        width: 96% !important;
+        padding-right: 2% !important;
+        padding-left: 2% !important;
+        justify-content: space-around !important;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .mobileLogos {
+        width: 25px;
+        height: 25px;
+    }
+
+    .mobileText {
+        font-size: 19px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .mobileText {
+        font-size: 17px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .mobileLogos {
+        width: 22px;
+        height: 22px;
+    }
+
+    .mobileText {
+        font-size: 15px;
+    }
+
+    .mobileNav {
+
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+
+}
+
+
+@media screen and (max-width: 300px) {
+    .mobileText {
+        font-size: 13px;
+    }
+
+}

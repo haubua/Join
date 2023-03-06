@@ -4,6 +4,7 @@
     height: 85vh;
     padding-top: 50px;
     font-size: 21px;
+    z-index: 5;
 }
 
 h1 {
@@ -19,10 +20,12 @@ h1 {
 }
 
 .taskContainerLeft {
-
+    display: flex;
+    flex-direction: column;
     height: 95%;
     width: 43%;
     border-right: 1px solid #D1D1D1;
+    padding-bottom: 30px;
 }
 
 .taskContainerRight {
@@ -36,8 +39,7 @@ h1 {
 .taskBottomRow {
     display: flex;
     justify-content: end;
-    /* width: 86%; cant chose contacts when active*/
-    position: absolute;
+    margin-top: 30px;
     bottom: 90px;
 }
 
@@ -78,12 +80,12 @@ h1 {
 }
 
 .taskContainerSections {
-    margin-top: 6%;
+    margin-top: 27px;
 }
 
 p {
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .inputField {
@@ -281,7 +283,7 @@ input:focus {
     justify-content: center;
     align-items: center;
     top: 0;
-    left: 0;
+    left: 220px;
     right: 0;
     bottom: 0;
     z-index: 5;
@@ -393,7 +395,19 @@ input:focus {
     cursor: pointer;
 }
 
+.mobileCloseIcon {
+    height: 31px;
+    width: 31px;
+    cursor: pointer;
+    display: none;
+    filter: invert(1);
+}
+
 .closeIcon:hover {
+    filter: invert(85%);
+}
+
+.mobileCloseIcon:hover {
     filter: invert(85%);
 }
 
@@ -487,7 +501,7 @@ input::-webkit-inner-spin-button {
     justify-content: center;
     align-items: center;
     top: 0;
-    left: 0;
+    left: 220px;
     right: 0;
     bottom: 0;
     z-index: 5;
@@ -513,9 +527,10 @@ input::-webkit-inner-spin-button {
 }
 
 .popupTaskBottomRow {
-    position: absolute;
     bottom: 60px;
     right: 40px;
+    margin-top: 30px;
+    margin-left: 75px;
 }
 
 .popupHeadline {
@@ -579,22 +594,6 @@ input::-webkit-inner-spin-button {
     border-radius: 15px;
 }
 
-/* */
-/* 
-.addTaskPopup {
-    width: 1000px;
-    height: 750px;
-    animation: fadeIn 1s ease 0s 1 normal forwards;
-    background-color: #FFFFFF;
-    border-radius: 20px;
-    border: 1px solid #D1D1D1;
-    ;
-} */
-
-/* .popupContainer {
-    display: flex;
-} */
-
 @keyframes fadeInY {
     from {
         opacity: 0;
@@ -648,9 +647,9 @@ input::-webkit-inner-spin-button {
     filter: invert(0.8);
 }
 
-.newCat{
+.newCat {
     height: 47px;
-   
+
 }
 
 .newCatBtn {
@@ -658,7 +657,7 @@ input::-webkit-inner-spin-button {
     align-items: center;
 }
 
-.greyLine{
+.greyLine {
     border-right: 1px solid rgb(0, 0, 0, 0.3);
     height: 33px;
 }
@@ -672,7 +671,7 @@ input::-webkit-inner-spin-button {
     padding: 11px;
 }
 
-.catColorsSelection{
+.catColorsSelection {
     display: flex;
     margin-top: 14px;
 }
@@ -680,4 +679,790 @@ input::-webkit-inner-spin-button {
 .highlightSelectedColor {
     box-shadow: 0px 2px 1px 1px rgb(0 0 0 / 30%);
     border: 3px solid #fffbfb;
+}
+
+.overflowHidden {
+    overflow: hidden;
+}
+
+.mobileAddContact {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+
+.margin231 {
+    margin-top: 231px;
+}
+
+@media screen and (max-width: 1700px) {
+    .addTask {
+        padding-left: 21%;
+        padding-right: 4%;
+    }
+
+}
+
+@media screen and (max-width: 1500px) {
+    .addTask {
+        padding-left: 22%;
+        padding-right: 0%;
+    }
+
+}
+
+@media screen and (max-width: 1400px) {
+    .addTask {
+        padding-left: 24%;
+        padding-right: 0%;
+    }
+
+    .taskContainerLeft {
+        width: 45%;
+    }
+
+    .taskContainerRight {
+        width: 45%;
+    }
+
+}
+
+@media screen and (max-width: 1300px) {
+    .addTask {
+        padding-left: 21%;
+        padding-right: 0%;
+    }
+
+    .taskContainerLeft {
+        width: 47%;
+    }
+
+    .taskContainerRight {
+        width: 47%;
+    }
+
+    .addTaskPopup {
+        width: 950px;
+    }
+
+    .popup {
+        width: 950px;
+    }
+
+    .editConLeftText {
+        font-size: 50px;
+    }
+
+    .popupSubtitle {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    #sidebar {
+        display: none !important;
+    }
+
+    #mobileBar {
+        display: flex !important;
+        width: 70% !important;
+        padding-right: 0px !important;
+        justify-content: space-between !important;
+        padding-left: 15% !important;
+        padding-right: 15% !important;
+        left: 0;
+    }
+
+    #header {
+        display: none !important;
+    }
+
+    #mobileHeader {
+        position: fixed;
+        height: 50px !important;
+        width: 80% !important;
+        justify-content: space-between;
+        padding-left: 10% !important;
+        padding-right: 10% !important;
+        display: flex !important;
+        align-items: center !important;
+        background-color: #FFFFFF !important;
+        z-index: 1;
+        box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.26);
+        top: 0 !important;
+        left: 0;
+    }
+
+    .joinLogoMobile {
+        width: 30px;
+        height: 32px;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .addTask {
+        padding-left: 0%;
+        padding-right: 0%;
+        padding-top: 75px;
+    }
+
+    .taskContainerLeft {
+        width: unset;
+        padding-right: 50px;
+        max-height: 600px;
+        overflow: auto;
+    }
+
+    .taskContainerRight {
+        width: unset;
+        padding-left: 50px;
+    }
+
+    .taskBottomRow {
+        bottom: 160px;
+    }
+
+
+    #cover {
+        left: 0;
+        top: 50px;
+        bottom: 90px;
+    }
+
+    #cover1 {
+        left: 0px;
+        top: 50px;
+        bottom: 90px;
+    }
+
+    .addTaskPopup {
+        height: 720px;
+    }
+
+    .addTaskPopupConLeft {
+        height: 535px;
+    }
+
+    .popupTaskBottomRow {
+        bottom: 40px;
+    }
+
+    .board {
+        margin-bottom: 80px;
+    }
+
+    .popupDropdownContainer {
+        max-height: 105px;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .textarea {
+        min-width: unset;
+        max-width: 330px;
+
+    }
+
+    .inputField {
+        width: 330px;
+    }
+
+    .dropdown {
+        width: 354px;
+    }
+
+    .selectWidth {
+        width: 354px !important;
+    }
+
+    .prioBtn {
+        width: 88px;
+    }
+
+    .catInput {
+        width: 190px;
+    }
+}
+
+@media screen and (max-width: 980px) {
+    .popup {
+        display: flex;
+        flex-direction: column;
+        height: unset;
+        align-items: center;
+    }
+
+    .popupContainerLeft {
+        height: 288px;
+        border-bottom-left-radius: unset;
+        border-top-right-radius: 20px;
+    }
+
+    .popupContainerRight {
+        height: 360px;
+        border-top-right-radius: unset;
+        border-bottom-left-radius: 20px;
+        flex-direction: column;
+        width: 380px;
+        padding: 25px;
+        align-items: center;
+        justify-content: unset;
+    }
+
+    .contactsJoinLogo {
+        margin-bottom: 25px;
+        margin-top: 0px;
+    }
+
+    .closeIcon {
+        display: none;
+    }
+
+    .detailsInitial {
+        position: relative;
+        top: -105px;
+        height: 150px;
+        width: 150px;
+        border: unset;
+    }
+
+    .mobileCloseIcon {
+        display: unset;
+    }
+
+    .editConRightInputfields {
+        display: flex;
+        flex-direction: column;
+        height: 276px;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-top: -66px;
+    }
+}
+
+
+@media screen and (max-width: 955px) {
+    .addTaskPopup {
+        width: 800px;
+    }
+
+    .popupTaskBottomRow {
+        bottom: 27px;
+    }
+    .popupTaskBottomRow {
+        margin-left: 25px;
+    }
+}
+
+
+
+@media screen and (max-width: 900px) {
+    .taskBottomRow {
+        position: unset;
+        margin-top: 50px;
+    }
+
+    .taskContainer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .taskContainerLeft {
+        border: none;
+        padding: 0px;
+    }
+
+    .taskContainerRight {
+        padding: 0px;
+    }
+
+    .addTask {
+        height: unset;
+        margin-bottom: 150px;
+        z-index: unset;
+    }
+}
+
+@media screen and (max-width: 835px) {
+    .addTaskPopup {
+        width: 95%;
+        height: 89%;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        overflow: auto;
+        padding-bottom: 50px;
+    }
+
+    .addTaskPopup::-webkit-scrollbar-track {
+        border-radius: 10px;
+        margin-bottom: 13px;
+        margin-top: 9px;
+    }
+
+    .addTaskPopup::-webkit-scrollbar {
+        width: 13px;
+    }
+
+    .addTaskPopup::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        border-radius: 15px;
+    }
+
+    .addTaskPopup::-webkit-scrollbar-thumb {
+        border-radius: 15px;
+    }
+
+    .popupTaskBottomRow {
+        bottom: 27px;
+    }
+
+    .popupContainer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .addTaskPopupConLeft {
+        border: none;
+        width: 100%;
+        height: unset;
+    }
+
+    .addTaskPopupConRight {
+        width: 100%;
+    }
+
+    .popupTaskBottomRow {
+        position: unset;
+        margin-top: 50px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .textarea {
+        min-width: unset;
+        max-width: 260px;
+
+    }
+
+    .catInput {
+        width: 160px;
+    }
+
+    .inputField {
+        width: 260px;
+    }
+
+    .dropdown {
+        width: 284px;
+    }
+
+    .selectWidth {
+        width: 284px !important;
+    }
+
+    .prioBtn {
+        width: 70px;
+    }
+
+    .taskBottomBtn {
+        width: 284px;
+    }
+
+    .taskContainerRight {
+        align-items: flex-start;
+    }
+
+    .addTask {
+        font-size: 17px;
+    }
+
+    h1 {
+        font-size: 50px;
+    }
+
+    .prioIcon {
+        margin-left: 6px;
+    }
+
+    #clearBtn {
+        width: 80px;
+    }
+
+    #createTaskBtn {
+        width: 160px;
+    }
+
+    .popupHeadline {
+        font-size: 50px;
+    }
+
+    #popupClearBtn {
+        width: 80px;
+    }
+
+    #popupCreateTaskBtn {
+        width: 160px;
+    }
+
+    .popupContainerLeft {
+        width: 336px;
+    }
+
+    .popupContainerRight {
+        width: 336px;
+    }
+
+    .prioBtn {
+        font-size: 17px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .popupHeadline {
+        margin-right: unset;
+        margin-left: unset;
+        justify-content: space-around;
+    }
+
+    .popupContainerRight {
+
+        width: 276px;
+    }
+
+    .popupSubtitle {
+        font-size: 20px;
+    }
+
+    .contactsJoinLogo {
+        height: 70px;
+        width: 58px;
+    }
+
+    .popupContainerLeft {
+        height: 255px;
+        width: 276px;
+    }
+
+    .editConLeftText {
+        font-size: 41px;
+    }
+
+    .editInputfield {
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .textarea {
+        min-width: unset;
+        max-width: 180px;
+
+    }
+
+    .inputField {
+        width: 180px;
+    }
+
+    .dropdown {
+        width: 204px;
+    }
+
+    .selectWidth {
+        width: 204px !important;
+    }
+
+    .prioBtn {
+        width: 70px;
+        padding: 4px;
+    }
+
+    .taskBottomBtn {
+        width: 204px;
+    }
+
+    .taskContainerRight {
+        align-items: flex-start;
+    }
+
+    .addTask {
+        font-size: 13px;
+    }
+
+    h1 {
+        font-size: 43px;
+    }
+
+    .prioIcon {
+        margin-left: 4px;
+    }
+
+    #clearBtn {
+        width: 60px;
+        padding: 6px;
+        font-size: 13px;
+    }
+
+    #createTaskBtn {
+        width: 110px;
+        padding: 6px;
+        font-size: 13px;
+    }
+
+    .inputField {
+        font-size: 13px;
+    }
+
+    .popupHeadline {
+        font-size: 37px;
+    }
+
+    .addTaskPopup::-webkit-scrollbar {
+        width: 9px;
+    }
+
+    .addTaskPopup {
+        padding-right: 9px;
+        padding-bottom: 32px;
+    }
+
+    #popupClearBtn {
+        width: 60px;
+        padding: 6px;
+        font-size: 13px;
+    }
+
+    #popupCreateTaskBtn {
+        width: 110px;
+        padding: 6px;
+        font-size: 13px;
+    }
+
+    .contactsJoinLogo {
+        height: 60px;
+    }
+
+    .editConLeftText {
+        font-size: 36px;
+    }
+
+    .popupSubtitle {
+        font-size: 18px;
+    }
+
+
+    .detailsInitial {
+        height: 125px;
+        width: 125px;
+    }
+
+    .popupContainerLeft {
+        height: 203px;
+        width: 229px;
+    }
+
+    .popupContainerRight {
+        height: 308px;
+        width: 229px;
+    }
+
+    .editInputfield {
+        width: 183px;
+    }
+
+    .editConLeftText {
+        font-size: 34px;
+    }
+
+    .popupSubtitle {
+        font-size: 17px;
+    }
+
+    .blueLine {
+        height: 2px;
+    }
+
+    .contactsJoinLogo {
+        height: 54px;
+        margin-bottom: 21px;
+    }
+
+    .detailsInitial {
+        height: 100px;
+        width: 100px;
+        top: -88px;
+    }
+
+    .catColor {
+        margin-left: 13px;
+    }
+
+    .clearBtn {
+        height: 23px;
+        width: 23px;
+        padding: 4px;
+    }
+
+    .checkBtn {
+        height: 15px;
+        width: 15px;
+        padding: 8px;
+    }
+
+    .catInput {
+        width: 119px;
+        font-size: 13px;
+    }
+
+    .prioBtn {
+        font-size: 13px;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #C1C1C1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #9f9f9f;
+}
+
+
+@media screen and (max-height: 860px) {
+    .addTask {
+        padding-top: 20px;
+    }
+
+    .taskContainer {
+        margin-top: 0%;
+    }
+}
+
+
+@media screen and (max-height: 860px) and (max-width: 1200px) {
+    .addTask {
+        padding-top: 60px;
+    }
+
+    .taskContainer {
+        margin-top: 0%;
+    }
+}
+
+@media screen and (max-height: 750px) and (max-width: 1200px) {
+    .popupTaskBottomRow {
+        margin-bottom: 30px;
+    }
+    .addTaskPopup {
+        height: 100%;
+        overflow: auto;
+    }
+}
+
+
+
+@media screen and (max-height: 750px) and (min-width: 1200px) {
+    .popupHeadline {
+        margin-top: 6px;
+    }
+
+    .addTaskPopup {
+        height: 690px;
+    }
+}
+
+@media screen and (max-height: 750px) and (max-width: 835px) {
+    .addTaskPopup {
+        height: 89%;
+    }
+}
+
+@media screen and (max-height: 790px) and (min-width: 1200px) {
+    .addTask {
+        padding-top: 65px;
+        margin-bottom: 50px;
+        height: unset;
+        z-index: unset;
+    }
+
+    .taskContainer {
+        margin-top: 0%;
+    }
+
+    .taskBottomRow {
+        position: unset;
+        margin-top: 50px;
+    }
+
+    .taskContainer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .taskContainerLeft {
+        border: none;
+        padding: 0px;
+    }
+
+    .taskContainerRight {
+        padding: 0px;
+        align-items: flex-start
+    }
+}
+
+@media screen and (max-height: 790px) and (max-width: 1200px) {
+    .addTask {
+        padding-top: 65px;
+        margin-bottom: 130px;
+        height: unset;
+        z-index: unset;
+    }
+
+    .taskContainer {
+        margin-top: 0%;
+    }
+
+    .taskBottomRow {
+        position: unset;
+        margin-top: 50px;
+    }
+
+    .taskContainer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .taskContainerLeft {
+        border: none;
+        padding: 0px;
+        max-height: unset;
+        overflow: unset;
+    }
+
+    .taskContainerRight {
+        padding: 0px;
+        align-items: flex-start
+    }
+}
+
+
+@media screen and (max-height: 700px) {
+    .addTaskPopup {
+        height: 100%;
+        overflow: auto;
+    }
 }

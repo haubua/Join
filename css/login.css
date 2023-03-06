@@ -1,0 +1,737 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4%;
+}
+body {
+    height: 100vh;
+}
+
+.login {
+    height: 100vh;
+    width: 100vw;
+}
+
+.head {
+    height: 13%;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 4%;
+}
+
+.loginContainer {
+    width: 550px;
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 35px;
+    padding-right: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    user-select: none;
+}
+
+#loginContainer {
+    height: 70%;
+}
+
+.headline {
+    font-size: 61px;
+    font-weight: 700;
+    color: #2A3647;
+}
+
+.blueLine {
+    min-height: 3px;
+    width: 125px;
+    background-color: #29ABE2;
+    margin-top: 15px;
+}
+
+.loginInputfields {
+    display: flex;
+    border: 1px solid rgb(0, 0, 0, 0.3);
+    align-items: center;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px 1px rgb(0 0 0 / 10%);
+    background-color: #FFFFFF;
+    padding-right: 12px;
+    margin-top: 35px;
+}
+
+.inputfield {
+    background-color: #FFFFFF;
+    border: none;
+
+    width: 280px;
+}
+
+.bottomRows {
+    display: flex;
+    justify-content: space-around;
+    width: 60%;
+    margin-top: 7%;
+    align-items: center;
+}
+
+.checkbox {
+    height: 10px;
+    width: 10px;
+    border: 1px solid black;
+    border-radius: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 7px;
+}
+
+.fontSize16 {
+    font-size: 16px;
+}
+
+.fontSize21 {
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.guestBtn {
+    color: #2A3647;
+    border: 1px solid #2A3647;
+    width: 130px;
+    height: 30px;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.loginBtn {
+    background-color: #2A3647;
+    width: 100px;
+    height: 30px;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 21px;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+}
+
+.signUp {
+    display: flex;
+    width: 245px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.signUpBtn {
+    background-color: #2A3647;
+    width: 60px;
+    height: 30px;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.topRow {
+    display: flex;
+}
+
+.backBtn {
+    position: absolute;
+    left: 32px;
+    cursor: pointer;
+}
+
+.forgotHeadline {
+    font-size: 41px;
+    font-weight: 700;
+    color: #2A3647;
+    text-align: center;
+}
+
+.containerText {
+    margin-top: 35px;
+    text-align: center;
+    width: 470px;
+}
+
+
+.sendnBtn {
+    background-color: #2A3647;
+    width: 210px;
+    height: 30px;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 21px;
+}
+
+#forgotContainer {
+    width: 550px;
+    height: 296px;
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 35px;
+    padding-right: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+}
+
+.resetContainer {
+    width: 550px;
+    height: 350px;
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 35px;
+    padding-right: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.continueBtn {
+    background-color: #2A3647;
+    width: 160px;
+    height: 30px;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 21px;
+}
+
+.joinLogo {
+    animation: fadeOut 1s ease-in 0s 1 normal backwards;
+}
+
+.mobileSignUpBtn {
+    display: none;
+    width: 245px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@keyframes fadeOut {
+    from {
+        scale: 5;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+    0% {
+        transform: translateX(120%) translateY(60%);
+    }
+
+    100% {
+        transform: translateX(0%) translateY(0%);
+    }
+}
+
+.forgotLink {
+    text-decoration: none;
+    color: #29ABE2;
+}
+
+.checkboxChecked {
+    height: 6px;
+    width: 6px;
+    border: 1px solid black;
+    background-color: black;
+    border-radius: 100%;
+}
+
+.rememberContainer {
+    display: flex;
+    align-items: center;
+}
+
+.loginFail {
+    margin-top: 4%;
+    color: red;
+    text-align: center;
+}
+
+.loginFailRows {
+    display: flex;
+    justify-content: space-around;
+    width: 60%;
+    margin-top: 6%;
+    align-items: center;
+}
+
+.emailSend {
+    height: 74px;
+    width: 450px;
+    background-color: #2A3647;
+    color: white;
+    animation: fadeInY 1s ease 0s 1 normal forwards;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 15px;
+    margin-top: 8%;
+    font-size: 23px;
+    font-weight: 400;
+}
+
+
+@keyframes fadeInY {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+    0% {
+        transform: translateY(300%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.pwReset {
+    position: absolute;
+    height: 74px;
+    width: 350px;
+    background-color: #2A3647;
+    color: white;
+    animation: fadeInY 1s ease 0s 1 normal forwards;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 15px;
+    font-size: 23px;
+    font-weight: 400;
+}
+
+.pwResetD-none {
+    animation: fadeOutY 1s ease 0s 1 normal backwards;
+}
+
+@keyframes fadeOutY {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(1300%);
+    }
+}
+
+.opacity20 {
+    opacity: 20%;
+}
+
+button {
+    border-width: 0px;
+    border-style: none;
+    box-sizing: unset;
+    text-rendering: unset;
+    appearance: unset;
+}
+
+.signUpCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+@media screen and (max-width: 1200px) {
+    .joinLogo {
+        height: 100px;
+    }
+}
+
+
+@keyframes fadeOut900 {
+    from {
+        scale: 5;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+    0% {
+        transform: translateX(80%) translateY(60%);
+    }
+
+    100% {
+        transform: translateX(0%) translateY(0%);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .center {
+        margin-top: 7%;
+    }
+
+    .joinLogo {
+        animation: fadeOut900 1s ease-in 0s 1 normal backwards;
+    }
+}
+
+@keyframes fadeOut700 {
+    from {
+        scale: 5;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+    0% {
+        transform: translateX(70%) translateY(60%);
+    }
+
+    100% {
+        transform: translateX(0%) translateY(0%);
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .mobileSignUpBtn {
+        display: flex;
+        margin-top: 15%;
+    }
+    .signUpCenter {
+        display: none
+    }
+
+   #loginContainer {
+    height: 60%;
+   }
+    .head {
+        width: 90vw;
+        height: 11%;
+        padding-left: 10vw;
+        justify-content: flex-start;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .joinLogo {
+        animation: fadeOut700 1s ease-in 0s 1 normal backwards;
+    }
+
+    #forgotContainerWidth {
+        width: 100%;
+    }
+
+    #forgotContainer {
+        width: 100%;
+    }
+}
+
+@keyframes fadeOut630 {
+    from {
+        scale: 4;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+    0% {
+        transform: translateX(50%) translateY(60%);
+    }
+
+    100% {
+        transform: translateX(0%) translateY(0%);
+    }
+}
+
+@media screen and (max-width: 630px) {
+    #loginContainer {
+        width: 100%;
+    }
+
+    #signUpContainer {
+        width: 100%;
+    }
+
+    .loginContainer {
+        width: 100%;
+    }
+
+    .bottomRows {
+        width: 65%;
+    }
+
+    .joinLogo {
+        animation: fadeOut630 1s ease-in 0s 1 normal backwards;
+    }
+    .forgotHeadline {
+        font-size: 38px;
+    }
+    .backBtn {
+        top: 16px;
+    }
+    .center {
+        width: 100%;
+    }
+    .resetContainer {
+        width: 100%;
+    }
+    .joinLogoResetPw {
+        height: 90px;
+    }
+}
+
+
+@media screen and (max-width: 560px) {
+    .containerText {
+        width: unset;
+    }
+    .bottomRows {
+        width: 72%;
+    }
+    .backBtn {
+        top: 10px;
+        height: 33px;
+    }
+    .forgotHeadline {
+        font-size: 37px;
+    }
+}
+
+@media screen and (max-width: 510px) {
+
+    .bottomRows {
+        width: 81%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .bottomRows {
+        flex-direction: column;
+        margin-top: 6%;
+        width: 324px
+    }
+
+    #bottomRow1 {
+        align-items: flex-start;
+    }
+
+    .forgotLink {
+        margin-top: 6%;
+    }
+
+    .guestBtn {
+        margin-top: 6%;
+    }
+
+    #forgotContainer {
+        height: auto;
+    }
+    .joinLogoResetPw {
+        height: 80px;
+    }
+    .emailSend {
+        width: 80%;
+        font-size: 17px;
+    }
+    .sendIcon {
+        height: 28px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+
+
+
+@media screen and (max-width: 400px) {
+    .joinLogo {
+        height: 77px;
+    }
+
+    .inputfield {
+        width: 225px;
+    }
+
+    .bottomRows {
+        width: 269px
+    }
+
+    #signUpHeadline {
+        font-size: 50px;
+    }
+
+    .backBtn {
+        left: 25px;
+        top: 15px;
+    }
+    .head {
+        width: 80%;
+        margin-left: 10vw;
+        justify-content: unset;
+    }
+    
+}
+
+@media screen and (max-width: 350px) {
+    .joinLogo {
+        height: 70px;
+    }
+
+    .head {
+        height: 8%;
+    }
+    .headline {
+        font-size: 56px;
+    }
+
+    .loginContainer {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .inputfield {
+        width: 210px;
+    }
+
+    .bottomRows {
+        width: 254px
+    }
+    .backBtn {
+        height: 30px;
+        left: 14px;
+    }
+    .resetContainer {
+       margin-top: 50px;
+       padding-left: unset;
+       padding-right: unset;
+    }
+    
+}
+
+@keyframes fadeOut310 {
+    from {
+        scale: 3;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+    0% {
+        transform: translateX(50%) translateY(90%);
+    }
+
+    100% {
+        transform: translateX(0%) translateY(0%);
+    }
+}
+
+@media screen and (max-width: 310px) {
+    .joinLogo {
+        height: 70px;
+    }
+    .headline {
+        font-size: 56px;
+    }
+
+    .inputfield {
+        width: 170px;
+    }
+
+    .bottomRows {
+        width: 214px
+    }
+
+    .joinLogo {
+        animation: fadeOut310 1s ease-in 0s 1 normal backwards;
+    }
+}
+
+    @media screen and (max-width: 730px) {
+        .loginContainer {
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+        #loginContainer {
+            height: unset;
+        }
+    }
+
+    @media screen and (max-height: 750px) {
+        .joinLogo {
+            height: 45px;
+        }
+    }

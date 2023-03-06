@@ -45,15 +45,19 @@
     display: flex;
     align-items: center;
     padding-left: 15%;
-    margin-top: 15px;
-    padding-top: 8.5px;
-    padding-bottom: 8.5px;
+    margin-top: 9px;
+    padding-top: 13px;
+    padding-bottom: 13px;
     cursor: pointer;
 }
 
 .sidebarNavRow:hover {
     background-color: #091931;
     transition: ease-in-out 255ms;
+}
+
+.sidebarHighlight {
+    background-color: #091931;
 }
 
 a {

@@ -5,22 +5,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/generalStyle.css">
-    <link rel="stylesheet" href="/css/login.css">
-    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="css/generalStyle.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/font.css">
 
-    <script src="/js/mini_backend.js"></script>
-    <script src="/js/JSON.js"></script>
-    <script src="/js/script.js"></script>
-    <script src="/js/login.js"></script>
-
-    <title>Document</title>
+    <script src="js/mini_backend.js"></script>
+    <script src="js/JSON.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/login.js"></script>
+    <link rel="icon" type="image/x-icon" href="img/joinLogoBlack.svg">
+    <title>JOIN</title>
 </head>
 
 <body onload="loginAnimation(), loadUsers(), setCurrentPageLogin()">
     <div class="head">
         <a href="login.html">
-            <img class="joinLogo" src="/img/joinLogoBlack.svg" alt="">
+            <img class="joinLogo" src="img/joinLogoBlack.svg" alt="">
         </a>
 
         <div class="signUpCenter">
@@ -37,11 +37,11 @@
                 <div class="blueLine"></div>
                 <div class="loginInputfields">
                     <input type="email" class="inputfield" id="email" placeholder="Email" required>
-                    <img class="editIcons" src="/img/emailIcon.svg" alt="">
+                    <img class="editIcons" src="img/emailIcon.svg" alt="">
                 </div>
                 <div class="loginInputfields">
                     <input type="password" class="inputfield" id="password" placeholder="Password" required>
-                    <img class="editIcons" src="/img/lockIcon.svg" alt="">
+                    <img class="editIcons" src="img/lockIcon.svg" alt="">
                 </div>
                 <div class="loginFail d-none" id="loginFail">
                     Your log-in has failed because email or password is incorrect.
@@ -68,22 +68,22 @@
         <div class="center">
             <div class="loginContainer">
                 <div class="topRow">
-                    <img class="backBtn" src="/img/backBtn.svg" alt="" onclick="closeSignUp()">
+                    <img class="backBtn" src="img/backBtn.svg" alt="" onclick="closeSignUp()">
                     <div class="headline" id="signUpHeadline">Sign up</div>
                 </div>
 
                 <div class="blueLine"></div>
                 <div class="loginInputfields">
                     <input type="text" class="inputfield" id="signUpName" placeholder="Name" required>
-                    <img class="editIcons" src="/img/lockIcon.svg" alt="">
+                    <img class="editIcons" src="img/lockIcon.svg" alt="">
                 </div>
                 <div class="loginInputfields">
                     <input type="email" class="inputfield" id="signUpEmail" placeholder="Email" required>
-                    <img class="editIcons" src="/img/emailIcon.svg" alt="">
+                    <img class="editIcons" src="img/emailIcon.svg" alt="">
                 </div>
                 <div class="loginInputfields">
                     <input type="password" class="inputfield" id="signUpPassword" placeholder="Password" required>
-                    <img class="editIcons" src="/img/lockIcon.svg" alt="">
+                    <img class="editIcons" src="img/lockIcon.svg" alt="">
                 </div>
                 <div class="bottomRows fontSize21">
                     <button class="loginBtn" type="submit" id="signUpBtn2">Sign up</button>
@@ -99,7 +99,7 @@
         <div class="center">
             <div class="forgotContainer d-none" id="forgotContainer">
                 <div class="topRow">
-                    <img class="backBtn" src="/img/backBtn.svg" alt="" onclick="closeForgotPW()">
+                    <img class="backBtn" src="img/backBtn.svg" alt="" onclick="closeForgotPW()">
                     <div class="forgotHeadline">I forgot my password</div>
                 </div>
                 <div class="blueLine"></div>
@@ -108,7 +108,7 @@
                 </div>
                 <div class="loginInputfields">
                     <input name="email" type="email" class="inputfield" id="sendEmail" placeholder="Email" required>
-                    <img class="editIcons" src="/img/emailIcon.svg" alt="">
+                    <img class="editIcons" src="img/emailIcon.svg" alt="">
                 </div>
                 <div class="loginFail  d-none" id="emailNotRegistered">
                     This e-mail address is not registered, pleas sign up first!
@@ -123,7 +123,7 @@
                 </div>
             </div>
             <div id="emailSend" class="d-none">
-                <img class="sendIcon" src="/img/sendCheck.svg" alt="">
+                <img class="sendIcon" src="img/sendCheck.svg" alt="">
                 An E-Mail has been sent to you
             </div>
         </div>

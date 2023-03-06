@@ -4,10 +4,10 @@ let userDataSaved = 'false';
 function loginAnimation() {
     setTimeout(() => {
         document.getElementById('center').classList.remove('d-none');
-        // document.getElementById('signUpBtn').classList.remove('d-none');
-        setSignUpBtn()
+        setSignUpBtn();
     }, 1000)
 }
+
 
 function setSignUpBtn() {
     w = window.innerWidth;
@@ -19,21 +19,24 @@ function setSignUpBtn() {
     }
 }
 
+
 function showSignUp() {
     document.getElementById('signUpContainer').classList.remove('d-none');
     document.getElementById('loginContainer').classList.add('d-none');
     document.getElementById('signUpBtn').classList.add('d-none');
     document.getElementById('mobileSignUpBtn').classList.add('d-none');
-    currentPage = 'signUp'
+    currentPage = 'signUp';
 }
+
 
 function closeSignUp() {
     document.getElementById('signUpContainer').classList.add('d-none');
     document.getElementById('loginContainer').classList.remove('d-none');
     document.getElementById('signUpBtn').classList.remove('d-none');
     document.getElementById('mobileSignUpBtn').classList.remove('d-none');
-    currentPage = 'login'
+    currentPage = 'login';
 }
+
 
 function showForgotPW() {
     document.getElementById('loginContainer').classList.add('d-none');
@@ -41,8 +44,9 @@ function showForgotPW() {
     document.getElementById('forgotContainerWidth').classList.remove('d-none')
     document.getElementById('signUpBtn').classList.add('d-none');
     document.getElementById('mobileSignUpBtn').classList.add('d-none');
-    currentPage = 'forgotPw'
+    currentPage = 'forgotPw';
 }
+
 
 function closeForgotPW() {
     document.getElementById('loginContainer').classList.remove('d-none');
@@ -50,8 +54,9 @@ function closeForgotPW() {
     document.getElementById('forgotContainerWidth').classList.add('d-none')
     document.getElementById('signUpBtn').classList.remove('d-none');
     document.getElementById('mobileSignUpBtn').classList.remove('d-none');
-    currentPage = 'login'
+    currentPage = 'login';
 }
+
 
 function rememberUser() {
     document.getElementById('checkbox').classList.add('checkboxChecked');
@@ -60,6 +65,7 @@ function rememberUser() {
     localStorage.removeItem('userDataSaved');
     localStorage.setItem('userDataSaved', 'true');
 }
+
 
 function dontRemember() {
     document.getElementById('checkbox').classList.remove('checkboxChecked');
@@ -70,7 +76,6 @@ function dontRemember() {
 }
 
 
-
 function autofill() {
     userDataSaved = localStorage.getItem('userDataSaved')
     if (userDataSaved == 'true') {
@@ -78,10 +83,9 @@ function autofill() {
         document.getElementById('password').value = localStorage.getItem('userPw');
         document.getElementById('checkbox').classList.add('checkboxChecked');
         document.getElementById('remember').onclick = dontRemember;
-    } else {
-
     }
 }
+
 
 function saveUserData() {
     let email = document.getElementById('email').value;
@@ -92,30 +96,35 @@ function saveUserData() {
     localStorage.setItem('userPw', pw);
 }
 
+
 function logIn(event) {
     event.preventDefault();
     saveUserData();
     let email = document.getElementById('email').value;
     let pw = document.getElementById('password').value;
     if (users.length == 0) {
-        document.getElementById('bottomRow1').classList.add('loginFailRows')
-        document.getElementById('bottomRow2').classList.add('loginFailRows')
-        document.getElementById('loginFail').classList.remove('d-none')
+        document.getElementById('bottomRow1').classList.add('loginFailRows');
+        document.getElementById('bottomRow2').classList.add('loginFailRows');
+        document.getElementById('loginFail').classList.remove('d-none');
     } else {
-        for (let i = 0; i < users.length; i++) {
-            if (users[i].userEmail == email && users[i].userPw == pw) {
-                localStorage.removeItem('currentUserName');
-                localStorage.removeItem('currentUserEmail');
-                localStorage.setItem('currentUserName', users[i].userName);
-                localStorage.setItem('currentUserEmail', users[i].userEmail);
-                document.body.classList.add('d-none');
-                checkWindowSize();
+        checkLoginData(email, pw);
+    }
+}
 
-            } else {
-                document.getElementById('bottomRow1').classList.add('loginFailRows')
-                document.getElementById('bottomRow2').classList.add('loginFailRows')
-                document.getElementById('loginFail').classList.remove('d-none')
-            }
+
+function checkLoginData(email, pw) {
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].userEmail == email && users[i].userPw == pw) {
+            localStorage.removeItem('currentUserName');
+            localStorage.removeItem('currentUserEmail');
+            localStorage.setItem('currentUserName', users[i].userName);
+            localStorage.setItem('currentUserEmail', users[i].userEmail);
+            document.body.classList.add('d-none');
+            checkWindowSize();
+        } else {
+            document.getElementById('bottomRow1').classList.add('loginFailRows');
+            document.getElementById('bottomRow2').classList.add('loginFailRows');
+            document.getElementById('loginFail').classList.remove('d-none');
         }
     }
 }
@@ -129,17 +138,14 @@ function guestLogIn() {
     checkWindowSize();
 }
 
+
 function nextPage() {
-    if (w < 450) {
+    if (w <= 1100) {
         window.open("greeting.html", "_self");
     } else {
         window.open("summary.html", "_self");
     }
-
-
 }
-
-
 
 //*** SIGN UP SECTION */
 
@@ -161,21 +167,26 @@ async function signUp(event) {
         localStorage.setItem('currentUserColor', color);
         checkWindowSize();
     } else {
-        for (let i = 0; i < users.length; i++) {
-            if (users[i].userEmail == userEmail) {
-                document.getElementById('signUpBtn2').classList.add('d-none');
-                document.getElementById('emailExists').classList.remove('d-none')
-            } else if (users[i] != newUser) {
-                users.push(newUser)
-                await backend.setItem('users', JSON.stringify(users));
-                localStorage.removeItem('currentUserName');
-                localStorage.removeItem('currentUserEmail');
-                localStorage.removeItem('currentUserColor');
-                localStorage.setItem('currentUserName', userName);
-                localStorage.setItem('currentUserEmail', userEmail);
-                localStorage.setItem('currentUserColor', color);
-                checkWindowSize();
-            }
+        setNewUserData(userName, userEmail, userPw);
+    }
+}
+
+
+async function setNewUserData(userName, userEmail) {
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].userEmail == userEmail) {
+            document.getElementById('signUpBtn2').classList.add('d-none');
+            document.getElementById('emailExists').classList.remove('d-none');
+        } else if (users[i] != newUser) {
+            users.push(newUser);
+            await backend.setItem('users', JSON.stringify(users));
+            localStorage.removeItem('currentUserName');
+            localStorage.removeItem('currentUserEmail');
+            localStorage.removeItem('currentUserColor');
+            localStorage.setItem('currentUserName', userName);
+            localStorage.setItem('currentUserEmail', userEmail);
+            localStorage.setItem('currentUserColor', color);
+            checkWindowSize();
         }
     }
 }
@@ -183,7 +194,7 @@ async function signUp(event) {
 
 window.addEventListener("keydown", (e) => {
     document.getElementById('signUpBtn2').classList.remove('d-none');
-    document.getElementById('emailExists').classList.add('d-none')
+    document.getElementById('emailExists').classList.add('d-none');
 })
 
 
@@ -200,14 +211,15 @@ function sendEmail() {
         }
     }
     document.getElementById('emailNotRegistered').classList.remove('d-none');
-    document.getElementById('bottomRow3').classList.add('loginFailRows')
+    document.getElementById('bottomRow3').classList.add('loginFailRows');
 }
 
 
 window.addEventListener("keydown", (e) => {
     document.getElementById('emailNotRegistered').classList.add('d-none');
-    document.getElementById('bottomRow3').classList.remove('loginFailRows')
+    document.getElementById('bottomRow3').classList.remove('loginFailRows');
 })
+
 
 async function onSubmit(event) {
     event.preventDefault();
@@ -216,26 +228,27 @@ async function onSubmit(event) {
     if (response.ok) {
         sendEmail();
     } else {
-        alert('Email cound not be sent, try again later')
+        alert('Email cound not be sent, try again later');
     }
 }
 
+
 function action(formData) {
-    const input = 'https://robert-hahn.developerakademie.net/send_mail.php';
+    const input = 'https://hahn-robert.com/send_mail.php';
     const requestInit = {
         method: 'post',
         body: formData
     };
-
     return fetch(
         input,
         requestInit
     );
 }
 
+
 function emailSend() {
-    document.getElementById('forgotContainer').classList.add('d-none')
-    document.getElementById('signUpBtn').classList.add('d-none')
+    document.getElementById('forgotContainer').classList.add('d-none');
+    document.getElementById('signUpBtn').classList.add('d-none');
     setTimeout(() => {
         document.getElementById('emailSend').classList.add('emailSend');
         document.getElementById('emailSend').classList.remove('d-none');

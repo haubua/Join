@@ -5,29 +5,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>JOIN</title>
 
-    <script src="/js/mini_backend.js"></script>
-    <script src="/js/JSON.js"></script>
-    <script src="/js/script.js"></script>
-    <script src="/js/includeHTML.js"></script>
-    <script src="/js/summary.js"></script>
-    <script src="/js/login.js"></script>
+    <script src="js/mini_backend.js"></script>
+    <script src="js/JSON.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/includeHTML.js"></script>
+    <script src="js/summary.js"></script>
+    <script src="js/login.js"></script>
     
-    <link rel="stylesheet" href="/css/font.css">
-    <link rel="stylesheet" href="/css/summaryStyle.css">
-    <link rel="stylesheet" href="/css/sidbarStyle.css">
-    <link rel="stylesheet" href="/css/generalStyle.css">
-    <link rel="stylesheet" href="/css/headerStyle.css">
-    <link rel="stylesheet" href="/css/mobilebar.css">
-    <link rel="stylesheet" href="/css/mobileHeaderStyle.css">
-    
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/summaryStyle.css">
+    <link rel="stylesheet" href="css/sidbarStyle.css">
+    <link rel="stylesheet" href="css/generalStyle.css">
+    <link rel="stylesheet" href="css/headerStyle.css">
+    <link rel="stylesheet" href="css/mobileNavBar.css">
+    <link rel="stylesheet" href="css/mobileHeaderStyle.css">
+    <link rel="icon" type="image/x-icon" href="img/joinLogoBlack.svg">
 </head>
 
 <body onload="includeHTML(), initSummary(), setCurrentPageSummary()" ;>
     <div w3-include-html="templates/sidebarTemplate.html"></div>
-    <div w3-include-html="templates/headerTemplate.html"></div>
     <div w3-include-html="templates/mobileBarTemplate.html"></div>
+    <div w3-include-html="templates/headerTemplate.html"></div>
     <div w3-include-html="templates/mobileHeaderTemplate.html"></div>
     <div class="summary">
         <div class="firstRow">
@@ -54,7 +54,7 @@
                 <div class="thirdRow">
                     <div class="sections section3rdRow">
                         <div class="thirdRowLeft">
-                            <img src="/img/urgentIcon.svg" class="urgentIcon" alt="">
+                            <img src="img/urgentIcon.svg" class="urgentIcon" alt="">
                             <div class="summaryUrgentAmount">
                                 <div class="tasksPrioUrgentAmount" id="tasksPrioUrgentAmount"></div>
                                 <div class="urgentText">Urgent</div>
@@ -68,14 +68,14 @@
                 </div>
                 <div class="fourthRow">
                     <div class="sections sectionMarginRight section4thRow">
-                        <img src="/img/editIcon.svg" class="summaryIcons" alt="">
+                        <img src="img/editIcon.svg" class="summaryIcons" alt="">
                         <div>
                             <div class="sectionNumber" id="tasksTodoAmount"></div>
                             <div class="sectionText">To-do</div>
                         </div>
                     </div>
                     <div class="sections section4thRow">
-                        <img src="/img/doneIcon.svg" class="summaryIcons" alt="">
+                        <img src="img/doneIcon.svg" class="summaryIcons" alt="">
                         <div>
                             <div class="sectionNumber" id="tasksDoneAmount"></div>
                             <div class="sectionText">Done</div>

@@ -1,8 +1,6 @@
-setURL('https://robert-hahn.developerakademie.net/smallest_backend_ever-master');
+setURL('https://hahn-robert.com/smallest_backend_ever-master');
 let categorys = [];
-let categoryColor = []
-// 'Sales', 'Backoffice'
-// '#FC71FF', '#1FD7C1'
+let categoryColor = [];
 let colorSelection = ['#9B5D27', '#97BD16', '#868CD8', '#223595', '#08CE33', '#F54EBD'];
 let color;
 let selectedColor = [];
@@ -29,8 +27,8 @@ async function addTask() {
     let prio = prioStatus[0];
     let addedSubtasks = subtasks;
     getTaskID();
-    let newTask = { title, description, category, assignedContacts, dueDate, prio, addedSubtasks, taskStatus, id }
-    tasks.push(newTask)
+    let newTask = { title, description, category, assignedContacts, dueDate, prio, addedSubtasks, taskStatus, id };
+    tasks.push(newTask);
     await backend.setItem('tasks', JSON.stringify(tasks));
     await backend.setItem('taskID', JSON.stringify(taskID));
     clearInnerHtml();
@@ -63,6 +61,7 @@ function clearInnerHtml() {
         closeTasks();
     }, 800)
 }
+
 
 function instantClearInnerHtml() {
     clearValue();
@@ -113,11 +112,11 @@ function showSucess() {
         document.getElementById('addedToBoard').classList.remove('d-none');
     }, 300)
     setTimeout(() => {
-        document.getElementById('addedToBoard').classList.add('addedToBoardD-none')
+        document.getElementById('addedToBoard').classList.add('addedToBoardD-none');
     }, 2300)
     setTimeout(() => {
-        document.getElementById('cover1').classList.add('d-none')
-        document.getElementById('addedToBoard').classList.remove('addedToBoardD-none')
+        document.getElementById('cover1').classList.add('d-none');
+        document.getElementById('addedToBoard').classList.remove('addedToBoardD-none');
         document.getElementById('addedToBoard').classList.remove('addedToBoard');
         document.getElementById('addedToBoard').classList.add('d-none');
     }, 3200)
@@ -127,7 +126,7 @@ function showSucess() {
 function showCategorys() {
     let dropdown = document.getElementById('categoryDropdown');
     dropdown.removeAttribute("onclick");
-    showCategorysHtmlTemplate(dropdown)
+    showCategorysHtmlTemplate(dropdown);
     renderSavedCategorys();
     closeContacts();
 }
@@ -152,9 +151,9 @@ function closeCategorys() {
 
 function addCategory(i) {
     if (newTaskCategory.indexOf(categorys[i]) >= 0) {
-        removeSelectedCat()
+        removeSelectedCat();
     } else {
-        changeSelectedCat(i)
+        changeSelectedCat(i);
     }
 }
 
@@ -185,7 +184,7 @@ function showSelectedCat() {
 function addNewCategory() {
     selectedColor = [];
     addNewCategoryHtmlTemplate();
-    document.getElementById('catColorsSelection').classList.remove('d-none')
+    document.getElementById('catColorsSelection').classList.remove('d-none');
     document.getElementById('catColorsSelection').innerHTML = '';
     for (let i = 0; i < 6; i++) {
         getRandomCatColor();
@@ -204,33 +203,32 @@ function getRandomCatColor() {
 
 
 function addNewCatColor(i) {
-    let newColor = document.getElementById(`catColor${i}`).innerHTML
+    let newColor = document.getElementById(`catColor${i}`).innerHTML;
     if (selectedColor.length == 0) {
-        selectCatColor(i);
+        selectCatColor(i, newColor);
     } else {
-        changeCatColor(i)
-
+        changeCatColor(i, newColor);
     }
+}
 
 
-    function selectCatColor(i) {
-        selectedColor.push(newColor);
-        document.getElementById(`addNewCatColor${i}`).classList.add('highlightSelectedColor');
-    }
+function selectCatColor(i, newColor) {
+    selectedColor.push(newColor);
+    document.getElementById(`addNewCatColor${i}`).classList.add('highlightSelectedColor');
+}
 
 
-    function changeCatColor(i) {
-        selectedColor.splice(0, 1)
-        selectedColor.push(newColor)
-        removeColorHighlights();
-        document.getElementById(`addNewCatColor${i}`).classList.add('highlightSelectedColor');
-    }
+function changeCatColor(i, newColor) {
+    selectedColor.splice(0, 1);
+    selectedColor.push(newColor);
+    removeColorHighlights();
+    document.getElementById(`addNewCatColor${i}`).classList.add('highlightSelectedColor');
 }
 
 
 function removeColorHighlights() {
     for (let i = 0; i < 6; i++) {
-        document.getElementById(`addNewCatColor${i}`).classList.remove('highlightSelectedColor')
+        document.getElementById(`addNewCatColor${i}`).classList.remove('highlightSelectedColor');
     }
 }
 
@@ -243,8 +241,9 @@ async function saveNewCat() {
     getNewCatInput();
     getNewCatColor();
     document.getElementById('catColorsSelection').classList.add('d-none');
-    addCategory(categorys.length - 1)
+    addCategory(categorys.length - 1);
 }
+
 
 function getNewCatInput() {
     if (newCatInputEmpty()) {
@@ -256,11 +255,13 @@ function getNewCatInput() {
     saveCatBackend();
 }
 
+
 async function saveCatBackend() {
     await backend.setItem('categorys', JSON.stringify(categorys));
     await backend.setItem('categoryColor', JSON.stringify(categoryColor));
     await backend.setItem('newCategory', JSON.stringify(newCategory));
 }
+
 
 function getNewCatColor() {
     if (newCatColorNotSelected()) {
@@ -272,7 +273,7 @@ function getNewCatColor() {
 
 
 function newCatInputEmpty() {
-    return !document.getElementById('newCat').value
+    return !document.getElementById('newCat').value;
 }
 
 
@@ -293,7 +294,7 @@ function prioUrgent() {
     clearPrioLow();
     clearPrioMedium();
     document.getElementById('prioUrgent').onclick = clearPrioUrgent;
-    prioStatus.push('Urgent')
+    prioStatus.push('Urgent');
 }
 
 
@@ -303,7 +304,7 @@ function prioMedium() {
     clearPrioLow();
     clearPrioUrgent();
     document.getElementById('prioMedium').onclick = clearPrioMedium;
-    prioStatus.push('Medium')
+    prioStatus.push('Medium');
 }
 
 
@@ -313,7 +314,7 @@ function prioLow() {
     clearPrioUrgent();
     clearPrioMedium();
     document.getElementById('prioLow').onclick = clearPrioLow;
-    prioStatus.push('Low')
+    prioStatus.push('Low');
 }
 
 
@@ -321,7 +322,7 @@ function clearPrioUrgent() {
     document.getElementById('prioUrgent').classList.remove('prioUrgent');
     document.getElementById('prioUrgentIcon').classList.remove('prioIconFilter');
     document.getElementById('prioUrgent').onclick = prioUrgent;
-    prioStatus.splice(0, 1)
+    prioStatus.splice(0, 1);
 }
 
 
@@ -329,7 +330,7 @@ function clearPrioMedium() {
     document.getElementById('prioMedium').classList.remove('prioMedium');
     document.getElementById('prioMediumIcon').classList.remove('prioIconFilter');
     document.getElementById('prioMedium').onclick = prioMedium;
-    prioStatus.splice(0, 1)
+    prioStatus.splice(0, 1);
 }
 
 
@@ -337,7 +338,7 @@ function clearPrioLow() {
     document.getElementById('prioLow').classList.remove('prioLow');
     document.getElementById('prioLowIcon').classList.remove('prioIconFilter');
     document.getElementById('prioLow').onclick = prioLow;
-    prioStatus.splice(0, 1)
+    prioStatus.splice(0, 1);
 }
 
 
@@ -380,6 +381,7 @@ function addContact(i) {
     }
 }
 
+
 function checkContactsCheckbox(i) {
     let indexOf = assignedContacts.indexOf(contacts[i])
     if (indexOf >= 0 && document.getElementById(`contactsCheckbox${i}`)) {
@@ -389,8 +391,9 @@ function checkContactsCheckbox(i) {
 
 
 function uncheckContactsCheckbox(i) {
-    document.getElementById(`checkboxChecked${i}`).classList.remove('checkboxChecked')
+    document.getElementById(`checkboxChecked${i}`).classList.remove('checkboxChecked');
 }
+
 
 function addCurrentUser() {
     let indexOf = -1;
@@ -417,6 +420,7 @@ function addCurrentUser() {
     }
 }
 
+
 function checkCurrentUserCheckbox() {
     let indexOf = assignedContacts.indexOf(currentUser)
     if (indexOf >= 0) {
@@ -424,28 +428,21 @@ function checkCurrentUserCheckbox() {
         <div id="checkboxChecked" class="checkboxChecked"></div>
     `
     }
-
-
 }
 
 
 function uncheckCurrentUserCheckbox() {
-    document.getElementById(`checkboxChecked`).classList.remove('checkboxChecked')
+    document.getElementById(`checkboxChecked`).classList.remove('checkboxChecked');
 }
-
-
-
-
-
 
 
 function taskClosePopup() {
-    document.getElementById('popup').classList.add('popupD-none')
+    document.getElementById('popup').classList.add('popupD-none');
     setTimeout(() => {
-        document.getElementById('cover').classList.add('d-none')
-        // document.body.classList.remove('overflowHidden');
+        document.getElementById('cover').classList.add('d-none');
     }, 800)
 }
+
 
 function taskAddNewContact() {
     setNewContactHtmlTemplate();
@@ -457,6 +454,7 @@ function taskAddNewContact() {
     addNewContactHtmlTemplate();
     closeContacts();
 }
+
 
 function taskSaveNewContact() {
     let name = document.getElementById('newName');
@@ -479,6 +477,7 @@ function taskSaveNewContact() {
     taskShowSavedSucess(newLastName);
 }
 
+
 function taskShowSavedSucess(newLastName) {
     showSavedSucessHtmlTemplate();
     let i = contacts.findIndex(obj => obj.lastName == `${newLastName}`);
@@ -494,7 +493,6 @@ function taskShowSavedSucess(newLastName) {
 }
 
 
-
 //*** SUBTASKS */
 
 function showTasks() {
@@ -503,17 +501,19 @@ function showTasks() {
         dropdown.removeAttribute("onclick");
         showTasksHtmlTemplate(dropdown);
         renderTasks();
+        document.getElementById('taskBottomRow').classList.remove('margin231')
     } else {
         boardRenderTasks();
     }
 }
+
 
 function renderTasks() {
     if (tasks.length == 0) {
         noTasksVailableHtmlTemplate();
     } else {
         for (let i = 0; i < tasks.length; i++) {
-            renderTasksHtmlTemplate(i);
+            renderSubtasksHtmlTemplate(i);
             checkSubtaskCheckbox(i)
         }
     }
@@ -524,6 +524,7 @@ function closeTasks() {
     if (document.getElementById('taskDropdown')) {
         let dropdown = document.getElementById('taskDropdown');
         closeTasksHtmlTemplate(dropdown);
+        document.getElementById('taskBottomRow').classList.add('margin231')
     }
 }
 
@@ -545,6 +546,7 @@ function addSubtask(i) {
     }
 }
 
+
 function checkSubtaskCheckbox(i) {
     let indexOf = subtasks.indexOf(tasks[i])
     if (indexOf >= 0 && document.getElementById(`subtaskCheckbox${i}`)) {
@@ -554,28 +556,29 @@ function checkSubtaskCheckbox(i) {
 
 
 function uncheckSubtaskCheckbox(i) {
-    document.getElementById(`checkboxSubtaskChecked${i}`).classList.remove('checkboxChecked')
+    document.getElementById(`checkboxSubtaskChecked${i}`).classList.remove('checkboxChecked');
 }
 
 
 function closeNewTaskPopupShowSucess() {
-    document.getElementById('addTaskPopup').classList.add('popupD-none')
+    document.getElementById('addTaskPopup').classList.add('popupD-none');
     setTimeout(() => {
         document.getElementById('addedToBoard').classList.add('addedToBoard');
         document.getElementById('addTaskPopup').classList.add('d-none');
         document.getElementById('addedToBoard').classList.remove('d-none');
     }, 800)
     setTimeout(() => {
-        document.getElementById('addedToBoard').classList.add('addedToBoardD-none')
+        document.getElementById('addedToBoard').classList.add('addedToBoardD-none');
     }, 2300)
     setTimeout(() => {
-        document.getElementById('cover1').classList.add('d-none')
-        document.getElementById('addedToBoard').classList.remove('addedToBoardD-none')
+        document.getElementById('cover1').classList.add('d-none');
+        document.getElementById('addedToBoard').classList.remove('addedToBoardD-none');
         document.getElementById('addedToBoard').classList.remove('addedToBoard');
         document.getElementById('addedToBoard').classList.add('d-none');
         document.body.classList.remove('overflowHidden');
     }, 3200)
 }
+
 
 function closeNewTaskPopup() {
     document.getElementById('addTaskPopup').classList.add('popupD-none');
@@ -588,6 +591,7 @@ function closeNewTaskPopup() {
         document.body.classList.remove('overflowHidden');
     }, 800)
 }
+
 
 function addNewTaskPopup(status) {
     taskStatus = status;
@@ -635,7 +639,7 @@ function clearPopupInnerHtml() {
         clearPopupPrioUrgent();
         clearPopupPrioMedium();
         clearPopupPrioLow();
-        closePopupCategorys()
+        closePopupCategorys();
         popupAssignedContacts = [];
         for (let i = 0; i < contacts.length; i++) {
             if (document.getElementById(`popupCheckboxChecked${i}`)) {
@@ -652,6 +656,7 @@ function clearPopupInnerHtml() {
     }, 800)
 }
 
+
 function instantClearPopup() {
     document.getElementById('popupAddTaskTitle').value = '';
     document.getElementById('popupAddTaskDescription').value = '';
@@ -662,7 +667,7 @@ function instantClearPopup() {
     clearPopupPrioUrgent();
     clearPopupPrioMedium();
     clearPopupPrioLow();
-    closePopupCategorys()
+    closePopupCategorys();
     popupAssignedContacts = [];
     for (let i = 0; i < contacts.length; i++) {
         if (document.getElementById(`popupCheckboxChecked${i}`)) {
@@ -678,48 +683,40 @@ function instantClearPopup() {
     popupCloseTasks();
 }
 
+
 function showPopupCategorys() {
     let dropdown = document.getElementById('popupCategoryDropdown');
     dropdown.removeAttribute("onclick");
-    dropdown.innerHTML = `
-        <div onclick="closePopupCategorys()" class="dorpdownRow categoryPadding borderBottom">Select task category <img src="/img/downIcon.svg" alt=""></div>
-        <div class="popupDropdownContainer">
-            <div onclick="popupAddNewCategory()" class="categoryPadding category spacebetween">New category <img class="plus" src="/img/boardPlusBtn.svg"></div>
-            <div id="popupSavedCategorys"></div>
-        </div>
-        `
+    showPopupCatDropdownTemplate(dropdown);
     renderPopupSavedCategorys();
     closePopupContacts();
 }
 
+
 function renderPopupSavedCategorys() {
     for (let i = 0; i < categorys.length; i++) {
-        document.getElementById('popupSavedCategorys').innerHTML += `
-        <div onclick="addPopupCategory(${i})" class="categoryPadding category">${categorys[i]}<div class="catColor" style="background-color: ${categoryColor[i]}"></div></div>
-    `
+        renderSavedCatTemplate(i);
     }
 }
+
 
 function closePopupCategorys() {
     let dropdown = document.getElementById('popupCategoryDropdown');
     if (popupNewTaskCategory.length == 0) {
-        dropdown.innerHTML = `
-        <div onclick="showPopupCategorys()" class="dorpdownRow categoryPadding">Select task category<img src="/img/downIcon.svg" alt=""></div>
-    `} else {
-        dropdown.innerHTML = `
-        <div onclick="showPopupCategorys()" class="category categoryPadding">${popupNewTaskCategory[0]}<div class="catColor" style="background-color: ${popupNewTaskCategory[1]}"></div></div>
-    `
+        renderPopupEmptyCatTemplate(dropdown);
+    } else {
+        renderPopupCatTemplate(dropdown);
     }
-
 }
+
 
 function addPopupCategory(i) {
     if (popupNewTaskCategory.indexOf(categorys[i]) >= 0) {
-        popupNewTaskCategory.splice(0, 2)
+        popupNewTaskCategory.splice(0, 2);
         showSelectedPopupCat();
     } else {
-        popupNewTaskCategory.splice(0, 2)
-        popupNewTaskCategory.push(categorys[i], categoryColor[i])
+        popupNewTaskCategory.splice(0, 2);
+        popupNewTaskCategory.push(categorys[i], categoryColor[i]);
         showSelectedPopupCat();
     }
 }
@@ -728,39 +725,35 @@ function addPopupCategory(i) {
 function showSelectedPopupCat() {
     let dropdown = document.getElementById('popupCategoryDropdown');
     if (popupNewTaskCategory.length > 0) {
-        dropdown.innerHTML = `
-        <div onclick="showPopupCategorys()" class="category categoryPadding">${popupNewTaskCategory[0]}<div class="catColor" style="background-color: ${popupNewTaskCategory[1]}"></div></div>
-    `
+        renderPopupEmptyCatDropdownTemplate(dropdown);
     } else {
-        dropdown.innerHTML = `
-        <div onclick="showPopupCategorys()" class="dorpdownRow categoryPadding">Select task category<img src="/img/downIcon.svg" alt=""></div>
-    `
+        renderPopupCatDropdownTemplate(dropdown);
     }
 }
 
 function popupAddNewCategory() {
-    document.getElementById('popupCategoryDropdown').innerHTML = `<div class="spacebetween newCat"><input id="popupNewCat" class="catInput"><div class="newCatBtn"><img class="clearBtn" src="/img/closeIcon.svg" onclick="popupCloseNewCat()"><div class="greyLine"></div><img onclick="popupSaveNewCat()"class="checkBtn" src="/img/checkMark.ico"></div></div>`
+    renderPopupAddCatDropdownTemplate();
     document.getElementById('popupCatColorsSelection').classList.remove('d-none');
     document.getElementById('popupCatColorsSelection').innerHTML = '';
     for (let i = 0; i < 6; i++) {
         getRandomCatColor();
-        document.getElementById('popupCatColorsSelection').innerHTML += `<div onclick="popupAddNewCatColor(${i})" class="catColor" id="popupAddNewCatColor${i}" style="background-color: ${color}"><div class="d-none" id="popupCatColor${i}">${color}</div></div>`
+        renderPopupCatColorTemplate(i);
     }
 }
 
 
 function popupAddNewCatColor(i) {
-    let newColor = document.getElementById(`popupCatColor${i}`).innerHTML
+    let newColor = document.getElementById(`popupCatColor${i}`).innerHTML;
     if (popupSelectedColor.length == 0) {
         popupSelectedColor.push(newColor)
-        document.getElementById(`popupAddNewCatColor${i}`).classList.add('highlightSelectedColor')
+        document.getElementById(`popupAddNewCatColor${i}`).classList.add('highlightSelectedColor');
     } else {
         popupSelectedColor.splice(0, 1)
-        popupSelectedColor.push(newColor)
+        popupSelectedColor.push(newColor);
         for (let i = 0; i < 6; i++) {
-            document.getElementById(`popupAddNewCatColor${i}`).classList.remove('highlightSelectedColor')
+            document.getElementById(`popupAddNewCatColor${i}`).classList.remove('highlightSelectedColor');
         }
-        document.getElementById(`popupAddNewCatColor${i}`).classList.add('highlightSelectedColor')
+        document.getElementById(`popupAddNewCatColor${i}`).classList.add('highlightSelectedColor');
     }
 }
 
@@ -786,10 +779,12 @@ async function popupSaveNewCat() {
     saveCatBackend();
 }
 
+
 function popupCloseNewCat() {
     showSelectedPopupCat();
     document.getElementById('popupCatColorsSelection').classList.add('d-none');
 }
+
 
 function popupPrioUrgent() {
     document.getElementById('popupPrioUrgent').classList.add('prioUrgent');
@@ -797,7 +792,7 @@ function popupPrioUrgent() {
     clearPopupPrioLow();
     clearPopupPrioMedium();
     document.getElementById('popupPrioUrgent').onclick = clearPopupPrioUrgent;
-    popupPrioStatus.push('Urgent')
+    popupPrioStatus.push('Urgent');
 }
 
 
@@ -807,7 +802,7 @@ function popupPrioMedium() {
     clearPopupPrioLow();
     clearPopupPrioUrgent();
     document.getElementById('popupPrioMedium').onclick = clearPopupPrioMedium;
-    popupPrioStatus.push('Medium')
+    popupPrioStatus.push('Medium');
 }
 
 
@@ -817,7 +812,7 @@ function popupPrioLow() {
     clearPopupPrioUrgent();
     clearPopupPrioMedium();
     document.getElementById('popupPrioLow').onclick = clearPopupPrioLow;
-    popupPrioStatus.push('Low')
+    popupPrioStatus.push('Low');
 }
 
 
@@ -825,7 +820,7 @@ function clearPopupPrioUrgent() {
     document.getElementById('popupPrioUrgent').classList.remove('prioUrgent');
     document.getElementById('popupPrioUrgentIcon').classList.remove('prioIconFilter');
     document.getElementById('popupPrioUrgent').onclick = popupPrioUrgent;
-    popupPrioStatus.splice(0, 1)
+    popupPrioStatus.splice(0, 1);
 }
 
 
@@ -833,7 +828,7 @@ function clearPopupPrioMedium() {
     document.getElementById('popupPrioMedium').classList.remove('prioMedium');
     document.getElementById('popupPrioMediumIcon').classList.remove('prioIconFilter');
     document.getElementById('popupPrioMedium').onclick = popupPrioMedium;
-    popupPrioStatus.splice(0, 1)
+    popupPrioStatus.splice(0, 1);
 }
 
 
@@ -841,22 +836,14 @@ function clearPopupPrioLow() {
     document.getElementById('popupPrioLow').classList.remove('prioLow');
     document.getElementById('popupPrioLowIcon').classList.remove('prioIconFilter');
     document.getElementById('popupPrioLow').onclick = popupPrioLow;
-    popupPrioStatus.splice(0, 1)
+    popupPrioStatus.splice(0, 1);
 }
 
-//* assignet to!! *//
 
 function showPopupContacts() {
     let dropdown = document.getElementById('popupContactsDropdown');
     dropdown.removeAttribute("onclick");
-    dropdown.innerHTML = `
-        <div onclick="closePopupContacts()" class="dorpdownRow categoryPadding borderBottom">Select contacts to assign<img src="/img/downIcon.svg" alt=""></div>
-        <div class="popupDropdownContainer">
-            <div class="categoryPadding category spacebetween" onclick="popupAddCurrentUser()">You<div class="contactsCheckbox" id="popupCurrentUserCheckbox"></div></div>
-            <div id="popupContacts"></div>
-            <div onclick="popupAddNewContact()" class="categoryPadding category spacebetween">Add new contact <img class="newContactIcon" src="/img/newContactIcon.png"></div>
-        </div>
-        `
+    renderPopupContactsDropdownTemplate(dropdown);
     renderPopupContacts();
     closePopupCategorys();
 }
@@ -866,12 +853,7 @@ function renderPopupContacts() {
     for (let i = 0; i < alpha.length; i++) {
         for (let j = 0; j < contacts.length; j++) {
             if (alpha[i] == contacts[j].lastName.charAt(0)) {
-                document.getElementById('popupContacts').innerHTML += `
-                    <div onclick="popupAddContact(${j})" class="categoryPadding category spacebetween">
-                        ${contacts[j].lastName} ${contacts[j].firstName}
-                        <div class="contactsCheckbox" id="popupContactsCheckbox${j}"></div>
-                    </div>
-                `
+                renderPopupContactsTemplate(j);
                 checkPopupContactsCheckbox(j);
                 checkPopupCurrentUserCheckbox();
             }
@@ -879,18 +861,12 @@ function renderPopupContacts() {
     }
 }
 
+
 function closePopupContacts() {
     let dropdown = document.getElementById('popupContactsDropdown');
-    dropdown.innerHTML = `
-        <div onclick="showPopupContacts()" class="dorpdownRow categoryPadding">Select contacts to assign<img src="/img/downIcon.svg" alt=""></div>
-     `
+    renderClosePopupContactsTemplate(dropdown);
 }
 
-// function popupCloseContacts() {
-//     document.getElementById('popupContactsDropdown').innerHTML = `
-//         <div onclick="showPopupContacts()" class="dorpdownRow categoryPadding">Select contacts to assign<img src="/img/downIcon.svg" alt=""></div>
-//         `
-// }
 
 function popupAddContact(i) {
     let indexOf = popupAssignedContacts.indexOf(contacts[i])
@@ -903,19 +879,19 @@ function popupAddContact(i) {
     }
 }
 
+
 function checkPopupContactsCheckbox(i) {
     let indexOf = popupAssignedContacts.indexOf(contacts[i])
     if (indexOf >= 0 && document.getElementById(`popupContactsCheckbox${i}`)) {
-        document.getElementById(`popupContactsCheckbox${i}`).innerHTML = `
-        <div id="popupCheckboxChecked${i}" class="checkboxChecked"></div>
-    `
+        checkpopupContactsCheckboxTemplate(i);
     }
 }
 
 
 function uncheckPopupContactsCheckbox(i) {
-    document.getElementById(`popupCheckboxChecked${i}`).classList.remove('checkboxChecked')
+    document.getElementById(`popupCheckboxChecked${i}`).classList.remove('checkboxChecked');
 }
+
 
 function popupAddCurrentUser() {
     let indexOf = -1;
@@ -927,7 +903,7 @@ function popupAddCurrentUser() {
     let curretUserLastName = splitName.join(' ');
     curretUserFirstName = curretUserFirstName.charAt(0).toUpperCase() + curretUserFirstName.slice(1);
     curretUserLastName = curretUserLastName.charAt(0).toUpperCase() + curretUserLastName.slice(1);
-    currentUser = { firstName: curretUserFirstName, lastName: curretUserLastName, email: currentUserEmail, 'phone': '', 'contactColor': currentUserColor }
+    currentUser = { firstName: curretUserFirstName, lastName: curretUserLastName, email: currentUserEmail, 'phone': '', 'contactColor': currentUserColor };
     for (let i = 0; i < popupAssignedContacts.length; i++) {
         if (JSON.stringify(popupAssignedContacts[i]) == JSON.stringify(currentUser)) {
             indexOf = i;
@@ -942,6 +918,7 @@ function popupAddCurrentUser() {
     }
 }
 
+
 function checkPopupCurrentUserCheckbox() {
     let indexOf = popupAssignedContacts.indexOf(currentUser)
     if (indexOf >= 0) {
@@ -952,10 +929,8 @@ function checkPopupCurrentUserCheckbox() {
 
 
 function uncheckPopupCurrentUserCheckbox() {
-    document.getElementById(`checkboxChecked`).classList.remove('checkboxChecked')
+    document.getElementById(`checkboxChecked`).classList.remove('checkboxChecked');
 }
-
-// NEW CONTACT POPUP !!!!!!!!!!!!!
 
 
 function popupAddNewContact() {
@@ -965,61 +940,42 @@ function popupAddNewContact() {
     document.getElementById('popup').classList.remove('popupD-none');
     document.getElementById('cover').classList.remove('d-none');
     document.getElementById('popup').classList.add('popup');
-    document.getElementById('popupDescription').innerHTML = `
-        <div>                                
-            <div>Add Contacts</div>
-            <div class="popupSubtitle">Tasks are better with a team!</div>   
-        </div>
-    `
+    popupDescriptionTemplate();
 }
 
-//*** SUBTASKS */
 
 function popupShowTasks() {
     let dropdown = document.getElementById('popupTaskDropdown');
     dropdown.removeAttribute("onclick");
-    dropdown.innerHTML = `
-        <div onclick="popupCloseTasks()" class="dorpdownRow categoryPadding borderBottom">Add Subtask<img src="/img/downIcon.svg" alt=""></div>
-        <div class="dropdownContainer">
-            <div id="popupTasks"></div>
-        </div>
-        `
+    renderPopupTasksTemplate(dropdown);
     popupRenderTasks();
-    // closeCategorys();
+    document.getElementById('popupTaskBottomRow').classList.remove('margin231')
 }
+
 
 function popupRenderTasks() {
     if (tasks.length == 0) {
-        document.getElementById('popupTasks').innerHTML = `
-            <div class="categoryPadding category">No task available</div>
-        `
+        popupRenderEmptyTaskTemplate();
     } else {
         for (let i = 0; i < tasks.length; i++) {
-            document.getElementById('popupTasks').innerHTML += `
-            <div onclick="popupAddSubtask(${i})" class="categoryPadding category spacebetween">${tasks[i].title} <div class="contactsCheckbox" id="popupSubtaskCheckbox${i}"></div></div>
-            
-        `
-            checkPopupSubtaskCheckbox(i)
+            popupRenderTasksTemplate(i);
+            checkPopupSubtaskCheckbox(i);
         }
     }
-
 }
 
 
 function popupCloseTasks() {
     let dropdown = document.getElementById('popupTaskDropdown');
-    dropdown.innerHTML = `
-        <div onclick="popupShowTasks()" class="dorpdownRow categoryPadding">Add Subtask<img src="/img/downIcon.svg" alt=""></div>
-     `
+    popupCloseTasksTemplate(dropdown);
+    document.getElementById('popupTaskBottomRow').classList.add('margin231')
 }
-
-///***** POPUP SUBTASKS */
 
 
 function popupAddSubtask(i) {
     let indexOf = popupSubtasks.indexOf(tasks[i])
     if (indexOf >= 0) {
-        popupSubtasks.splice(indexOf, 1)
+        popupSubtasks.splice(indexOf, 1);
         uncheckPopupSubtaskCheckbox(i);
     } else {
         popupSubtasks.push(tasks[i]);
@@ -1027,15 +983,15 @@ function popupAddSubtask(i) {
     }
 }
 
+
 function checkPopupSubtaskCheckbox(i) {
     let indexOf = popupSubtasks.indexOf(tasks[i])
     if (indexOf >= 0 && document.getElementById(`popupSubtaskCheckbox${i}`)) {
-        document.getElementById(`popupSubtaskCheckbox${i}`).innerHTML = `
-        <div id="popupCheckboxSubtaskChecked${i}" class="checkboxChecked"></div>
-    `
+        renderPopupSubtasksCheckboxTemplate(i);
     }
 }
 
+
 function uncheckPopupSubtaskCheckbox(i) {
-    document.getElementById(`popupCheckboxSubtaskChecked${i}`).classList.remove('checkboxChecked')
+    document.getElementById(`popupCheckboxSubtaskChecked${i}`).classList.remove('checkboxChecked');
 }
