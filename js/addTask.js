@@ -17,6 +17,7 @@ let subtasks = [];
 let popupSubtasks = [];
 let taskStatus = 'todo';
 let id;
+let dropdownActive = false;
 
 
 async function addTask() {
@@ -123,12 +124,25 @@ function showSucess() {
 }
 
 
+// window.onclick = function (event) {
+//     if (dropdownActive) {
+//         closeCategorys();
+//         closeContacts();
+//         closeTasks();
+//     }
+// }
+
+
 function showCategorys() {
     let dropdown = document.getElementById('categoryDropdown');
     dropdown.removeAttribute("onclick");
     showCategorysHtmlTemplate(dropdown);
     renderSavedCategorys();
     closeContacts();
+    setTimeout(() => {
+        dropdownActive = true;
+    }, 100)
+  
 }
 
 
@@ -146,6 +160,7 @@ function closeCategorys() {
     } else {
         closeCategoryHtmlTemplate(dropdown);
     }
+    dropdownActive = false;
 }
 
 
@@ -348,6 +363,9 @@ function showContacts() {
     showContactsHtmlTemplate(dropdown);
     renderContacts();
     closeCategorys();
+    setTimeout(() => {
+        dropdownActive = true;
+    }, 100)
 }
 
 
@@ -367,6 +385,7 @@ function renderContacts() {
 function closeContacts() {
     let dropdown = document.getElementById('contactsDropdown');
     closeContactsHtmlTemplate(dropdown);
+    dropdownActive = false;
 }
 
 
@@ -502,6 +521,9 @@ function showTasks() {
         showTasksHtmlTemplate(dropdown);
         renderTasks();
         document.getElementById('taskBottomRow').classList.remove('margin231')
+        setTimeout(() => {
+            dropdownActive = true;
+        }, 100)
     } else {
         boardRenderTasks();
     }
@@ -525,6 +547,7 @@ function closeTasks() {
         let dropdown = document.getElementById('taskDropdown');
         closeTasksHtmlTemplate(dropdown);
         document.getElementById('taskBottomRow').classList.add('margin231')
+        dropdownActive = false;
     }
 }
 

@@ -32,7 +32,7 @@
     <div class="addTask">
         <form onsubmit="addTask(); return false">
             <h1>Add Task</h1>
-            <div class="taskContainer">
+            <div class="taskContainer" >
                 <div class="taskContainerLeft">
                     <div class="taskContainerSections">
                         <p>Title</p>
@@ -85,7 +85,8 @@
                     </div>
                     <div class="taskBottomRow margin231" id="taskBottomRow">
                         <div class="taskBottomBtn">
-                            <div id="clearBtn" onclick="instantClearInnerHtml()">Clear <img class="taskBtnIcon" src="img/cancel.svg" alt=""></div>
+                            <div id="clearBtn" onclick="instantClearInnerHtml()">Clear <img class="taskBtnIcon"
+                                    src="img/cancel.svg" alt=""></div>
                             <button id="createTaskBtn" type="submit" value="">Create Task<img class="taskBtnIcon"
                                     src="img/check.svg" alt=""></button>
                         </div>
@@ -97,6 +98,7 @@
         </form>
     </div>
     <div id="cover" class="d-none">
+        <div id="blocker" onclick="closePopup()"></div>
         <div class="d-none" id="popup">
             <div class="popupContainerLeft">
                 <div class="mobileAddContact">
@@ -112,6 +114,7 @@
         </div>
     </div>
     <div id="cover1" class="d-none">
+        <div id="blocker1" onclick="closeNewTaskPopup()"></div>
         <div class="d-none" id="addedToBoard">Task added to board <img src="img/addedIcon.svg" alt=""></div>
         <div id="addTaskPopup" class="d-none">
             <form onsubmit="popupAddTask(); return false">
@@ -165,15 +168,15 @@
                         <div class="taskContainerSections">
                             <p>Subtasks</p>
                             <div onclick="popupShowTasks()" id="popupTaskDropdown" class="dropdown selectWidth ">
-                                <div class="dorpdownRow  categoryPadding">Add Subtask<img src="img/downIcon.svg"
-                                        alt="">
+                                <div class="dorpdownRow  categoryPadding">Add Subtask<img src="img/downIcon.svg" alt="">
                                 </div>
                             </div>
                             <div id="popupSubtasks"></div>
                         </div>
                         <div class="popupTaskBottomRow margin231" id="popupTaskBottomRow">
                             <div class="taskBottomBtn">
-                                <div id="popupClearBtn" onclick="instantClearPopup()">Clear <img class="taskBtnIcon" src="img/cancel.svg" alt="">
+                                <div id="popupClearBtn" onclick="instantClearPopup()">Clear <img class="taskBtnIcon"
+                                        src="img/cancel.svg" alt="">
                                 </div>
                                 <button id="popupCreateTaskBtn" type="submit" value="">Create Task<img
                                         class="taskBtnIcon" src="img/check.svg" alt=""></button>

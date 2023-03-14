@@ -323,8 +323,11 @@ function taskDetails(i) {
         taskSetInitial(i, j);
     }
     renderDetailsEditBtnHtmltemplate(i);
+    renderDetailsDeleteBtn(i);
     renderDetailsSubtasks(i);
     setPrioColor(i);
+    document.getElementById('blocker2').classList.remove('d-none');
+    document.getElementById('blockerEditTask').classList.add('d-none');
 }
 
 
@@ -385,6 +388,7 @@ function filteredTaskDetails(i) {
         renderFilteredTaskDetailsAssignetContactsHtmlTemp(i, j);
         filteredTaskSetInitial(i, j);
     }
+    renderFilteredTasksDeleteBtn(i);
     renderFilteredTasksEditBtnHtmltemplate(i);
     setPrioColorFiltered(i);
 }
@@ -437,10 +441,19 @@ function showDetailsSubtasks(i) {
 }
 
 
+function deleteTask(i) {
+    tasks.splice(i, 1)
+    saveBoard();
+    boardRenderTasks();
+    closeDetails();
+}
+
 
 function openEditTask(i) {
     document.getElementById('detailsPopup').classList.add('d-none');
     document.getElementById('editTaskPopup').classList.remove('d-none');
+    document.getElementById('blocker2').classList.add('d-none');
+    document.getElementById('blockerEditTask').classList.remove('d-none');
     document.getElementById('editTilte').value = `${tasks[i].title}`;
     document.getElementById('editDescription').value = `${tasks[i].description}`;
     document.getElementById('editDueDate').value = `${tasks[i].dueDate}`;
@@ -485,6 +498,8 @@ function closeEditTask() {
     }
     document.getElementById('detailsPopup').classList.remove('d-none');
     document.getElementById('editTaskPopup').classList.add('d-none');
+    document.getElementById('blocker2').classList.remove('d-none');
+    document.getElementById('blockerEditTask').classList.add('d-none');
     popupAssignedContacts = [];
     popupSubtasks = [];
     editCloseContacts();

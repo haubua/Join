@@ -172,6 +172,12 @@ function renderDetailsAssignetContactsHtmltemplate(i, j) {
 }
 
 
+function renderDetailsDeleteBtn(i) {
+    document.getElementById('deleteTask').innerHTML = `
+    <div class="deleteTask" onclick="deleteTask(${i})"><img class="pencil" src=img/delete.png"></div>
+    `
+}
+
 function renderDetailsEditBtnHtmltemplate(i) {
     document.getElementById('detailsEdit').innerHTML = `
         <div class="detailsEdit" onclick="openEditTask(${i})"><img class="pencil" src=img/pencilWhite.svg"></div>
@@ -208,6 +214,11 @@ function renderFilteredTaskDetailsAssignetContactsHtmlTemp(i, j) {
         `
 }
 
+function renderFilteredTasksDeleteBtn(i) {
+    document.getElementById('deleteTask').innerHTML = `
+    <div class="deleteTask" onclick="deleteTask(${i})"><img class="pencil" src=img/delete.png"></div>
+    `
+}
 
 function renderFilteredTasksEditBtnHtmltemplate(i) {
     document.getElementById('detailsEdit').innerHTML = `
